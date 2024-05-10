@@ -10,11 +10,11 @@ namespace RrezeBack.Data.Model
 
         public int? DriverRating { get; set; }
 
-        public string DriverComment { get; set; }
+        public string? DriverComment { get; set; }
 
         public int? RiderRating { get; set; }
 
-        public string RiderComment { get; set; }
+        public string? RiderComment { get; set; }
 
         public int RiderID { get; set; }
         [ForeignKey("RiderID")]

@@ -30,7 +30,7 @@ namespace RrezeBack.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.ToString());
             }
         }
 

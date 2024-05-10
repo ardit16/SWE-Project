@@ -12,10 +12,8 @@ public class DBContext : DbContext
     public DbSet<Driver> Drivers { get; set; }
     public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
-    public DbSet<VehicleImages> VehicleImages { get; set; }
-    public DbSet<VehicleDocuments> VehicleDocuments { get; set; }
+   
     public DbSet<Ride> Rides { get; set; }
-    public DbSet<PaymentMethod> PaymentMethods { get; set; }
     public DbSet<Feedbacks> Feedbacks { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,10 +29,6 @@ public class DBContext : DbContext
             .WithOne(f => f.Rider)
             .HasForeignKey(f => f.RiderID);
 
-        modelBuilder.Entity<Rider>()
-            .HasMany(r => r.PaymentMethods)
-            .WithOne()
-            .HasForeignKey(pm => pm.PaymentMethodID);
 
         // Configure Driver entity
         modelBuilder.Entity<Driver>()
@@ -52,32 +46,7 @@ public class DBContext : DbContext
             .WithOne(v => v.Driver)
             .HasForeignKey(v => v.DriverID);
 
-        modelBuilder.Entity<Driver>()
-            .HasOne(d => d.PaymentMethod)
-            .WithMany(pm => pm.Drivers)
-            .HasForeignKey(d => d.PaymentMethodID);
 
-        // Configure Administrator entity
-        modelBuilder.Entity<Administrator>()
-            .HasMany(a => a.Drivers)
-            .WithOne()
-            .HasForeignKey(d => d.AdministratorID);
-
-        modelBuilder.Entity<Administrator>()
-            .HasMany(a => a.Riders)
-            .WithOne()
-            .HasForeignKey(r => r.AdministratorID);
-
-        // Configure Vehicle entity
-        modelBuilder.Entity<Vehicle>()
-                    .HasMany(v => v.VehicleImages)
-                    .WithOne(vi => vi.Vehicle)
-                    .HasForeignKey(vi => vi.VehicleID);
-
-        modelBuilder.Entity<Vehicle>()
-            .HasMany(v => v.VehicleDocuments)
-            .WithOne(vd => vd.Vehicle)
-            .HasForeignKey(vd => vd.VehicleID);
 
         // Configure Ride entity
         modelBuilder.Entity<Ride>()
@@ -85,16 +54,6 @@ public class DBContext : DbContext
             .WithOne(f => f.Ride)
             .HasForeignKey(f => f.RideID);
 
-        // Configure PaymentMethod entity
-        modelBuilder.Entity<PaymentMethod>()
-            .HasMany(pm => pm.Riders)
-            .WithOne()
-            .HasForeignKey(r => r.PaymentMethodID);
-
-        modelBuilder.Entity<PaymentMethod>()
-            .HasMany(pm => pm.Drivers)
-            .WithOne()
-            .HasForeignKey(d => d.PaymentMethodID);
 
         // Configure Feedback entity
         modelBuilder.Entity<Feedbacks>()
@@ -112,12 +71,6 @@ public class DBContext : DbContext
             .WithMany(r => r.Feedbacks)
             .HasForeignKey(f => f.RideID);
 
-        // Configure composite keys if needed
-        modelBuilder.Entity<VehicleImages>()
-            .HasKey(vi => new { vi.VehicleImagesID, vi.VehicleID });
-
-        modelBuilder.Entity<VehicleDocuments>()
-            .HasKey(vd => new { vd.VehicleDocumentsID, vd.VehicleID });
     }
 
 }

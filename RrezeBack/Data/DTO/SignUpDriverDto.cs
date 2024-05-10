@@ -9,7 +9,7 @@
         public string Email { get; set; }
         public string Birthday { get; set; }
         public bool Two_Fa { get; set; }
-        public string Nationality { get; set; }
+        public string Gender { get; set; }
         public IFormFile photo { get; set; }
         
        
