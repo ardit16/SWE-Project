@@ -8,20 +8,14 @@ using System.Threading.Tasks;
 
 namespace RrezeBack.Controllers
 {
+    
     [Route("api/LogIn")]
     [ApiController]
     public class LogInController : ControllerBase
     {
         private readonly ILogInService _logInService;
 
-        public interface ILogInService
-        {
-            Task<object> LogInRider(LoginDTO dto);
-            Task<object> LogInDriver(LoginDTO dto);
-            Task<object> ConfirmFaRider(FaCredencialsDto dto);
-            Task<object> ConfirmFaDriver(FaCredencialsDto dto);
-            Task<bool> ResendFa(string email);
-        }
+        
         public LogInController(ILogInService logInService)
         {
             _logInService = logInService;

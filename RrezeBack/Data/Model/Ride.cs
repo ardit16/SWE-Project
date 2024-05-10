@@ -8,29 +8,44 @@ namespace RrezeBack.Data.Model
         [Key]
         public int RideID { get; set; }
 
-        [Required]
-        public string PickupLocation { get; set; }
+       
+        public double PickupLocationLONG { get; set; }
+        public double PickupLocationLAT { get; set; }
 
-        [Required]
-        public string DropOffLocation { get; set; }
 
-        [Required]
-        public DateTime RideDate { get; set; }
+        public double DropOffLocationLONG { get; set; }
+        public double DropOffLocationLAT { get; set; }
 
-        [Required]
-        public DateTime RideStartTime { get; set; }
+        
+        public string RideDate { get; set; }
 
-        [Required]
-        public DateTime RideEndTime { get; set; }
+        
+        public string RideStartTime { get; set; }
 
-        [Required]
-        public decimal Fare { get; set; }
+       
+        public string RideEndTime { get; set; }
 
-        [Required]
-        public string RideStatus { get; set; }
+        
 
-        [Required]
+        
+        public bool RideStatus { get; set; }
+
+        
         public double RideDistance { get; set; }
+        public string PaymentType { get; set; }
+
+        public string Amount { get; set; }
+
+        public string CardNumber { get; set; }
+
+
+        public string ExpiryDate { get; set; }
+
+
+        public string CVV { get; set; }
+
+
+        public string CardName { get; set; }
 
         public int DriverID { get; set; }
         [ForeignKey("DriverID")]
@@ -40,9 +55,7 @@ namespace RrezeBack.Data.Model
         [ForeignKey("RiderID")]
         public Rider Rider { get; set; }
 
-        public int PaymentMethodID { get; set; }
-        [ForeignKey("PaymentMethodID")]
-        public PaymentMethod PaymentMethod { get; set; }
+        
 
         public ICollection<Feedbacks> Feedbacks { get; set; }
     }

@@ -12,6 +12,14 @@ using System.Threading.Tasks;
 
 namespace RrezeBack.Services
 {
+    public interface ILogInService
+    {
+        Task<object> LogInRider(LoginDTO dto);
+        Task<object> LogInDriver(LoginDTO dto);
+        Task<object> ConfirmFaRider(FaCredencialsDto dto);
+        Task<object> ConfirmFaDriver(FaCredencialsDto dto);
+        Task<bool> ResendFa(string email);
+    }
     public class LogInService : ILogInService
     {
         private readonly DBContext _context;

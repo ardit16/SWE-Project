@@ -65,14 +65,15 @@ namespace RrezeBack.Services
                     Password = HashPassword(driverDto.Password),
                     PhoneNumber = driverDto.Phone,
                     TwoFactorEnabled = driverDto.Two_Fa,
-                    
+                    Gender=driverDto.Gender,
+   
                 };
 
                 await _context.Drivers.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
                 string fileName = $"{newUser.DriverID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop";
+                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo";
 
                 if (!Directory.Exists(photosDirectoryPath))
                 {
@@ -113,14 +114,15 @@ namespace RrezeBack.Services
                     PhoneNumber = riderDto.Phone,
                     Birthday = riderDto.Birthday,
                     TwoFactorEnabled = riderDto.Two_Fa,
-                    
+                    Gender = riderDto.Gender,
+
                 };
 
                 await _context.Riders.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
                 string fileName = $"{newUser.RiderID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop";
+                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo";
 
                 if (!Directory.Exists(photosDirectoryPath))
                 {
@@ -142,14 +144,6 @@ namespace RrezeBack.Services
             }
         }
 
-        Task<Driver> ISignUpService.SignUpDriver(SignUpDriverDto driverDto)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<Rider> ISignUpService.SignUpRider(SignUpRiderDto riderDto)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }
