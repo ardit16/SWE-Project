@@ -23,10 +23,11 @@ namespace RrezeBack.Data.Model
         
         public string Birthday { get; set; }
 
-       
+
         public bool TwoFactorEnabled { get; set; }
 
-        
+
+
 
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Feedbacks> Feedbacks { get; set; }

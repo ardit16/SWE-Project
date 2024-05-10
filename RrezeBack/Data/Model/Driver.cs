@@ -8,16 +8,15 @@ namespace RrezeBack.Data.Model
         [Key]
         public int DriverID { get; set; }
 
+        public string Name { get; set; }
+
+        public string Surname { get; set; }
+
         public string Email { get; set; }
         
 
         public string Password { get; set; }
 
-        public string Name { get; set; }
-
-        public string Surname { get; set; }
-
-        
         public string Birthday { get; set; }
 
        
@@ -30,6 +29,7 @@ namespace RrezeBack.Data.Model
 
 
         public bool TwoFactorEnabled { get; set; }
+
 
 
         public ICollection<Ride> Rides { get; set; }

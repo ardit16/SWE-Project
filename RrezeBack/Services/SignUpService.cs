@@ -66,6 +66,7 @@ namespace RrezeBack.Services
                     PhoneNumber = driverDto.Phone,
                     TwoFactorEnabled = driverDto.Two_Fa,
                     Gender=driverDto.Gender,
+                    DriverLicense=driverDto.DriverLicense, 
    
                 };
 
