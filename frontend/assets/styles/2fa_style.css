@@ -51,33 +51,20 @@ body {
 
 .input-group {
     position: relative;
-    margin-bottom: 20px;
+    margin: 0 auto 10px auto; 
     width: 90%;
 }
 
 .input-group input {
-    width: 100%;
+    width: 60%;
+    height: 30px;
     padding: 10px 10px 10px 30px;
     border: none;
     background: rgb(239, 238, 238);
     border-radius: 10px;
     color: black;
     top: -20px;
-    font-size: 12px;
-}
-
-.input-group label {
-    position: absolute;
-    left: 30px;
-    top: 5px;
-    color: rgba(46, 44, 44, 0.651);
-    pointer-events: none;
-    transition: 0.3s;
-}
-
-.input-group input:focus ~ label,
-.input-group input:valid ~ label {
-    display: none;
+    font-size: 20px;
 }
 
 button {
@@ -96,6 +83,25 @@ button {
 button:hover {
     background-color: #F5D042;
     color: black;
+}
+
+.resend-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(128, 128, 128, 0.308);
+    color: black;
+    width: 15%; 
+    height: 10px;
+    font-size: 10px;
+    margin-top: 2;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.resend-button:hover {
+    background-color: black;
+    color: white;
 }
 
 .tfa-box p {

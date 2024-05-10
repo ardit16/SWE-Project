@@ -119,7 +119,7 @@ body {
 }
 
 .leftc2 a:hover {
-    background-color: rgba(88, 87, 82, 0.8);
+    background-color: rgba(88, 87, 82, 0.259);
     color: white;
     border-radius: 10px;
     font-weight: bold;
