@@ -15,3 +15,5 @@ document.addEventListener('click', function (e) {
         dropdowns.forEach(d => d.style.display = 'none');
     }
 });
+
+document.getElementById('current-year').textContent = new Date().getFullYear();

@@ -65,3 +65,44 @@
     background-color: rgba(245, 208, 66, 0.8);
     color: white;
 }
+
+.divider {
+    border: 0.5px solid white; 
+    margin: 0; 
+}
+
+#year {
+    float: left; 
+    font-weight: bold;
+    padding-left: 20px; 
+    font-size: 15px;
+}
+
+#social {
+    float: right;
+    padding-right: 20px; 
+}
+
+.fa-facebook {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 10px;
+}
+
+.fa-instagram {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 10px;
+}
+
+.fa-youtube {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 10px;
+}
+
+.fa-linkedin {
+    font-size: 1.5em;
+    color: white;
+    margin-left: 10px;
+}
