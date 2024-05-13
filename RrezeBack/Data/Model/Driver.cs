@@ -22,13 +22,19 @@ namespace RrezeBack.Data.Model
        
         public string PhoneNumber { get; set; }
        
-       public string Gender { get; set; }
+        public bool Gender { get; set; }
 
 
-        public string DriverLicense { get; set; }
+        //public string DriverLicense { get; set; }
 
 
         public bool TwoFactorEnabled { get; set; }
+
+        public bool status { get; set; }
+        public bool Verified { get; set; }
+        public float ovrating {  get; set; }
+
+
 
 
 

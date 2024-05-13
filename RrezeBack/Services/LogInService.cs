@@ -42,9 +42,9 @@ namespace RrezeBack.Services
 
         public async Task<bool> Send2FAEmail(string toEmailAddress, string twoFACode)
         {
-            var fromAddress = new MailAddress("nestquest2@gmail.com", "Rreze");
+            var fromAddress = new MailAddress("Rreze2024@gmail.com", "Rreze");
             var toAddress = new MailAddress(toEmailAddress);
-            const string fromPassword = "rtbt zmpo lngl uajx";
+            const string fromPassword = "";
             const string subject = "Your 2FA Code";
             string body = $"Your two-factor authentication code is: {twoFACode}";
 

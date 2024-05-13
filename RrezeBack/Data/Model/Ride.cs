@@ -11,12 +11,13 @@ namespace RrezeBack.Data.Model
        
         public double PickupLocationLONG { get; set; }
         public double PickupLocationLAT { get; set; }
+        public string PickUpName { get; set; }
 
 
         public double DropOffLocationLONG { get; set; }
         public double DropOffLocationLAT { get; set; }
+        public string DropOffName { get; set; }
 
-        
         public string RideDate { get; set; }
 
         
@@ -32,20 +33,8 @@ namespace RrezeBack.Data.Model
 
         
         public double RideDistance { get; set; }
-        public string PaymentType { get; set; }
 
         public string Amount { get; set; }
-
-        public string CardNumber { get; set; }
-
-
-        public string ExpiryDate { get; set; }
-
-
-        public string CVV { get; set; }
-
-
-        public string CardName { get; set; }
 
         public int DriverID { get; set; }
         [ForeignKey("DriverID")]
@@ -55,7 +44,6 @@ namespace RrezeBack.Data.Model
         [ForeignKey("RiderID")]
         public Rider Rider { get; set; }
 
-        
 
         public ICollection<Feedbacks> Feedbacks { get; set; }
     }

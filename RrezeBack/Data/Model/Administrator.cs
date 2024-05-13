@@ -18,5 +18,6 @@ namespace RrezeBack.Data.Model
 
         public ICollection<Driver> Drivers { get; set; }
         public ICollection<Rider> Riders { get; set; }
+        public ICollection<Ride> Rides { get; set; }
     }
 }

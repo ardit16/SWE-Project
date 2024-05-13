@@ -18,7 +18,7 @@ namespace RrezeBack.Data.Model
 
         public string PhoneNumber { get; set; }
         
-        public string Gender { get; set; }
+        public bool Gender { get; set; }
 
         
         public string Birthday { get; set; }
@@ -26,11 +26,12 @@ namespace RrezeBack.Data.Model
 
         public bool TwoFactorEnabled { get; set; }
 
-
+        public float ovrating { get; set; }
 
 
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Feedbacks> Feedbacks { get; set; }
+        public ICollection<PaymentMethod> PaymentMethods { get; set; }
         
         
     }

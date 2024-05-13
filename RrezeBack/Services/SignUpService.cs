@@ -66,15 +66,18 @@ namespace RrezeBack.Services
                     PhoneNumber = driverDto.Phone,
                     TwoFactorEnabled = driverDto.Two_Fa,
                     Gender=driverDto.Gender,
-                    DriverLicense=driverDto.DriverLicense, 
-   
+                    Birthday=driverDto.Birthday,
+                    status=false,
+                    Verified = false,
+                    ovrating = 0,
+
                 };
 
                 await _context.Drivers.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
                 string fileName = $"{newUser.DriverID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo";
+                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\profile";
 
                 if (!Directory.Exists(photosDirectoryPath))
                 {
@@ -86,6 +89,22 @@ namespace RrezeBack.Services
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
                     await driverDto.photo.CopyToAsync(stream);
+                    
+                }
+                 fileName = $"{newUser.DriverID}.jpg";
+                photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\driverslicense";
+
+                if (!Directory.Exists(photosDirectoryPath))
+                {
+                    Directory.CreateDirectory(photosDirectoryPath);
+                }
+
+                 filePath = Path.Combine(photosDirectoryPath, fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await driverDto.DriverLicense.CopyToAsync(stream);
+
                 }
 
                 return newUser;
@@ -116,6 +135,7 @@ namespace RrezeBack.Services
                     Birthday = riderDto.Birthday,
                     TwoFactorEnabled = riderDto.Two_Fa,
                     Gender = riderDto.Gender,
+                    ovrating=0,
 
                 };
 
