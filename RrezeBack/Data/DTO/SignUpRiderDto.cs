@@ -17,7 +17,6 @@ namespace NestQuest.Data.DTO
         
         public bool Gender { get; set; }
 
-        
-        public IFormFile? photo { get; set; }
+        public IFormFile photo { get; set; }
     }
 }

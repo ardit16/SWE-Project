@@ -12,7 +12,8 @@ public class DBContext : DbContext
     public DbSet<Driver> Drivers { get; set; }
     public DbSet<Administrator> Administrators { get; set; }
     public DbSet<Vehicle> Vehicles { get; set; }
-   
+    public DbSet<PaymentMethod> PaymentMethod{ get; set; }
+
     public DbSet<Ride> Rides { get; set; }
     public DbSet<Feedbacks> Feedbacks { get; set; }
 
@@ -54,6 +55,7 @@ public class DBContext : DbContext
             .WithOne(f => f.Ride)
             .HasForeignKey(f => f.RideID);
 
+        
 
         // Configure Feedback entity
         modelBuilder.Entity<Feedbacks>()

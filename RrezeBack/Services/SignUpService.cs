@@ -91,7 +91,7 @@ namespace RrezeBack.Services
                     await driverDto.photo.CopyToAsync(stream);
                     
                 }
-                 fileName = $"{newUser.DriverID}.jpg";
+                string secondfileName = $"{newUser.DriverID}.jpg";
                 photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\driverslicense";
 
                 if (!Directory.Exists(photosDirectoryPath))
@@ -99,7 +99,7 @@ namespace RrezeBack.Services
                     Directory.CreateDirectory(photosDirectoryPath);
                 }
 
-                 filePath = Path.Combine(photosDirectoryPath, fileName);
+                 filePath = Path.Combine(photosDirectoryPath, secondfileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
@@ -142,15 +142,15 @@ namespace RrezeBack.Services
                 await _context.Riders.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
-                string fileName = $"{newUser.RiderID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo";
+                string thirdfileName = $"{newUser.RiderID}.jpg";
+                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider";
 
                 if (!Directory.Exists(photosDirectoryPath))
                 {
                     Directory.CreateDirectory(photosDirectoryPath);
                 }
 
-                string filePath = Path.Combine(photosDirectoryPath, fileName);
+                string filePath = Path.Combine(photosDirectoryPath, thirdfileName);
 
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
