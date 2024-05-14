@@ -22,6 +22,7 @@ builder.Services.AddMemoryCache();
 // Register application services
 builder.Services.AddScoped<ILogInService, LogInService>();
 builder.Services.AddScoped<ISignUpService, SignUpService>();
+builder.Services.AddScoped<IRiderService, RiderService>();
 
 // CORS configuration
 builder.Services.AddCors(options =>

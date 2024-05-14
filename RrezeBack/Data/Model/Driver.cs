@@ -34,10 +34,6 @@ namespace RrezeBack.Data.Model
         public bool Verified { get; set; }
         public float ovrating {  get; set; }
 
-
-
-
-
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Feedbacks> Feedbacks { get; set; }
         public ICollection<Vehicle> Vehicles { get; set; }
