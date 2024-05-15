@@ -44,7 +44,7 @@ namespace RrezeBack.Services
         {
             var fromAddress = new MailAddress("Rreze2024@gmail.com", "Rreze");
             var toAddress = new MailAddress(toEmailAddress);
-            const string fromPassword = "";
+            const string fromPassword = "jipe otwq xklb jvhb";
             const string subject = "Your 2FA Code";
             string body = $"Your two-factor authentication code is: {twoFACode}";
 

@@ -14,11 +14,10 @@
         public string RideEndTime { get; set; }
         public bool RideStatus { get; set; }
         public double RideDistance { get; set; }
-        public string Amount { get; set; }
-        public int DriverID { get; set; }
+        public double Amount { get; set; }
+        public int DriverId { get; set; }
         public int RiderID { get; set; }
         
-        public IEnumerable<FeedbackDTO> Feedbacks { get; set; }
     }
 
 }

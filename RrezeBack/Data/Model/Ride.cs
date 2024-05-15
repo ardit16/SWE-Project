@@ -22,28 +22,16 @@ namespace RrezeBack.Data.Model
 
         
         public string RideStartTime { get; set; }
-
-       
         public string RideEndTime { get; set; }
-
-        
-
-        
-        public bool RideStatus { get; set; }
-
-        
+        public bool RideStatus { get; set; }        
         public double RideDistance { get; set; }
+        public double Amount { get; set; }
 
-        public string Amount { get; set; }
-
-        public int DriverID { get; set; }
         [ForeignKey("DriverID")]
-        public Driver Driver { get; set; }
+        public int? DriverID { get; set; }
 
-        public int RiderID { get; set; }
         [ForeignKey("RiderID")]
-        public Rider Rider { get; set; }
-
+        public int RiderID { get; set; }
 
         public ICollection<Feedbacks> Feedbacks { get; set; }
     }

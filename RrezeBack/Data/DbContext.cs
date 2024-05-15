@@ -19,11 +19,7 @@ public class DBContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        // Configure Rider entity
-        modelBuilder.Entity<Rider>()
-            .HasMany(r => r.Rides)
-            .WithOne(ri => ri.Rider)
-            .HasForeignKey(ri => ri.RiderID);
+       
 
         modelBuilder.Entity<Rider>()
             .HasMany(r => r.Feedbacks)
@@ -32,10 +28,7 @@ public class DBContext : DbContext
 
 
         // Configure Driver entity
-        modelBuilder.Entity<Driver>()
-            .HasMany(d => d.Rides)
-            .WithOne(ri => ri.Driver)
-            .HasForeignKey(ri => ri.DriverID);
+        
 
         modelBuilder.Entity<Driver>()
             .HasMany(d => d.Feedbacks)

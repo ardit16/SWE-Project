@@ -150,6 +150,7 @@ namespace RrezeBack.Services
                 RideDistance = rideRequestDto.RideDistance,
                 RideEndTime = rideRequestDto.RideEndTime,
                 RideID = rideRequestDto.RideID,
+                DriverID=rideRequestDto.DriverId,
             };
 
             _context.Rides.Add(ride);

@@ -69,10 +69,11 @@ namespace RrezeBack.Controllers
             return Ok("Ride requested successfully");
         }
 
-        [HttpPost("cancelride")]
-        public async Task<IActionResult> CancelRide([FromBody] int riderid)
+        [HttpPost("cancelride/{riderid}")]
+        public async Task<IActionResult> CancelRide( string riderid)
         {
-            int result = await _riderService.CancelRide(riderid);
+
+            int result = await _riderService.CancelRide(int.Parse(riderid));
             if (result == -1)
                 return NotFound("Ride not found");
             else if (result == 0)
