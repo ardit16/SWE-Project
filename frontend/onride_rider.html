@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>On ride</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/onride_r_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+            <div class="right">
+                <div class="dropdown">
+                    <a href="#" class="fixed-bg dropdown-toggle"><i class="fa-solid fa-user"></i> Name <i class="fa-solid fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#">Manage account</a>
+                        <a href="#">My rides</a>
+                        <a href="#">My wallet</a>
+                        <a href="#">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="left-section">
+                <div id="map"></div>
+            </div>
+            <div class="right-section">
+                <div class="waitingride-box">
+                    <div class="driver-info">
+                        <img src="./assets/images/driver_photo.jpg" alt="Driver's Photo" class="driver-photo">
+                        <div class="name-rating">
+                            <h2>John Doe</h2>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ride-details">
+                        <p>Meet at: <span class="pickup-location">123 Main St.</span> in <span class="arrival-time">5</span> minutes</p>
+                        <p>Car: <span class="car-details">Blue Tesla Model S</span> - <span class="license">XYZ1234</span></p>
+                        <p>Phone: <span class="driver-phone">+1234567890</span></p>
+                    </div>
+                    <button class="cancel-ride-button">Cancel Ride</button>
+                </div>
+                <div class="onride-box">
+                    <div class="driver-info">
+                        <img src="./assets/images/driver_photo.jpg" alt="Driver's Photo" class="driver-photo">
+                        <div class="name-rating">
+                            <h2>John Doe</h2>
+                            <div class="rating">
+                                <i class="fas fa-star"></i> 4.8
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ride-details">
+                        <p><span class="arrival-time">5</span> minutes away from destination</p>
+                        <p>Car: <span class="car-details">Blue Tesla Model S</span> - <span class="license">XYZ1234</span></p>
+                        <p>Phone: <span class="driver-phone">+1234567890</span></p>
+                    </div>
+                    <button class="cancel-ride-button">Cancel Ride</button>
+                </div>                
+            <div class="finishedride-box">
+                <div class="feedback-form">
+                    <h2>Rate Your ride (optional)</h2>
+                    <div class="stars-rating">
+                        <svg viewBox="0 0 24 24" onclick="rateStar(1)"><path d="M12 .587l3.668 7.431 8.332 1.209-6.035 5.877 1.425 8.305L12 18.897l-7.39 3.885 1.425-8.305L.001 9.227l8.332-1.209z"/></svg>
+                        <svg viewBox="0 0 24 24" onclick="rateStar(2)"><path d="M12 .587l3.668 7.431 8.332 1.209-6.035 5.877 1.425 8.305L12 18.897l-7.39 3.885 1.425-8.305L.001 9.227l8.332-1.209z"/></svg>
+                        <svg viewBox="0 0 24 24" onclick="rateStar(3)"><path d="M12 .587l3.668 7.431 8.332 1.209-6.035 5.877 1.425 8.305L12 18.897l-7.39 3.885 1.425-8.305L.001 9.227l8.332-1.209z"/></svg>
+                        <svg viewBox="0 0 24 24" onclick="rateStar(4)"><path d="M12 .587l3.668 7.431 8.332 1.209-6.035 5.877 1.425 8.305L12 18.897l-7.39 3.885 1.425-8.305L.001 9.227l8.332-1.209z"/></svg>
+                        <svg viewBox="0 0 24 24" onclick="rateStar(5)"><path d="M12 .587l3.668 7.431 8.332 1.209-6.035 5.877 1.425 8.305L12 18.897l-7.39 3.885 1.425-8.305L.001 9.227l8.332-1.209z"/></svg>
+                    </div>
+                    <label for="feedback">Feedback for driver (optional):</label>
+                    <textarea id="feedback" name="feedback" rows="4" cols="50" maxlength="100" placeholder="Enter feedback..."></textarea>
+                    <div class="form-buttons">
+                        <button class="feedback-button">Send Feedback</button>
+                        <p>or</p>
+                        <button class="exit-button">Exit</button>
+                    </div>
+                </div>
+            </div>            
+            <div class="emergency-box">
+                <div class="emergency-contact">
+                    <button class="emergency-button">
+                        <i class="fa-solid fa-phone"></i> Call 911
+                    </button>
+                    <p>Contact for any inconveniences at <a href="mailto:rreze2024@gmail.com">rreze2024@gmail.com</a></p>
+                </div>  
+            </div>      
+            </div>
+        </div>
+    </div>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6eiXsoCYemQlx6j3MpW_t6Y0WwysgJ9M&loading=async&callback=initMap&libraries=places">
+    </script>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/onride_r_script.js"></script>
+</body>
+</html>

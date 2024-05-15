@@ -2,7 +2,10 @@ async function initMap() {
     var mapOptions = {
         center: new google.maps.LatLng(41.328971, 19.819183),
         zoom: 18,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControl: false,  
+        streetViewControl: false,  
+        fullscreenControl: true 
     };
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
     var directionsService = new google.maps.DirectionsService();
@@ -100,3 +103,18 @@ function calculatePrice(distanceInMeters) {
         return (baseFare + rateTier1 * 5 + rateTier2 * 10 + rateTier3 * (distanceInKm - 16.5)).toFixed(2); 
     }
 }
+
+document.getElementById("choose-ride").addEventListener("click", function() {
+    var statusMessage = document.getElementById("status-message");
+    statusMessage.style.display="block";
+    statusMessage.innerHTML = 'Searching for drivers<span class="dot-one">.</span><span class="dot-two">.</span><span class="dot-three">.</span>';
+
+    setTimeout(function() {
+        var driverFound = false;
+        if (!driverFound) {
+            statusMessage.textContent = 'Driver not found';
+        } else {
+            window.location.href = 'onride.html';
+        }
+    }, 180000);
+});

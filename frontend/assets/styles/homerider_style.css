@@ -93,7 +93,7 @@ body {
 .return-box {
     display: none;
     width: 70%;
-    height: 280px;
+    height: 300px;
     background-color: #f8f8f8;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -165,9 +165,34 @@ body {
     background-color: #44b41f;
 }
 
+.status-message {
+    display: none;
+    margin-left: 5px;
+    font-size: 16px;
+    color: #555;
+}
+
+@keyframes dot {
+    0%, 20% {
+        color: rgba(0,0,0,0); 
+    }
+    40% {
+        color: #333; 
+    }
+    60%, 100% {
+        color: rgba(0,0,0,0);
+    }
+}
+
+.dot-one { animation: dot 1.5s infinite; }
+.dot-two { animation: dot 1.5s infinite .2s; }
+.dot-three { animation: dot 1.5s infinite .4s; }
+
+
 .right-section {
     width: 70%;
     position: relative;
+    padding: 10px;
 }
 
 #map {
