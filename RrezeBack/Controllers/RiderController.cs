@@ -26,6 +26,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPut("{riderId}/updateinfo")]
+
         public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromBody] RiderDTO riderDto)
         {
             if (riderId != riderDto.RiderID) return BadRequest("Rider ID mismatch");
