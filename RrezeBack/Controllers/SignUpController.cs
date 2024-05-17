@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using NestQuest.Data.DTO;
 using RrezeBack.Data.DTO;
 using RrezeBack.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace RrezeBack.Controllers
 {
-    [Route("api/SingUp")]
+    [Route("api/Signup")]
     [ApiController]
     public class SignUpController : ControllerBase
     {
@@ -17,37 +19,34 @@ namespace RrezeBack.Controllers
             _signUpService = signUpService;
         }
 
-        [HttpPost("AdminSignup")]
-        public async Task<IActionResult> SignUpAdmin([FromBody] AdminSignUpDTO adminSignUpDto)
+        [HttpPost("SignUpRider")]
+        public async Task<ActionResult> SignUpRider([FromForm] SignUpRiderDto riderDto)
         {
-            var result = await _signUpService.SignUpAdminAsync(adminSignUpDto);
-            if (!result)
+            try
             {
-                return BadRequest("Username or email already exists.");
+                var user = await _signUpService.SignUpRider(riderDto);
+                if (user == null) { return Conflict(); }
+                return Ok();
             }
-            return Ok("Admin registered successfully.");
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
-        [HttpPost("DriverSignup")]
-        public async Task<IActionResult> SignUpDriver([FromBody] SignUpDriverDto driverDto)
+        [HttpPost("SignUpDriver")]
+        public async Task<ActionResult> SignUpDriver([FromForm] SignUpDriverDto driverDto)
         {
-            var driver = await _signUpService.SignUpDriver(driverDto);
-            if (driver == null)
+            try
             {
-                return BadRequest("Email already exists.");
+                var user = await _signUpService.SignUpDriver(driverDto);
+                if (user == null) { return Conflict(); }
+                return Ok();
             }
-            return Ok("Driver registered successfully.");
-        }
-
-        [HttpPost("RiderSignup")]
-        public async Task<IActionResult> SignUpRider([FromBody] SignUpRiderDto riderDto)
-        {
-            var rider = await _signUpService.SignUpRider(riderDto);
-            if (rider == null)
+            catch (Exception ex)
             {
-                return BadRequest("Email already exists.");
+                return BadRequest();
             }
-            return Ok("Rider registered successfully.");
         }
     }
 }

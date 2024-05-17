@@ -28,7 +28,7 @@ namespace RrezeBack.Data.Model
         public double Amount { get; set; }
 
         [ForeignKey("DriverID")]
-        public int DriverID { get; set; }
+        public int? DriverID { get; set; }
 
         [ForeignKey("RiderID")]
         public int RiderID { get; set; }

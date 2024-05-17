@@ -7,7 +7,7 @@ using RrezeBack.Services;
 namespace RrezeBack.Controllers
 {
     [ApiController]
-    [Route("api/Rider")]
+    [Route("api/[controller]")]
     public class RiderController : ControllerBase
     {
         private readonly IRiderService _riderService;
