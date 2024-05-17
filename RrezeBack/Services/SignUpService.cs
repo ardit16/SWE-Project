@@ -16,8 +16,7 @@ namespace RrezeBack.Services
     {
         Task<Driver> SignUpDriver(SignUpDriverDto driverDto);
         Task<Rider> SignUpRider(SignUpRiderDto riderDto);
-            
-        
+        Task<bool> SignUpAdminAsync(AdminSignUpDTO adminSignUpDto);
     }
 
     public class SignUpService : ISignUpService
@@ -164,7 +163,30 @@ namespace RrezeBack.Services
                 throw;
             }
         }
+        public async Task<bool> SignUpAdminAsync(AdminSignUpDTO adminSignUpDto)
+        {
+            var existingAdmin = await _context.Administrators
+                .FirstOrDefaultAsync(a => a.Name == adminSignUpDto.Name || a.Email == adminSignUpDto.Email);
+            if (existingAdmin != null)
+            {
+                return false; // Username or email already exists
+            }
 
-        
+            var admin = new Administrator
+            {
+                
+                Email = adminSignUpDto.Email,
+                Password = HashPassword(adminSignUpDto.Password), 
+                Name = adminSignUpDto.Name,
+                Surname=adminSignUpDto.Surname,
+                PhoneNumber=adminSignUpDto.Phone,
+                
+            };
+
+            _context.Administrators.Add(admin);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
     }
 }
