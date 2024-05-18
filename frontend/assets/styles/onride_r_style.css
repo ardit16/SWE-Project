@@ -42,7 +42,7 @@ body {
 }
 
 .waitingride-box {
-    display: inline-block;
+    display: none;
     width: 80%;
     height: auto;
     background-color: #f8f8f8;
@@ -55,7 +55,7 @@ body {
 }
 
 .waitingride-box:hover {
-    box-shadow: 0 8px 20px rgba(204, 204, 0); 
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .driver-info {
@@ -119,11 +119,11 @@ body {
 }
 
 .onride-box:hover {
-    box-shadow: 0 8px 20px #F5D042;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .finishedride-box {
-    display: none;
+    display: inline-block;
     width: 70%;
     height: 270px;
     background-color: #f8f8f8;
@@ -136,7 +136,7 @@ body {
 }
 
 .finishedride-box:hover {
-    box-shadow: 0 8px 20px #F5D042;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .feedback-form {

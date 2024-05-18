@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rreze</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/homedriver_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+            <div class="right">
+                <div class="dropdown">
+                    <a href="#" class="fixed-bg dropdown-toggle"><i class="fa-solid fa-user"></i> Name <i class="fa-solid fa-chevron-down"></i></a>
+                    <div class="dropdown-content">
+                        <a href="#">Manage account</a>
+                        <a href="#">My rides</a>
+                        <a href="#">My wallet</a>
+                        <a href="#">Log out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="top-section">
+            <h2>Full Name of Driver</h2>
+            <p>Your status: <span id="status">Offline</span> <button id="change-status">Change Status</button></p>
+        </div>
+        <div class="content">
+            <div class="left-section">
+                <div id="request-boxes"></div>
+            </div>
+            <div class="right-section">
+                <div id="map"></div>
+            </div>
+        </div>
+    </div>
+    <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6eiXsoCYemQlx6j3MpW_t6Y0WwysgJ9M&loading=async&callback=initMap&libraries=places">
+    </script>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/homedriver_script.js"></script>
+</body>
+</html>

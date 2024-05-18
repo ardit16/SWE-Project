@@ -1,0 +1,152 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    background-color: white;
+}
+
+.left-section {
+    width: 60%;
+    padding: 10px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: normal;
+    flex-direction: column;
+    border-right: 1px solid #ddd;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+}
+
+.right-section {
+    width: 40%;
+    padding: 10px;
+    padding-left: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: normal;
+    flex-direction: column;
+    border-right: 1px solid #ddd;
+}
+
+.pickingup-box,
+.droppingoff-box,
+.feedback-box {
+    display: none;
+    width: 80%;
+    height: auto;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    transition: box-shadow 0.3s ease;
+}
+
+.pickingup-box:hover,
+.droppingoff-box:hover,
+.feedback-box:hover {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-ride-button {
+    padding: 10px 20px;
+    background-color: #CC0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+.cancel-ride-button:hover {
+    background-color: #A30000;
+}
+
+.feedback-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.feedback-form h2 {
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.stars-rating svg {
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+    fill: transparent;
+    stroke: #F5D042;
+    stroke-width: 2px;
+}
+
+.stars-rating svg:hover,
+.stars-rating svg.selected {
+    fill: #F5D042;
+}
+
+.feedback-form label {
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+#feedback {
+    resize: none;
+}
+
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.feedback-button {
+    padding: 10px 20px;
+    height: 50px;
+    background-color: #14992c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.exit-button {
+    padding: 10px 20px;
+    height: 50px;
+    background-color: #0A174E;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.feedback-button:hover {
+    background-color: #0f7622;
+}
+
+.exit-button:hover {
+    background-color: #0a1544;
+}
