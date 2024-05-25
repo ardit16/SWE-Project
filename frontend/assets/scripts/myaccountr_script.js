@@ -14,22 +14,6 @@ document.getElementById('profile-upload').addEventListener('change', (event) => 
     }
 });
 
-// License Photo Upload
-document.getElementById('edit-license').addEventListener('click', function() {
-    document.getElementById('license-upload').click();
-});
-
-document.getElementById('license-upload').addEventListener('change', (event) => {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            document.querySelector('.license-photo img').src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-});
-
 // Show/Hide Password Fields
 document.getElementById('change-password').addEventListener('click', function() {
     const passwordFields = document.getElementById('password-fields');
