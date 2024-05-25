@@ -1,0 +1,160 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    background-color: white;
+    color: black;
+    padding: 20px;
+}
+
+.account-container {
+    background-color: white;
+    color: black;
+    border-radius: 10px;
+    padding: 20px;
+    width: 1450px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.account-container h1 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.left-section {
+    width: 50%;
+    float: left;
+}
+
+.right-section {
+    width: 50%;
+    float: right;
+}
+
+.profile-photo {
+    position: relative;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.profile-photo img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 2px solid black;
+    object-fit: cover;
+}
+
+.license-photo img {
+    width: 260px;
+    height: 170px;
+    border-radius: 5px;
+    border: 2px solid black;
+    object-fit: cover;
+}
+
+.profile-photo i {
+    position: absolute;
+    top: 5px;
+    left: 105px;
+    cursor: pointer;
+    background-color: wheat;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.license-photo i {
+    position: absolute;
+    top: 4px;
+    left: 253px;
+    cursor: pointer;
+    background-color: wheat;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+}
+
+.info-item span {
+    margin-left: 10px; /* Add margin to create space between spans */
+}
+
+.label {
+    margin-right: 30px; /* Added a small space between label and value */
+}
+
+.value {
+    flex-grow: 1;
+}
+
+.info-item button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 15px;
+}
+
+.info-item button:hover {
+    background-color: rgb(176, 174, 174);
+    opacity: 0.8;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.password-change {
+    margin-bottom: 15px;
+}
+
+#password-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-left: 10px;
+}
+
+#password-fields input {
+    padding: 5px;
+    width: 200px;
+}
+
+#confirm-password-change {
+    background-color: rgb(33, 180, 52);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#confirm-password-change:hover {
+    background-color: rgb(28, 113, 39);
+    opacity: 0.8;
+}
