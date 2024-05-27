@@ -91,12 +91,12 @@ namespace RrezeBack.Controllers
             }
         }
 
-        [HttpGet("Resend_2FA/{email}")]
-        public async Task<ActionResult> Resend2Fa(string email)
+        [HttpPost("Resend_2FA")]
+        public async Task<ActionResult> Resend2Fa([FromBody] RfaCredencialsDTO dto)
         {
             try
             {
-                var result = await _logInService.ResendFa(email);
+                var result = await _logInService.ResendFa(dto);
                 if (result)
                 {
                     return Ok(result);
@@ -105,6 +105,7 @@ namespace RrezeBack.Controllers
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in Resend2Fa: {ex.Message}"); // Debugging line
                 return BadRequest();
             }
         }

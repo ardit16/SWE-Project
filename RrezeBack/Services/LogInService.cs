@@ -20,7 +20,7 @@ namespace RrezeBack.Services
         Task<object> LogInDriver(LoginDTO dto);
         Task<object> ConfirmFaRider(FaCredencialsDto dto);
         Task<object> ConfirmFaDriver(FaCredencialsDto dto);
-        Task<bool> ResendFa(string email);
+        Task<bool> ResendFa(RfaCredencialsDTO dto);
     }
     public class LogInService : ILogInService
     {
@@ -152,21 +152,24 @@ namespace RrezeBack.Services
                     var code = GenerateRandomCode();
                     await Send2FAEmail(result.Email, code);
                     _memoryCache.Set(result.Email, code, TimeSpan.FromMinutes(1));
-                    return new { Email = result.Email, TwoFactorEnabled = true };
+                    Console.WriteLine("Two-factor authentication is enabled."); // Debugging line
+                    return new { Email = result.Email, TwoFactorEnabled = true }; // Ensure property name matches
                 }
                 else
                 {
+                    Console.WriteLine("Two-factor authentication is not enabled."); // Debugging line
                     return new
                     {
                         Id = result.RiderID,
                         Name = result.Name,
                         Surname = result.Surname,
-                        TwoFactorEnabled = false
+                        TwoFactorEnabled = false // Ensure property name matches
                     };
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in LogInRider: {ex.Message}"); // Debugging line
                 throw;
             }
         }
@@ -265,17 +268,18 @@ namespace RrezeBack.Services
             }
         }
 
-        public async Task<bool> ResendFa(string email)
+        public async Task<bool> ResendFa(RfaCredencialsDTO dto)
         {
             try
             {
                 var code = GenerateRandomCode();
-                var result = await Send2FAEmail(email, code);
-                _memoryCache.Set(email, code, TimeSpan.FromMinutes(1));
+                var result = await Send2FAEmail(dto.Email, code);
+                _memoryCache.Set(dto.Email, code, TimeSpan.FromMinutes(1));
                 return result;
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"Error in ResendFa: {ex.Message}"); // Debugging line
                 return false;
             }
         }
