@@ -37,5 +37,6 @@ namespace RrezeBack.Data.Model
         public int AdminID { get; set; }
 
         public ICollection<Feedbacks> Feedbacks { get; set; }
+        public ICollection<PaymentMethod> PaymentMethods { get; set; }
     }
 }

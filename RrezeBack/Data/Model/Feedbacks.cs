@@ -16,17 +16,17 @@ namespace RrezeBack.Data.Model
 
         public string? RiderComment { get; set; }
 
-        public int RiderID { get; set; }
-        [ForeignKey("RiderID")]
-        public Rider Rider { get; set; }
-
-        public int DriverID { get; set; }
         [ForeignKey("DriverID")]
-        public Driver Driver { get; set; }
+        public int DriverID { get; set; }
 
-        public int RideID { get; set; }
+        [ForeignKey("RiderID")]
+        public int RiderID { get; set; }
+
         [ForeignKey("RideID")]
+        public int RideID { get; set; }
+
+        public Driver Driver { get; set; }
+        public Rider Rider { get; set; }
         public Ride Ride { get; set; }
     }
-
 }

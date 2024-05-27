@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.wallet-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.left-container {
+    flex: 3;
+    margin-right: 20px;
+}
+
+.right-container {
+    flex: 2;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.left-container h2, .right-container h2 {
+    margin-top: 0;
+}
+
+.payment-method {
+    background-color: #f8f8f8;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cash-method {
+    background-color: #d4edda;
+    width: 300px;
+    height: 50px;
+}
+
+.payment-method p {
+    margin: 0;
+}
+
+.payment-method button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.payment-method button:hover {
+    background-color: darkred;
+}
+
+#add-card-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#add-card-form label {
+    margin-top: 10px;
+}
+
+#add-card-form input {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+#add-card-form button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #0A174E;
+    color: white;
+    cursor: pointer;
+}
+
+#add-card-form button:hover {
+    background-color: #F5D042;
+    color: black;
+}

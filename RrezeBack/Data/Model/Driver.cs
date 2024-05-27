@@ -22,5 +22,6 @@ namespace RrezeBack.Data.Model
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Feedbacks> Feedbacks { get; set; }
         public ICollection<Vehicle> Vehicles { get; set; }
+        public ICollection<PaymentMethod> PaymentMethods { get; set; }
     }
 }

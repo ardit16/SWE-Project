@@ -91,10 +91,10 @@ namespace RrezeBack.Services
             return feedbacks.Select(feedback => new FeedbackDTO
             {
                 RideID = feedback.RideID,
-                DriverID = feedback.DriverID,
+                //DriverID = feedback.DriverID,
                 DriverComment = feedback.DriverComment,
                 DriverRating = feedback.DriverRating,
-                RiderID = feedback.RiderID,
+                //RiderID = feedback.RiderID,
                 RiderRating = feedback.RiderRating,
                 RiderComment = feedback.RiderComment,
             }).ToList();

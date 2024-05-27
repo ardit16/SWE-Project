@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using RrezeBack.Data.DTO;
 using RrezeBack.Data.Model;
 using System.Security.Cryptography;
+using System.Linq;
+using System.Threading.Tasks;
+
 
 namespace RrezeBack.Services
 { 
@@ -14,7 +17,7 @@ namespace RrezeBack.Services
     Task<bool> RequestRide(RideDTO rideRequestDto);
     Task<int> CancelRide(int Riderid);
     Task<bool> SubmitFeedback(FeedbackDTO feedbackDto);
-    Task<bool> AddPaymentMethod(int riderId, PaymentMethodDTO paymentMethodDto);
+    Task<bool> AddPaymentMethod( PaymentMethodDTO paymentMethodDto);
     Task<float> CheckRating(int riderId);
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
     }
@@ -170,11 +173,36 @@ namespace RrezeBack.Services
 
         public async Task<bool> SubmitFeedback(FeedbackDTO feedbackDto)
         {
+            // Check if the RideID exists
+            var ride = await _context.Rides.FindAsync(feedbackDto.RideID);
+            if (ride == null)
+            {
+                throw new Exception("Ride not found");
+            }
+
+            // Check if the DriverID exists
+            var driver = await _context.Drivers.FindAsync(feedbackDto.DriverID);
+            if (driver == null)
+            {
+                throw new Exception("Driver not found");
+            }
+
+            // Check if the RiderID exists
+            var rider = await _context.Riders.FindAsync(feedbackDto.RiderID);
+            if (rider == null)
+            {
+                throw new Exception("Rider not found");
+            }
+
             var feedback = new Feedbacks
             {
                 RideID = feedbackDto.RideID,
                 DriverRating = feedbackDto.DriverRating,
-                DriverComment = feedbackDto.DriverComment
+                DriverComment = feedbackDto.DriverComment,
+                RiderRating = feedbackDto.RiderRating,
+                RiderComment = feedbackDto.RiderComment,
+                DriverID = feedbackDto.DriverID,
+                RiderID = feedbackDto.RiderID
             };
 
             _context.Feedbacks.Add(feedback);
@@ -183,18 +211,28 @@ namespace RrezeBack.Services
             return true;
         }
 
-        public async Task<bool> AddPaymentMethod(int riderId, PaymentMethodDTO paymentMethodDto)
+
+
+        public async Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto)
         {
+            // Check if Rider, Driver, and Ride exist
+            var rider = await _context.Riders.FindAsync(paymentMethodDto.RiderID);
+            
+
+            if (rider == null)
+            {
+                throw new Exception("Rider, Driver or Ride not found");
+            }
+
             var paymentMethod = new PaymentMethod
             {
-                PaymentId = paymentMethodDto.PaymentId,
-                Amount = paymentMethodDto.Amount,
+                
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
                 CVV = paymentMethodDto.CVV,
                 CardName = paymentMethodDto.CardName,
-                RiderID = riderId
+                
             };
 
             _context.PaymentMethod.Add(paymentMethod);
@@ -203,13 +241,27 @@ namespace RrezeBack.Services
             return true;
         }
 
-       
+
 
         public async Task<float> CheckRating(int riderId)
         {
-            var rider = await _context.Riders.FindAsync(riderId);
-            return rider?.ovrating ?? 0;
+            // Fetch all feedbacks for the given rider
+            var feedbacks = await _context.Feedbacks
+                                          .Where(f => f.RiderID == riderId)
+                                          .ToListAsync();
+
+            // If there are no feedbacks, return 0
+            if (feedbacks == null || !feedbacks.Any())
+            {
+                return 0;
+            }
+
+            // Calculate the average rating
+            float averageRating = (float)feedbacks.Average(f => f.RiderRating ?? 0);
+
+            return averageRating;
         }
+
 
         public async Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId)
         {

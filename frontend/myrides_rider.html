@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Trips</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/myrides_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="header">
+                <h1>Past Trips</h1>
+                <div class="filter">
+                    <label for="ride-filter">Show trips from: </label>
+                    <select id="ride-filter">
+                        <option value="always">Always</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                        <option value="year">This Year</option>
+                    </select>
+                </div>
+            </div>
+            <div class="rides-container" id="rides-container">
+                <!-- Ride boxes will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/myridesr_script.js"></script>
+</body>
+</html>

@@ -95,7 +95,7 @@ namespace RrezeBack.Controllers
         [HttpPost("{riderId}/paymentmethod")]
         public async Task<IActionResult> AddPaymentMethod(int riderId, [FromBody] PaymentMethodDTO paymentMethodDto)
         {
-            var result = await _riderService.AddPaymentMethod(riderId, paymentMethodDto);
+            var result = await _riderService.AddPaymentMethod(paymentMethodDto);
             if (!result) return BadRequest("Failed to add payment method");
 
             return Ok("Payment method added successfully");
