@@ -9,7 +9,6 @@
         public string Phone { get; set; }
         public string Birthday { get; set; }      
         public bool Two_Fa { get; set; }
-        public bool Gender { get; set; }
         public IFormFile photo { get; set; }
         public IFormFile DriverLicense { get; set; }
 

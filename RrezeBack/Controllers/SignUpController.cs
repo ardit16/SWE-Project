@@ -29,7 +29,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("DriverSignup")]
-        public async Task<IActionResult> SignUpDriver([FromBody] SignUpDriverDto driverDto)
+        public async Task<IActionResult> SignUpDriver([FromForm] SignUpDriverDto driverDto)
         {
             var driver = await _signUpService.SignUpDriver(driverDto);
             if (driver == null)

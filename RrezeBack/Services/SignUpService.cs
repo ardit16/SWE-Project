@@ -64,46 +64,41 @@ namespace RrezeBack.Services
                     Password = HashPassword(driverDto.Password),
                     PhoneNumber = driverDto.Phone,
                     TwoFactorEnabled = driverDto.Two_Fa,
-                    Gender=driverDto.Gender,
-                    Birthday=driverDto.Birthday,
-                    status=false,
+                    Birthday = driverDto.Birthday,
+                    status = false,
                     Verified = false,
                     ovrating = 0,
-
                 };
 
                 await _context.Drivers.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
-                string fileName = $"{newUser.DriverID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\profile";
+                string profilePhotoFileName = $"{newUser.DriverID}_profile.jpg";
+                string profilePhotosDirectoryPath = @"C:\Users\ardit\Desktop\photo\profile";
 
-                if (!Directory.Exists(photosDirectoryPath))
+                if (!Directory.Exists(profilePhotosDirectoryPath))
                 {
-                    Directory.CreateDirectory(photosDirectoryPath);
+                    Directory.CreateDirectory(profilePhotosDirectoryPath);
                 }
 
-                string filePath = Path.Combine(photosDirectoryPath, fileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                string profilePhotoFilePath = Path.Combine(profilePhotosDirectoryPath, profilePhotoFileName);
+                using (var stream = new FileStream(profilePhotoFilePath, FileMode.Create))
                 {
                     await driverDto.photo.CopyToAsync(stream);
-                    
                 }
-                string secondfileName = $"{newUser.DriverID}.jpg";
-                photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\driverslicense";
 
-                if (!Directory.Exists(photosDirectoryPath))
+                string licensePhotoFileName = $"{newUser.DriverID}_license.jpg";
+                string licensePhotosDirectoryPath = @"C:\Users\ardit\Desktop\photo\driverslicense";
+
+                if (!Directory.Exists(licensePhotosDirectoryPath))
                 {
-                    Directory.CreateDirectory(photosDirectoryPath);
+                    Directory.CreateDirectory(licensePhotosDirectoryPath);
                 }
 
-                 filePath = Path.Combine(photosDirectoryPath, secondfileName);
-
-                using (var stream = new FileStream(filePath, FileMode.Create))
+                string licensePhotoFilePath = Path.Combine(licensePhotosDirectoryPath, licensePhotoFileName);
+                using (var stream = new FileStream(licensePhotoFilePath, FileMode.Create))
                 {
                     await driverDto.DriverLicense.CopyToAsync(stream);
-
                 }
 
                 return newUser;
@@ -133,7 +128,6 @@ namespace RrezeBack.Services
                     PhoneNumber = riderDto.Phone,
                     Birthday = riderDto.Birthday,
                     TwoFactorEnabled = riderDto.Two_Fa,
-                    Gender = riderDto.Gender,
                     ovrating=0,
 
                 };
@@ -141,19 +135,22 @@ namespace RrezeBack.Services
                 await _context.Riders.AddAsync(newUser);
                 await _context.SaveChangesAsync();
 
-                string thirdfileName = $"{newUser.RiderID}.jpg";
-                string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider";
-
-                if (!Directory.Exists(photosDirectoryPath))
+                if (riderDto.photo != null)
                 {
-                    Directory.CreateDirectory(photosDirectoryPath);
-                }
+                    string thirdfileName = $"{newUser.RiderID}.jpg";
+                    string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider";
 
-                string filePath = Path.Combine(photosDirectoryPath, thirdfileName);
+                    if (!Directory.Exists(photosDirectoryPath))
+                    {
+                        Directory.CreateDirectory(photosDirectoryPath);
+                    }
 
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                {
-                    await riderDto.photo.CopyToAsync(stream);
+                    string filePath = Path.Combine(photosDirectoryPath, thirdfileName);
+
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await riderDto.photo.CopyToAsync(stream);
+                    }
                 }
 
                 return newUser;

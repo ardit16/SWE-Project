@@ -33,6 +33,9 @@ namespace RrezeBack.Data.Model
         [ForeignKey("RiderID")]
         public int RiderID { get; set; }
 
+        [ForeignKey("AdminID")]
+        public int AdminID { get; set; }
+
         public ICollection<Feedbacks> Feedbacks { get; set; }
     }
 }

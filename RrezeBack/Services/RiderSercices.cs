@@ -39,7 +39,6 @@ namespace RrezeBack.Services
                 Name = rider.Name,
                 Surname = rider.Surname,
                 PhoneNumber = rider.PhoneNumber,
-                Gender = rider.Gender,
                 Birthday = rider.Birthday,
                 TwoFactorEnabled = rider.TwoFactorEnabled,
                 Ovrating = rider.ovrating
@@ -55,7 +54,6 @@ namespace RrezeBack.Services
             rider.Name = riderDto.Name;
             rider.Surname = riderDto.Surname;
             rider.PhoneNumber = riderDto.PhoneNumber;
-            rider.Gender = riderDto.Gender;
             rider.Birthday = riderDto.Birthday;
             rider.TwoFactorEnabled = riderDto.TwoFactorEnabled;
             
@@ -149,8 +147,8 @@ namespace RrezeBack.Services
                 Amount = rideRequestDto.Amount,
                 RideDistance = rideRequestDto.RideDistance,
                 RideEndTime = rideRequestDto.RideEndTime,
-                RideID = rideRequestDto.RideID,
                 DriverID=rideRequestDto.DriverId,
+                AdminID=1,
             };
 
             _context.Rides.Add(ride);

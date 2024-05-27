@@ -17,8 +17,6 @@ namespace RrezeBack.Data.Model
         public string Surname { get; set; }
 
         public string PhoneNumber { get; set; }
-        
-        public bool Gender { get; set; }
 
         
         public string Birthday { get; set; }

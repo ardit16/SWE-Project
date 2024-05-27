@@ -3,20 +3,22 @@ using Microsoft.EntityFrameworkCore;
 using RrezeBack.Data.DTO;
 using RrezeBack.DTO;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RrezeBack.Services
 {
     public interface IAdminService
     {
-        
         Task<bool> AcceptNewDriverAsync(int DriverId);
         Task<bool> DeleteRiderAsync(int userId);
         Task<bool> DeleteDriverAsync(int userId);
         Task<IEnumerable<RideDTO>> GetRidesAsync();
         Task<IEnumerable<FeedbackDTO>> GetRatingsAsync();
         Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
-        
     }
+
     public class AdminService : IAdminService
     {
         private readonly DBContext _context;
@@ -24,7 +26,7 @@ namespace RrezeBack.Services
         public AdminService(DBContext context)
         {
             _context = context;
-        }      
+        }
 
         public async Task<bool> AcceptNewDriverAsync(int DriverId)
         {
@@ -39,6 +41,7 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<bool> DeleteRiderAsync(int userId)
         {
             var user = await _context.Riders.FindAsync(userId);
@@ -51,6 +54,7 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<bool> DeleteDriverAsync(int userId)
         {
             var user = await _context.Drivers.FindAsync(userId);
@@ -63,6 +67,7 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<IEnumerable<RideDTO>> GetRidesAsync()
         {
             var rides = await _context.Rides.ToListAsync();
@@ -75,29 +80,28 @@ namespace RrezeBack.Services
                 RideEndTime = ride.RideEndTime,
                 RideDistance = ride.RideDistance,
                 Amount = ride.Amount,
-                DriverId=ride.DriverID,
-                RiderID=ride.RiderID,
-                
+                DriverId = ride.DriverID,
+                RiderID = ride.RiderID,
             }).ToList();
         }
+
         public async Task<IEnumerable<FeedbackDTO>> GetRatingsAsync()
         {
             var feedbacks = await _context.Feedbacks.ToListAsync();
             return feedbacks.Select(feedback => new FeedbackDTO
             {
-                RideID= feedback.RideID,
-                DriverID= feedback.DriverID,
+                RideID = feedback.RideID,
+                DriverID = feedback.DriverID,
                 DriverComment = feedback.DriverComment,
                 DriverRating = feedback.DriverRating,
                 RiderID = feedback.RiderID,
                 RiderRating = feedback.RiderRating,
                 RiderComment = feedback.RiderComment,
-                
             }).ToList();
         }
+
         private bool VerifyPassword(string storedHash, string providedPassword)
         {
-            // Split the stored hash to get the salt and the hash components
             var parts = storedHash.Split(':', 2);
             if (parts.Length != 2)
             {
@@ -107,7 +111,6 @@ namespace RrezeBack.Services
             var salt = Convert.FromBase64String(parts[0]);
             var storedSubkey = parts[1];
 
-            // Hash the provided password using the same salt
             string hashedProvidedPassword = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: providedPassword,
                 salt: salt,
@@ -115,9 +118,9 @@ namespace RrezeBack.Services
                 iterationCount: 100000,
                 numBytesRequested: 256 / 8));
 
-            // Compare the hashes
             return storedSubkey == hashedProvidedPassword;
         }
+
         private string HashPassword(string password)
         {
             byte[] salt = new byte[128 / 8];
@@ -135,13 +138,14 @@ namespace RrezeBack.Services
 
             return $"{Convert.ToBase64String(salt)}:{hashed}";
         }
+
         public async Task<int> ChangePassword(ChangePasswordDto dto)
         {
             try
             {
                 var rezult = await _context.Administrators
-                        .Where(u => u.AdministratorID == dto.Id)
-                        .FirstOrDefaultAsync();
+                    .Where(u => u.AdministratorID == dto.Id)
+                    .FirstOrDefaultAsync();
                 if (rezult == null) { return -1; }
                 if (VerifyPassword(rezult.Password, dto.Password))
                 {
@@ -160,9 +164,5 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-        
     }
-
-
-
 }
