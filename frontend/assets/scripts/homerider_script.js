@@ -1,3 +1,13 @@
+// Script to display rider's name
+document.addEventListener('DOMContentLoaded', function() {
+    const riderName = localStorage.getItem('riderName');
+    const riderSurname = localStorage.getItem('riderSurname');
+    console.log('Retrieved rider name:', riderName);
+    if (riderName && riderSurname) {
+        document.getElementById('rider-name').textContent = riderName + ' ' + riderSurname;
+    }
+});
+
 async function initMap() {
     var mapOptions = {
         center: new google.maps.LatLng(41.328971, 19.819183),

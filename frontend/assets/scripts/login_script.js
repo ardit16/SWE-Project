@@ -25,6 +25,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const result = await response.json();
                 console.log('Login result:', result); // Log the entire response
 
+                // Check if the Name property is present
+                console.log('Name:', result.name);
+
+                // Store rider's name and ID in local storage
+                localStorage.setItem('riderName', result.name);
+                localStorage.setItem('riderSurname', result.surname);
+                localStorage.setItem('riderId', result.id);
+
                 if (result.twoFactorEnabled) { // Check for 'twoFactorEnabled' with lowercase
                     console.log('twoFactorEnabled is true, redirecting to 2FA'); // Debugging line
                     console.log('Result email:', result.email); // Debugging line

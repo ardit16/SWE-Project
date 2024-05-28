@@ -147,29 +147,29 @@ namespace RrezeBack.Services
                     return null;
                 }
 
+                var response = new
+                {
+                    Id = result.RiderID,
+                    Name = result.Name,
+                    Email = result.Email,
+                    TwoFactorEnabled = result.TwoFactorEnabled
+                };
+
                 if (result.TwoFactorEnabled)
                 {
                     var code = GenerateRandomCode();
                     await Send2FAEmail(result.Email, code);
                     _memoryCache.Set(result.Email, code, TimeSpan.FromMinutes(1));
-                    Console.WriteLine("Two-factor authentication is enabled."); // Debugging line
-                    return new { Email = result.Email, TwoFactorEnabled = true }; // Ensure property name matches
+                    return new { response.Email, response.TwoFactorEnabled };
                 }
                 else
                 {
-                    Console.WriteLine("Two-factor authentication is not enabled."); // Debugging line
-                    return new
-                    {
-                        Id = result.RiderID,
-                        Name = result.Name,
-                        Surname = result.Surname,
-                        TwoFactorEnabled = false // Ensure property name matches
-                    };
+                    return response;
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error in LogInRider: {ex.Message}"); // Debugging line
+                Console.WriteLine($"Error in LogInRider: {ex.Message}");
                 throw;
             }
         }
@@ -185,7 +185,10 @@ namespace RrezeBack.Services
                 {
                     return null;
                 }
-
+                if(!result.Verified)
+                {
+                    return new { Error = "Driver not verified!" };
+                }
                 if (result.TwoFactorEnabled)
                 {
                     var code = GenerateRandomCode();

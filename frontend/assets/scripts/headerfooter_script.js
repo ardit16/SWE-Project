@@ -1,19 +1,17 @@
-document.addEventListener('click', function (e) {
-    const target = e.target;
-    const dropdowns = document.querySelectorAll('.dropdown-content');
+document.addEventListener('DOMContentLoaded', function() {
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownContent = document.querySelector('.dropdown-content');
 
-    if (target.classList.contains('dropdown-toggle')) {
-        const dropdownContent = target.nextElementSibling;
-        const isVisible = dropdownContent.style.display === 'block';
+    dropdownToggle.addEventListener('click', function() {
+        dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+    });
 
-        dropdowns.forEach(d => d.style.display = 'none');
-
-        if (!isVisible) {
-            dropdownContent.style.display = 'block';
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function(event) {
+        if (!dropdownToggle.contains(event.target)) {
+            dropdownContent.style.display = 'none';
         }
-    } else {
-        dropdowns.forEach(d => d.style.display = 'none');
-    }
+    });
 });
 
 document.getElementById('current-year').textContent = new Date().getFullYear();
