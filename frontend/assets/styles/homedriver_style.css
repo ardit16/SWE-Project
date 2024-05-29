@@ -27,8 +27,15 @@ body {
     font-weight: 700;
 }
 
-.top-section p {
-    margin: 10px 0 0;
+.status-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.status-container p {
+    margin: 0 10px;
     font-size: 15px;
 }
 
@@ -48,6 +55,13 @@ body {
     background-color: #44b41f;
 }
 
+.top-section #vehicle-dropdown {
+    padding: 5px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 10px;
+}
 .left-section {
     width: 25%;
     padding: 10px;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rreze Wallet</title>
-    <link rel="stylesheet" type="text/css" href="./assets/styles/mywalletr_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/mywalletd_style.css">
     <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
@@ -31,6 +31,9 @@
                     <!-- Additional payment methods will be dynamically added here -->
                 </div>
                 <div class="right-container">
+                    <div id="max-payment-warning" class="warning-hidden">
+                        You already have the maximum of one payment method.
+                    </div>
                     <h2>Add new credit card</h2>
                     <form id="add-card-form">
                         <label for="card-number">Card Number:</label>
@@ -52,6 +55,6 @@
         </div>
     </div>
     <script src="assets/scripts/headerfooter_script.js"></script>
-    <script src="assets/scripts/mywalletr_script.js"></script>
+    <script src="assets/scripts/mywalletd_script.js"></script>
 </body>
 </html>
