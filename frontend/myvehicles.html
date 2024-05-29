@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Vehicles</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/myvehicles_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="header-container">
+                <h1>My Vehicles</h1>
+            </div>
+            <div class="vehicles-container1">
+                <div class="left-content" id="vehicles-container">
+                    <!-- Vehicle boxes will be dynamically inserted here -->
+                </div>
+                <div class="right-content">
+                    <h2>Add New Vehicle</h2>
+                    <form id="add-vehicle-form">
+                        <label for="vehicle-model">Model:</label>
+                        <input type="text" id="vehicle-model" name="model" required>
+
+                        <label for="vehicle-make">Make:</label>
+                        <input type="text" id="vehicle-make" name="make" required>
+
+                        <label for="vehicle-year">Year:</label>
+                        <input type="number" id="vehicle-year" name="year" required>
+
+                        <label for="vehicle-color">Color:</label>
+                        <input type="text" id="vehicle-color" name="color" required>
+
+                        <label for="vehicle-license">License Plate Number:</label>
+                        <input type="text" id="vehicle-license" name="licenseplatenumber" required>
+
+                        <label for="vehicle-seats">Number of Seats:</label>
+                        <input type="number" id="vehicle-seats" name="numberofseats" required>
+
+                        <label for="vehicle-insurance">Insurance Expiry Date:</label>
+                        <input type="date" id="vehicle-insurance" name="insuranceexpirydate" required>
+
+                        <label for="vehicle-registration">Registration Expiry Date:</label>
+                        <input type="date" id="vehicle-registration" name="registrationexpirydate" required>
+
+                        <label for="vehicle-photos">Photos:</label>
+                        <input type="file" id="vehicle-photos" name="photos" multiple accept="image/*">
+
+                        <label for="vehicle-documents">Documents:</label>
+                        <input type="file" id="vehicle-documents" name="documents" multiple accept="application/pdf">
+
+                        <button type="submit">Add Vehicle</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/myvehicles_script.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    color: black;
+    padding: 20px;
+    width: 100%;
+}
+
+.header-container {
+    width: 100%;
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+    margin-left: 158px;
+}
+
+.vehicles-container1 {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+}
+
+.left-content {
+    flex: 3;
+    margin-right: 20px;
+}
+
+.right-content {
+    flex: 2;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.right-container h2 {
+    margin-top: 0;
+}
+
+.vehicle-box {
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px; /* Adjusted width */
+    margin-bottom: 20px;
+}
+
+.vehicle-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.info-item {
+    flex: 1;
+    min-width: 150px;
+}
+
+.info-item span {
+    font-weight: bold;
+}
+
+.info-item .value {
+    font-weight: normal;
+}
+
+.media-container {
+    display: flex;
+    gap: 20px;
+}
+
+.photos, .documents {
+    flex: 1;
+}
+
+.photos .value, .documents .value {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.vehicle-photo {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+#add-vehicle-form {
+    display: flex;
+    flex-direction: column;
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    max-width: 400px;
+    margin: auto;
+}
+
+#add-vehicle-form label {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+#add-vehicle-form input,
+#add-vehicle-form button {
+    margin-top: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    max-width: 100%; 
+    transition: border-color 0.2s;
+}
+
+#add-vehicle-form button {
+    margin-top: 20px;
+    background-color: #319946;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#add-vehicle-form button:hover {
+    background-color: #44b41f;
+}
