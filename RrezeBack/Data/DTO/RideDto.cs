@@ -17,7 +17,6 @@
         public double Amount { get; set; }
         public int DriverId { get; set; }
         public int RiderID { get; set; }
-        public int AdminID { get; set; }
 
 
     }

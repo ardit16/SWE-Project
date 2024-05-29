@@ -15,6 +15,5 @@ namespace NestQuest.Data.DTO
         public string Birthday { get; set; }
         public bool Two_Fa { get; set; }
 
-        public IFormFile? photo { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace RrezeBack.Services
                 await _context.SaveChangesAsync();
 
                 string profilePhotoFileName = $"{newUser.DriverID}_profile.jpg";
-                string profilePhotosDirectoryPath = @"C:/Users/Megi Dervishi/OneDrive/Desktop/profile";
+                string profilePhotosDirectoryPath = @"C:/Users/ardit/Desktop/profile"; 
 
                 if (!Directory.Exists(profilePhotosDirectoryPath))
                 {
@@ -88,7 +88,7 @@ namespace RrezeBack.Services
                 }
 
                 string licensePhotoFileName = $"{newUser.DriverID}_license.jpg";
-                string licensePhotosDirectoryPath = @"C:/Users/Megi Dervishi/OneDrive/Desktop/driverslicense";
+                string licensePhotosDirectoryPath = @"C:/Users/ardit/Desktop/driverslicense"; shifeeeepatthinnnnnnnprandajjjjjkaaaaaerror;
 
                 if (!Directory.Exists(licensePhotosDirectoryPath))
                 {
@@ -134,25 +134,7 @@ namespace RrezeBack.Services
 
                 await _context.Riders.AddAsync(newUser);
                 await _context.SaveChangesAsync();
-
-                if (riderDto.photo != null)
-                {
-                    string thirdfileName = $"{newUser.RiderID}.jpg";
-                    string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider";
-
-                    if (!Directory.Exists(photosDirectoryPath))
-                    {
-                        Directory.CreateDirectory(photosDirectoryPath);
-                    }
-
-                    string filePath = Path.Combine(photosDirectoryPath, thirdfileName);
-
-                    using (var stream = new FileStream(filePath, FileMode.Create))
-                    {
-                        await riderDto.photo.CopyToAsync(stream);
-                    }
-                }
-
+                
                 return newUser;
             }
             catch (Exception ex)

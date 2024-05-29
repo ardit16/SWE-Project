@@ -45,10 +45,8 @@ public class DBContext : DbContext
         modelBuilder.Entity<PaymentMethod>()
             .HasOne(p => p.Rider)
             .WithMany(r => r.PaymentMethods)
-            .HasForeignKey(p => p.RiderID);
-
-        
-
+            .HasForeignKey(p => p.RiderID)
+            .OnDelete(DeleteBehavior.Cascade);
 
         // Configure Feedback entity
         modelBuilder.Entity<Feedbacks>()
