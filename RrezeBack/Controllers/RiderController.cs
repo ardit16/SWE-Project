@@ -25,16 +25,16 @@ namespace RrezeBack.Controllers
             return Ok(rider);
         }
 
-        [HttpPut("{riderId}/updateinfo")]
+        [HttpPut("{riderId}/CHANGETWOFA")]
 
-        public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromBody] RiderDTO riderDto)
+        public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromBody] twofadto twofadto)
         {
-            if (riderId != riderDto.RiderID) return BadRequest("Rider ID mismatch");
+            if (riderId != twofadto.RideriId) return BadRequest("Rider ID mismatch");
 
-            var result = await _riderService.UpdateRiderProfile(riderId,riderDto);
-            if (!result) return NotFound();
+            var result = await _riderService.UpdateRiderTWOFA(riderId, twofadto);
+            if (!result) return NotFound("");
 
-            return NoContent(); // Consider using Ok() if you want to return a confirmation message.
+            return Ok("Two-factor authentication updated successfully");
         }
 
         [HttpPost("{riderId}/changepassword")]
@@ -114,5 +114,20 @@ namespace RrezeBack.Controllers
             var rides = await _riderService.GetPreviousRidesAsync(riderId);
             return Ok(rides);
         }
+
+        [HttpPut("profilepicture")]
+        public async Task<IActionResult> UpdateProfilePicture([FromForm] ProfilePictureDto profilePictureDto)
+        {
+            var result = await _riderService.UpdateProfilePicture(profilePictureDto);
+            if (!result)
+            {
+                return NotFound("Rider not found");
+            }
+
+            return Ok("Profile picture updated successfully");
+        }
+
+
     }
+
 }

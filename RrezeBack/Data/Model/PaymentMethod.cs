@@ -1,5 +1,6 @@
 ﻿using RrezeBack.Data.Model;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class PaymentMethod
 {
@@ -10,7 +11,9 @@ public class PaymentMethod
     public string ExpiryDate { get; set; }
     public string CVV { get; set; }
     public string CardName { get; set; }
+
     public int RiderID { get; set; }
+
+    [ForeignKey("RiderID")]
     public Rider Rider { get; set; }
-   
 }

@@ -12,7 +12,7 @@ namespace RrezeBack.Services
     public interface IRiderService
     {
     Task<RiderDTO> GetRiderProfile(int riderId);
-    Task<bool> UpdateRiderProfile(int Riderid, RiderDTO riderDto);
+    Task<bool> UpdateRiderTWOFA(int Riderid, twofadto twofadto);
     Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
     Task<bool> RequestRide(RideDTO rideRequestDto);
     Task<int> CancelRide(int Riderid);
@@ -20,6 +20,8 @@ namespace RrezeBack.Services
     Task<bool> AddPaymentMethod( PaymentMethodDTO paymentMethodDto);
     Task<float> CheckRating(int riderId);
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
+        Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
+
     }
     public class RiderService : IRiderService
     {
@@ -48,19 +50,12 @@ namespace RrezeBack.Services
             };
         }
 
-        public async Task<bool> UpdateRiderProfile(int id,RiderDTO riderDto)
+        public async Task<bool> UpdateRiderTWOFA(int id, twofadto twofadto)
         {
-            var rider = await _context.Riders.FindAsync(riderDto.RiderID);
+            var rider = await _context.Riders.FindAsync(twofadto.RideriId);
             if (rider == null) return false;
 
-            rider.Email = riderDto.Email;
-            rider.Name = riderDto.Name;
-            rider.Surname = riderDto.Surname;
-            rider.PhoneNumber = riderDto.PhoneNumber;
-            rider.Birthday = riderDto.Birthday;
-            rider.TwoFactorEnabled = riderDto.TwoFactorEnabled;
-            
-
+            rider.TwoFactorEnabled = twofadto.TwoFactorEnabled;
             _context.Riders.Update(rider);
             await _context.SaveChangesAsync();
 
@@ -137,7 +132,7 @@ namespace RrezeBack.Services
         {
             var ride = new Ride
             {
-               RiderID= rideRequestDto.RiderID,
+                RiderID= rideRequestDto.RiderID,
                 PickupLocationLONG = rideRequestDto.PickupLocationLONG,
                 PickupLocationLAT = rideRequestDto.PickupLocationLAT,
                 PickUpName = rideRequestDto.PickUpName,
@@ -151,7 +146,6 @@ namespace RrezeBack.Services
                 RideDistance = rideRequestDto.RideDistance,
                 RideEndTime = rideRequestDto.RideEndTime,
                 DriverID=rideRequestDto.DriverId,
-                AdminID=1,
             };
 
             _context.Rides.Add(ride);
@@ -215,31 +209,42 @@ namespace RrezeBack.Services
 
         public async Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto)
         {
-            // Check if Rider, Driver, and Ride exist
+            // Check if Rider exists
             var rider = await _context.Riders.FindAsync(paymentMethodDto.RiderID);
-            
 
             if (rider == null)
             {
-                throw new Exception("Rider, Driver or Ride not found");
+                throw new Exception($"Rider with ID {paymentMethodDto.RiderID} not found");
             }
 
             var paymentMethod = new PaymentMethod
             {
-                
+                RiderID = paymentMethodDto.RiderID, // Set the RiderID here
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
                 CVV = paymentMethodDto.CVV,
                 CardName = paymentMethodDto.CardName,
-                
             };
 
-            _context.PaymentMethod.Add(paymentMethod);
-            await _context.SaveChangesAsync();
-
-            return true;
+            try
+            {
+                _context.PaymentMethod.Add(paymentMethod);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                // Log the exception message and inner exception for detailed error information
+                Console.WriteLine($"An error occurred while saving the payment method: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                throw; // Re-throw the exception to be handled by the calling code
+            }
         }
+
 
 
 
@@ -285,6 +290,36 @@ namespace RrezeBack.Services
                 })
                 .ToListAsync();
         }
+
+        public async Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto)
+        {
+            var rider = await _context.Riders.FindAsync(profilePictureDto.RiderId);
+            if (rider == null) return false;
+
+            string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider\pfp"; shifeeeepatthinnnnnnnprandajjjjjkaaaaaerror;
+            string fileName = $"{profilePictureDto.RiderId}.jpg";
+            string filePath = Path.Combine(photosDirectoryPath, fileName);
+
+            // Ensure the directory exists
+            if (!Directory.Exists(photosDirectoryPath))
+            {
+                Directory.CreateDirectory(photosDirectoryPath);
+            }
+
+            // Save the profile picture to the file system
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await profilePictureDto.ProfilePicture.CopyToAsync(stream);
+            }
+
+            // Update the rider's profile picture path in the database
+            rider.ProfilePicturePath = filePath;
+            _context.Riders.Update(rider);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 
 }
