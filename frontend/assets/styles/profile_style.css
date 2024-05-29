@@ -1,0 +1,99 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; /* Center the content vertically */
+    background-color: white;
+    color: black;
+    padding: 20px;
+    width: 100%;
+}
+
+.profile-header {
+    width: 100%;
+    text-align: center; /* Center the header text */
+}
+
+h1 {
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    width: 100%;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: auto; /* Center the container horizontally */
+}
+
+.profile-photo img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 10px; /* Reduced margin to bring name closer */
+    border-radius: 10px; /* Square with rounded corners */
+    border: 3px solid #0A174E; /* Added border */
+}
+
+.profile-info {
+    text-align: center;
+    margin-bottom: 10px; /* Reduced margin to bring feedback container closer */
+}
+
+.profile-info #rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.profile-info #rating i {
+    color: #FFD700;
+    margin-right: 5px;
+}
+
+.profile-info #days-using,
+.profile-info #contact-info {
+    margin: 5px 0;
+}
+
+.feedbacks-container {
+    width: 100%;
+    margin-top: 10px; /* Reduced margin to bring feedback container closer */
+}
+
+.feedbacks {
+    max-height: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: white;
+}
+
+.feedback-box {
+    background-color: #eee;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}

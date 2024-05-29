@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/profile_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="profile-header">
+                <h1>Rider - Profile</h1>
+            </div>
+            <div class="profile-container">
+                <div class="profile-photo">
+                    <img src="./assets/images/example.jpg" alt="Profile Photo" id="profile-photo">
+                </div>
+                <div class="profile-info">
+                    <h2 id="fullname">John Doe</h2>
+                    <p id="days-using">125 days using Rreze</p>
+                    <p id="contact-info">Contact at johndoe@gmail.com or 0687569892</p>
+                    <p id="rating"><i class="fas fa-star"></i> 4.5</p>
+                </div>
+                <div class="feedbacks-container">
+                    <h2>Feedbacks</h2>
+                    <div class="feedbacks" id="feedbacks">
+                        <!-- Feedback boxes will be dynamically inserted here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="assets/scripts/profilerider_script.js"></script>
+</body>
+</html>
