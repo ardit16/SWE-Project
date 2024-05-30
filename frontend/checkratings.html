@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Ratings</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/checkratings_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="index.html">Rreze</a>
+            </div>
+            <div class="right">
+                <a href="#">Manage Account</a>
+                <a href="#">Add New Admin</a>
+                <a href="#">Log Out</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <h1>Check Ratings</h1>
+            <div class="filter-container">
+                <select id="user-type">
+                    <option value="drivers">Drivers</option>
+                    <option value="riders">Riders</option>
+                </select>
+                <select id="sort-order">
+                    <option value="highest">Highest to Lowest</option>
+                    <option value="lowest">Lowest to Highest</option>
+                </select>
+                <div class="search-container">
+                    <input type="text" id="search-id" placeholder="Search by ID">
+                    <button id="search-button">Search</button>
+                </div>
+            </div>
+            <table id="ratings-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Phone Number</th>
+                        <th>Rating</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="assets/scripts/checkratings_script.js"></script>
+</body>
+</html>

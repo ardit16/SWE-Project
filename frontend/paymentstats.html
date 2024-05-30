@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Statistics</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/paymentstats_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style2.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="index.html">Rreze</a>
+            </div>
+            <div class="right">
+                <a href="#">Manage Account</a>
+                <a href="#">Add New Admin</a>
+                <a href="#">Log Out</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <h1 class="animated-header" >Payment Statistics</h1>
+            <h2>Earnings in ALL</h2>
+            <div class="filter-container">
+                <select id="time-period">
+                    <option value="days">Days</option>
+                    <option value="months">Months</option>
+                </select>
+                <button id="update-chart">Update</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="paymentsChart"></canvas>
+            </div>
+            <h2>Payment Method Usage</h2>
+            <div class="chart-container">
+                <canvas id="paymentMethodsChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script src="assets/scripts/paymentstats_script.js"></script>
+</body>
+</html>

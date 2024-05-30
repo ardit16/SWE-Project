@@ -1,0 +1,188 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    align-items: center;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent;
+}
+
+.navbar a {
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, font-weight 0.3s ease, transform 0.3s ease;
+    margin: 0 10px;
+}
+
+.navbar a:hover {
+    background-color: rgba(245, 208, 66, 0.8);
+    color: black;
+    font-weight: bold;
+    text-shadow: none;
+    transform: scale(1.05);
+}
+
+.navbar .left, .navbar .right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .left a:first-child {
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.navbar .left a:first-child:hover {
+    color: #F5D042;
+    background-color: transparent;
+}
+
+.divider {
+    position: relative;
+    height: 1px;
+    margin: 0;
+    background: transparent;
+}
+
+.divider:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: white;
+    z-index: 1;
+}
+
+.divider:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: black;
+    z-index: 2;
+    transform: translateY(-1px);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 0px;
+}
+
+.content h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    color: #0A174E;
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.filter-container select,
+.filter-container button,
+.filter-container input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1.2em;
+}
+
+.filter-container button {
+    background-color: #0A174E;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+    background-color: #F5D042;
+    color: black;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+#ratings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#ratings-table th, #ratings-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+#ratings-table th {
+    background-color: #0A174E;
+    color: white;
+}
+
+#ratings-table td .btn {
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9em;
+    margin-right: 5px;
+}
+
+#ratings-table td .btn-view {
+    background-color: #0A174E;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#ratings-table td .btn-view:hover {
+    background-color: #F5D042;
+    color: black;
+}
+
+#ratings-table td .btn-delete {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+#ratings-table td .btn-delete:hover {
+    background-color: #c9302c;
+}

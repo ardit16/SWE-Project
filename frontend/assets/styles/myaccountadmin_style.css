@@ -11,108 +11,109 @@ body {
 .content {
     flex: 1;
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    background-color: white;
+    justify-content: center;
+    align-items: center;
+    background-color: #f5f5f5;
     color: black;
-    padding: 20px;
+    padding: 40px;
 }
 
 .account-container {
     background-color: white;
     color: black;
     border-radius: 10px;
-    padding: 20px;
-    width: 1000px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 60%;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .account-container h1 {
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 24px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #0A174E;
 }
 
-.left-section {
-    width: 50%;
-    float: left;
-}
-
-.right-section {
-    width: 50%;
-    float: right;
+.info-section {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .account-info {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
+    width: 45%;
+}
+
+.password-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 45%;
 }
 
 .info-item {
     display: flex;
-    align-items: center;
-}
-
-.info-item span {
-    margin-left: 10px; /* Add margin to create space between spans */
+    flex-direction: column;
 }
 
 .label {
-    margin-right: 30px; /* Added a small space between label and value */
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
 .value {
-    flex-grow: 1;
+    font-size: 1.1em;
 }
 
 .info-item button {
-    background-color: black;
+    background-color: #0A174E;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
-    margin-left: 15px;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
 }
 
 .info-item button:hover {
-    background-color: rgb(176, 174, 174);
-    opacity: 0.8;
-}
-
-.right-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-.password-change {
-    margin-bottom: 15px;
+    background-color: #F5D042;
+    color: black;
 }
 
 #password-fields {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-left: 10px;
+    gap: 15px;
+    margin-top: 10px;
 }
 
 #password-fields input {
-    padding: 5px;
-    width: 200px;
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 #confirm-password-change {
-    background-color: rgb(33, 180, 52);
+    background-color: #21b434;
     color: white;
     border: none;
-    padding: 5px 10px;
+    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
 }
 
 #confirm-password-change:hover {
-    background-color: rgb(28, 113, 39);
-    opacity: 0.8;
+    background-color: #1c7127;
 }
