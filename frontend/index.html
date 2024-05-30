@@ -20,15 +20,15 @@
         <div class="right">
             <a href="#">Help</a>
             <div class="dropdown">
-                <a href="#" class="fixed-bg dropdown-toggle">Log In</a>
-                <div class="dropdown-content">
+                <div class="dropdown-toggle" onclick="toggleDropdown(event, 'login-dropdown')">Log In</div>
+                <div id="login-dropdown" class="dropdown-content">
                     <a href="#">To drive</a>
                     <a href="#">To ride</a>
                 </div>
             </div>
             <div class="dropdown">
-                <a href="#" class="fixed-bg dropdown-toggle">Sign Up</a>
-                <div class="dropdown-content">
+                <div class="dropdown-toggle" onclick="toggleDropdown(event, 'signup-dropdown')">Sign Up</div>
+                <div id="signup-dropdown" class="dropdown-content">
                     <a href="#">To drive</a>
                     <a href="#">To ride</a>
                 </div>
@@ -37,52 +37,53 @@
     </div>
     <hr class="divider">
     <div class="wrapper">
-    <div class="container">
-        <div class="leftc">
-            <img src="./assets/images/index.jpg" alt="Rreze image">
-        </div>        
-        <div class="rightc">
-            <h1>Go anywhere,<br>with a tap</h1>
-            <div class="button-group">
-                <a href="#">Apply to drive</a>
-                <a href="#">Sign up to ride</a>
+        <div class="container">
+            <div class="leftc">
+                <img src="./assets/images/index.jpg" alt="Rreze image">
+            </div>        
+            <div class="rightc">
+                <h1>Go anywhere,<br>with a tap</h1>
+                <div class="button-group">
+                    <a href="#">Apply to drive</a>
+                    <a href="#">Sign up to ride</a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container2">
-        <div class="leftc2">
-            <h1>DRIVE WITH RREZE</h1>
-            <h2>Be your own boss.<br>Drive when you want.</h2>
-            <h3><i class="fa-solid fa-clock"></i> Access to work 24/7<br>
-                <i class="fa-solid fa-credit-card"></i> No waiting for paychecks<br></h3>
-            <a id="link_drive" href="#">more info <i class="fa-solid fa-right-long"></i></a>
-        </div>        
-        <div class="rightc2">
-            <img src="./assets/images/driver_index.jpg" alt="Driver image">
+        <div class="container2">
+            <div class="leftc2">
+                <h1>DRIVE WITH RREZE</h1>
+                <h2>Be your own boss.<br>Drive when you want.</h2>
+                <h3><i class="fa-solid fa-clock"></i> Access to work 24/7<br>
+                    <i class="fa-solid fa-credit-card"></i> No waiting for paychecks<br></h3>
+                <a id="link_drive" href="#">more info <i class="fa-solid fa-right-long"></i></a>
+            </div>        
+            <div class="rightc2">
+                <img src="./assets/images/driver_index.jpg" alt="Driver image">
+            </div>
         </div>
-    </div>
-    <div class="container3">
-        <div class="leftc3">
-            <img src="./assets/images/rider_index.jpg" alt="Rider image">
-        </div>        
-        <div class="rightc3">
-            <h1>RIDE WITH RREZE</h1>
-            <h2>A smarter way to drive around.</h2>
-            <h3><i class="fa-solid fa-user-shield"></i> Safety checks<br>
-                <i class="fa-solid fa-money-bill"></i> Cost upfront, no surprises<br></h3>
-            <a id="link_ride" href="#">more info <i class="fa-solid fa-right-long"></i></a>
+        <div class="container3">
+            <div class="leftc3">
+                <img src="./assets/images/rider_index.jpg" alt="Rider image">
+            </div>        
+            <div class="rightc3">
+                <h1>RIDE WITH RREZE</h1>
+                <h2>A smarter way to drive around.</h2>
+                <h3><i class="fa-solid fa-user-shield"></i> Safety checks<br>
+                    <i class="fa-solid fa-money-bill"></i> Cost upfront, no surprises<br></h3>
+                <a id="link_ride" href="#">more info <i class="fa-solid fa-right-long"></i></a>
+            </div>
         </div>
+        <footer>
+            <hr class="divider">
+            <div id="year">
+                <h6>© <span id="current-year"></span> by Rreze</h6>
+            </div>
+            <div id="social">
+                <h6><i class="fa-brands fa-facebook"></i>   <i class="fa-brands fa-instagram"></i>   <i class="fa-brands fa-youtube"></i>   <i class="fa-brands fa-linkedin"></i></h6>
+            </div>
+        </footer>
     </div>
-    <footer>
-        <hr class="divider">
-        <div id="year">
-            <h6>© <span id="current-year"></span> by Rreze</h6>
-        </div>
-        <div id="social">
-            <h6><i class="fa-brands fa-facebook"></i>   <i class="fa-brands fa-instagram"></i>   <i class="fa-brands fa-youtube"></i>   <i class="fa-brands fa-linkedin"></i></h6>
-        </div>
-    </footer>
-    </div>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/index_script.js"></script>
 </body>
-<script src="assets/scripts/headerfooter_script.js"></script>
 </html>
