@@ -49,5 +49,17 @@ namespace RrezeBack.Controllers
             }
             return Ok("Rider registered successfully.");
         }
+
+        [HttpPost("google-signup-rider")]
+        public async Task<IActionResult> GoogleSignUp([FromBody] GoogleSignUpDTO dto)
+        {
+            var result = await _signUpService.GoogleSignUpRider(dto.IdToken);
+            if (result == null)
+            {
+                return BadRequest("User already exists or invalid role.");
+            }
+            return Ok(result);
+        }
     }
+
 }

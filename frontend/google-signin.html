@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sign-In</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            document.getElementById("idToken").innerText = response.credential;
+        }
+    </script>
+</head>
+<body>
+    <h1>Google Sign-In</h1>
+    <div id="g_id_onload"
+         data-client_id="176016010893-88f1vpbjug03ft6egsdl4i09d6pku1c3.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-shape="rectangular"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-size="large">
+    </div>
+    <h2>Your ID Token:</h2>
+    <p id="idToken"></p>
+</body>
+</html>

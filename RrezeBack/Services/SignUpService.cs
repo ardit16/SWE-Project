@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
+using Google.Apis.Auth;
 
 namespace RrezeBack.Services
 {
@@ -17,6 +18,7 @@ namespace RrezeBack.Services
         Task<Driver> SignUpDriver(SignUpDriverDto driverDto);
         Task<Rider> SignUpRider(SignUpRiderDto riderDto);
         Task<bool> SignUpAdminAsync(AdminSignUpDTO adminSignUpDto);
+        Task<object> GoogleSignUpRider(string idToken);
     }
 
     public class SignUpService : ISignUpService
@@ -167,5 +169,35 @@ namespace RrezeBack.Services
             return true;
         }
 
+        public async Task<object> GoogleSignUpRider(string idToken)
+        {
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
+            var existingUser = await _context.Riders.FirstOrDefaultAsync(u => u.Email == payload.Email);
+
+            try
+            {
+                if (existingUser != null){
+
+                return null; // User already exists
+                }
+
+                var newUser = new Rider
+                {
+                    Name = payload.GivenName,
+                    Surname = payload.FamilyName,
+                    Email = payload.Email,
+                    TwoFactorEnabled = false
+                };
+
+                await _context.Riders.AddAsync(newUser);
+                await _context.SaveChangesAsync();
+
+                return newUser;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

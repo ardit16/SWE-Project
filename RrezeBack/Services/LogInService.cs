@@ -10,6 +10,7 @@ using RrezeBack.DTO;
 using System;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Google.Apis.Auth;
 
 namespace RrezeBack.Services
 {
@@ -21,7 +22,10 @@ namespace RrezeBack.Services
         Task<object> ConfirmFaRider(FaCredencialsDto dto);
         Task<object> ConfirmFaDriver(FaCredencialsDto dto);
         Task<bool> ResendFa(RfaCredencialsDTO dto);
+        Task<object> GoogleLogin(string idToken);
     }
+
+
     public class LogInService : ILogInService
     {
         private readonly DBContext _context;
@@ -286,5 +290,23 @@ namespace RrezeBack.Services
                 return false;
             }
         }
+        public async Task<object> GoogleLogin(string idToken)
+        {
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
+            var user = await _context.Riders.FirstOrDefaultAsync(u => u.Email == payload.Email);
+
+            if (user == null)
+            {
+                return null; // User not found
+            }
+
+            return new
+            {
+                Id = user.RiderID,
+                Name = user.Name,
+                Email = user.Surname
+            };
+        }
+
     }
 }

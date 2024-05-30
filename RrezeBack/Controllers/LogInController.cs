@@ -108,6 +108,18 @@ namespace RrezeBack.Controllers
                 Console.WriteLine($"Error in Resend2Fa: {ex.Message}"); // Debugging line
                 return BadRequest();
             }
+     
+        }
+
+        [HttpPost("google-login-rider")]
+        public async Task<IActionResult> GoogleLogin([FromBody] string idToken)
+        {
+            var result = await _logInService.GoogleLogin(idToken);
+            if (result == null)
+            {
+                return Unauthorized("Invalid Google token.");
+            }
+            return Ok(result);
         }
     }
 }
