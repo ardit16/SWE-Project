@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage account</title>
-    <link rel="stylesheet" type="text/css" href="./assets/styles/myaccount_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/myaccountadmin_style.css">
     <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
@@ -22,41 +22,30 @@
             <div class="account-container">
                 <h1>Account Information</h1>
                 <div class="left-section">
-                <div class="profile-photo">
-                    <img src="assets/images/user.jpg" alt="Profile Photo" id="profile-photo">
-                    <i class="fas fa-pencil-alt" id="edit-photo"></i>
-                    <input type="file" accept="image/*" id="profile-upload" style="display: none;">
-                </div>
-                <div class="account-info">
-                    <div class="info-item">
-                        <span>Name:</span>
-                        <span id="name">Megi</span>
+                    <div class="account-info">
+                        <div class="info-item">
+                            <span>Name:</span>
+                            <span id="name">Admin Name</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Surname:</span>
+                            <span id="surname">Admin Surname</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Email:</span>
+                            <span id="email">admin@example.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Phone number:</span>
+                            <span id="phone-number">+1234567890</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Birthday:</span>
+                            <span id="birthday">01/01/1980</span>
+                        </div>
                     </div>
-                    <div class="info-item">
-                        <span>Surname:</span>
-                        <span id="surname">Dervishi</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Email:</span>
-                        <span id="email">megidervishi5@gmail.com</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Phone number:</span>
-                        <span id="phone-number">+355686268882</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Two factor authentication:</span>
-                        <span id="two-factor">Yes</span>
-                        <button id="change-2fa">Change</button>
-                    </div>                    
-                </div>
                 </div>
                 <div class="right-section">
-                    <div class="profile-photo license-photo">
-                        <img src="assets/images/license.jpg" alt="Driver License" id="license-photo">
-                        <i class="fas fa-pencil-alt" id="edit-license"></i>
-                        <input type="file" accept="image/*" id="license-upload" style="display: none;">
-                    </div>
                     <div class="info-item password-change">
                         <button id="change-password">Change password</button>
                     </div>
@@ -66,10 +55,11 @@
                         <input type="password" id="confirm-new-password" placeholder="Confirm New Password">
                         <button id="confirm-password-change">Confirm</button>
                     </div>                    
+                </div>
             </div>
         </div>
     </div>
     <script src="assets/scripts/headerfooter_script.js"></script>
-    <script src="assets/scripts/myaccount_script.js"></script>
+    <script src="assets/scripts/myaccountadmin_script.js"></script>
 </body>
 </html>

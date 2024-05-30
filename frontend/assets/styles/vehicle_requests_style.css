@@ -1,0 +1,254 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    padding: 20px;
+    align-items: center;
+}
+
+.animated-header {
+    font-size: 2em;
+    margin-bottom: 20px;
+    animation: fadeInDown 1s ease-out;
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.filter-container input,
+.filter-container select,
+.filter-container button {
+    padding: 10px;
+    margin: 0 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 1em;
+}
+
+.filter-container button {
+    background-color: #f5d042;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.filter-container button:hover {
+    background-color: #e5c732;
+}
+
+.request-container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+.vehicle-request {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 10px 0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.info-container {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.info-item {
+    flex: 1 1 45%;
+    margin-bottom: 10px;
+}
+
+.info-item span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.media-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 20px;
+}
+
+.media-container span {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.photos {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.photos img.vehicle-photo {
+    width: 200px;
+    height: 150px;
+    margin-right: 10px;
+    border-radius: 5px;
+}
+
+.documents {
+    display: flex;
+    flex-direction: column;
+}
+
+.documents a {
+    color: #0A174E;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    margin: 5px 0;
+}
+
+.documents a:hover {
+    color: #F5D042;
+}
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+.accept-button, .reject-button {
+    padding: 20px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em;
+}
+
+.accept-button {
+    background-color: #319946;
+    color: white;
+}
+
+.accept-button:hover {
+    background-color: #44b41f;
+}
+
+.reject-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+.reject-button:hover {
+    background-color: #c9302c;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: transparent;
+}
+
+.navbar a {
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, font-weight 0.3s ease, transform 0.3s ease;
+    margin: 0 10px;
+}
+
+.navbar a:hover {
+    background-color: rgba(245, 208, 66, 0.8);
+    color: black;
+    font-weight: bold;
+    text-shadow: none;
+    transform: scale(1.05);
+}
+
+.navbar .left, .navbar .right {
+    display: flex;
+    align-items: center;
+}
+
+.navbar .left a:first-child {
+    font-weight: bold;
+    font-size: 1.7em;
+}
+
+.navbar .left a:first-child:hover {
+    color: #F5D042;
+    background-color: transparent;
+}
+
+.divider {
+    position: relative;
+    height: 1px;
+    margin: 0;
+    background: transparent;
+}
+
+.divider:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: white;
+    z-index: 1;
+}
+
+.divider:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: black;
+    z-index: 2;
+    transform: translateY(-1px);
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 0px;
+}

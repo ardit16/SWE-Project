@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Admin</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/new_admin_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="navbar">
+            <div class="left">
+                <a href="#">Rreze</a>
+            </div>
+        </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="signup-container">
+                <div class="signup-box">
+                    <h2>Add New Admin</h2>
+                    <form id="signup-form">
+                        <div class="left-section">
+                            <div class="input-group">
+                                <input type="text" id="name" required>
+                                <label for="name">Name</label>
+                                <i class='bx bx-user'></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="text" id="surname" required>
+                                <label for="surname">Surname</label>
+                                <i class='bx bx-user'></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="email" id="email" required>
+                                <label for="email">Email</label>
+                                <i class='bx bx-envelope'></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="password" required>
+                                <label for="password">Password</label>
+                                <i class='bx bx-lock'></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="password" id="confirm-password" required>
+                                <label for="confirm-password">Confirm Password</label>
+                                <i class='bx bx-lock'></i>
+                            </div>
+                        </div>
+                        <div class="right-section">
+                            <div class="input-group">
+                                <input type="date" id="birthday" required>
+                                <label for="birthday">Birthday</label>
+                                <i class='bx bx-calendar'></i>
+                            </div>
+                            <div class="input-group">
+                                <input type="tel" id="phone-number" required>
+                                <label for="phone-number">Phone Number</label>
+                                <i class='bx bx-phone'></i>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="terms" required>
+                                <label for="terms">I agree to the Terms and Conditions</label>
+                            </div>
+                            <button type="submit" class="signup-button">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <hr class="divider">
+            <div id="year">
+                <h6>© <span id="current-year"></span> by Rreze</h6>
+            </div>
+        </footer>
+    </div>
+</body>
+<script src="assets/scripts/headerfooter_script.js"></script>
+</html>
