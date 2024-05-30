@@ -191,8 +191,6 @@ namespace RrezeBack.Services
             var feedback = new Feedbacks
             {
                 RideID = feedbackDto.RideID,
-                DriverRating = feedbackDto.DriverRating,
-                DriverComment = feedbackDto.DriverComment,
                 RiderRating = feedbackDto.RiderRating,
                 RiderComment = feedbackDto.RiderComment,
                 DriverID = feedbackDto.DriverID,
@@ -296,7 +294,7 @@ namespace RrezeBack.Services
             var rider = await _context.Riders.FindAsync(profilePictureDto.RiderId);
             if (rider == null) return false;
 
-            string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider\pfp"; shifeeeepatthinnnnnnnprandajjjjjkaaaaaerror;
+            string photosDirectoryPath = @"C:\Users\ardit\Desktop\photo\rider\pfp"; 
             string fileName = $"{profilePictureDto.RiderId}.jpg";
             string filePath = Path.Combine(photosDirectoryPath, fileName);
 

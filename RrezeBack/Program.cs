@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RrezeBack.Data;
 using RrezeBack.Services;
 using RrezeBack.Data.Model;
+using static DriverService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ builder.Services.AddScoped<ILogInService, LogInService>();
 builder.Services.AddScoped<ISignUpService, SignUpService>();
 builder.Services.AddScoped<IRiderService, RiderService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IDriverService, DriverServices>();
+
 
 // CORS configuration
 builder.Services.AddCors(options =>

@@ -74,7 +74,7 @@ namespace RrezeBack.Services
                 await _context.SaveChangesAsync();
 
                 string profilePhotoFileName = $"{newUser.DriverID}_profile.jpg";
-                string profilePhotosDirectoryPath = @"C:/Users/ardit/Desktop/profile"; 
+                string profilePhotosDirectoryPath = @"C:/Users/ardit/Desktop/profile";
 
                 if (!Directory.Exists(profilePhotosDirectoryPath))
                 {
@@ -88,7 +88,7 @@ namespace RrezeBack.Services
                 }
 
                 string licensePhotoFileName = $"{newUser.DriverID}_license.jpg";
-                string licensePhotosDirectoryPath = @"C:/Users/ardit/Desktop/driverslicense"; shifeeeepatthinnnnnnnprandajjjjjkaaaaaerror;
+                string licensePhotosDirectoryPath = @"C:/Users/ardit/Desktop/driverslicense";   
 
                 if (!Directory.Exists(licensePhotosDirectoryPath))
                 {

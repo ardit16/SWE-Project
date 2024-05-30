@@ -12,8 +12,12 @@ public class PaymentMethod
     public string CVV { get; set; }
     public string CardName { get; set; }
 
-    public int RiderID { get; set; }
+    public int? RiderID { get; set; }
+    public int? DriverID { get; set; }
+
 
     [ForeignKey("RiderID")]
     public Rider Rider { get; set; }
+
+
 }
