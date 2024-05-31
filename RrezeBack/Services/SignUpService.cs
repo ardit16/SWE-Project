@@ -70,6 +70,7 @@ namespace RrezeBack.Services
                     status = false,
                     Verified = false,
                     ovrating = 0,
+                    DateAdded = DateTime.Now,
                 };
 
                 await _context.Drivers.AddAsync(newUser);
@@ -131,6 +132,7 @@ namespace RrezeBack.Services
                     Birthday = riderDto.Birthday,
                     TwoFactorEnabled = riderDto.Two_Fa,
                     ovrating=0,
+                    DateAdded= DateTime.Now,
 
                 };
 
@@ -186,7 +188,8 @@ namespace RrezeBack.Services
                     Name = payload.GivenName,
                     Surname = payload.FamilyName,
                     Email = payload.Email,
-                    TwoFactorEnabled = false
+                    TwoFactorEnabled = false,
+                    DateAdded = DateTime.Now,
                 };
 
                 await _context.Riders.AddAsync(newUser);

@@ -20,7 +20,7 @@ namespace RrezeBack.Services
     Task<bool> AddPaymentMethod( PaymentMethodDTO paymentMethodDto);
     Task<float> CheckRating(int riderId);
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
-        Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
+    Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
 
     }
     public class RiderService : IRiderService
@@ -49,7 +49,6 @@ namespace RrezeBack.Services
                 Ovrating = rider.ovrating
             };
         }
-
         public async Task<bool> UpdateRiderTWOFA(int id, twofadto twofadto)
         {
             var rider = await _context.Riders.FindAsync(twofadto.RideriId);
@@ -101,7 +100,6 @@ namespace RrezeBack.Services
 
             return $"{Convert.ToBase64String(salt)}:{hashed}";
         }
-
         public async Task<int> ChangePassword(ChangePasswordDto dto)
         {
             try
@@ -127,7 +125,6 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-
         public async Task<bool> RequestRide(RideDTO rideRequestDto)
         {
             var ride = new Ride
@@ -141,7 +138,7 @@ namespace RrezeBack.Services
                 DropOffName = rideRequestDto.DropOffName,
                 RideDate = rideRequestDto.RideDate,
                 RideStartTime = rideRequestDto.RideStartTime,
-                RideStatus = false, // Initially false until driver accepts the ride
+                RideStatus = false, 
                 Amount = rideRequestDto.Amount,
                 RideDistance = rideRequestDto.RideDistance,
                 RideEndTime = rideRequestDto.RideEndTime,
@@ -153,7 +150,6 @@ namespace RrezeBack.Services
 
             return true;
         }
-
         public async Task<int> CancelRide(int rideId)
         {
             var ride = await _context.Rides.FindAsync(rideId);
@@ -164,7 +160,6 @@ namespace RrezeBack.Services
 
             return 1;
         }
-
         public async Task<bool> SubmitFeedback(FeedbackDTO feedbackDto)
         {
             // Check if the RideID exists
@@ -202,9 +197,6 @@ namespace RrezeBack.Services
 
             return true;
         }
-
-
-
         public async Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto)
         {
             // Check if Rider exists
@@ -217,7 +209,7 @@ namespace RrezeBack.Services
 
             var paymentMethod = new PaymentMethod
             {
-                RiderID = paymentMethodDto.RiderID, // Set the RiderID here
+                RiderID = paymentMethodDto.RiderID, 
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
@@ -242,10 +234,6 @@ namespace RrezeBack.Services
                 throw; // Re-throw the exception to be handled by the calling code
             }
         }
-
-
-
-
         public async Task<float> CheckRating(int riderId)
         {
             // Fetch all feedbacks for the given rider
@@ -264,8 +252,6 @@ namespace RrezeBack.Services
 
             return averageRating;
         }
-
-
         public async Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId)
         {
             return await _context.Rides
@@ -288,7 +274,6 @@ namespace RrezeBack.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto)
         {
             var rider = await _context.Riders.FindAsync(profilePictureDto.RiderId);

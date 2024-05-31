@@ -10,5 +10,6 @@
         public string Birthday { get; set; }
         public bool TwoFactorEnabled { get; set; }
         public float Ovrating { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.Now;
     }
 }

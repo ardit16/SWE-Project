@@ -16,12 +16,18 @@ namespace RrezeBack.Data.Model
         public bool TwoFactorEnabled { get; set; }
         public bool status { get; set; }
         public bool Verified { get; set; }
-        public float ovrating {  get; set; }
+        public float ovrating { get; set; }
+        public string? ProfilePicturePath { get; set; }
+        public DateTime DateAdded { get; set; }
+
+
+
 
         [ForeignKey("DriverID")]
         public ICollection<Ride> Rides { get; set; }
         public ICollection<Feedbacks> Feedbacks { get; set; }
         public ICollection<Vehicle> Vehicles { get; set; }
         public ICollection<PaymentMethod> PaymentMethods { get; set; }
+        
     }
 }

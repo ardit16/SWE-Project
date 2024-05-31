@@ -18,7 +18,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("AdminSignup")]
-        public async Task<IActionResult> SignUpAdmin([FromBody] AdminSignUpDTO adminSignUpDto)
+        public async Task<IActionResult> SignUpAdmin([FromForm] AdminSignUpDTO adminSignUpDto)
         {
             var result = await _signUpService.SignUpAdminAsync(adminSignUpDto);
             if (!result)
@@ -40,7 +40,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("RiderSignup")]
-        public async Task<IActionResult> SignUpRider([FromBody] SignUpRiderDto riderDto)
+        public async Task<IActionResult> SignUpRider([FromForm] SignUpRiderDto riderDto)
         {
             var rider = await _signUpService.SignUpRider(riderDto);
             if (rider == null)

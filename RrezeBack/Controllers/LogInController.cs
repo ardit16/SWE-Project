@@ -21,7 +21,7 @@ namespace RrezeBack.Controllers
             _logInService = logInService;
         }
          [HttpPost("LogInAdmin")]
-        public async Task<IActionResult> LoginAdmin([FromBody] LoginDTO loginDto)
+        public async Task<IActionResult> LoginAdmin([FromForm] LoginDTO loginDto)
         {
             var result = await _logInService.LoginADMIN(loginDto);
             if (result == null)
@@ -32,7 +32,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("LogInRider")]
-        public async Task<ActionResult> LogInRider([FromBody] LoginDTO dto)
+        public async Task<ActionResult> LogInRider([FromForm] LoginDTO dto)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("LogInDriver")]
-        public async Task<ActionResult> LogInDriver([FromBody] LoginDTO dto)
+        public async Task<ActionResult> LogInDriver([FromForm] LoginDTO dto)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("Check_2FA_Rider")]
-        public async Task<ActionResult> Check2FaRider([FromBody] FaCredencialsDto dto)
+        public async Task<ActionResult> Check2FaRider([FromForm] FaCredencialsDto dto)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("Check_2FA_Driver")]
-        public async Task<ActionResult> Check2FaDriver([FromBody] FaCredencialsDto dto)
+        public async Task<ActionResult> Check2FaDriver([FromForm] FaCredencialsDto dto)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("Resend_2FA")]
-        public async Task<ActionResult> Resend2Fa([FromBody] RfaCredencialsDTO dto)
+        public async Task<ActionResult> Resend2Fa([FromForm] RfaCredencialsDTO dto)
         {
             try
             {
@@ -112,7 +112,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("google-login-rider")]
-        public async Task<IActionResult> GoogleLogin([FromBody] string idToken)
+        public async Task<IActionResult> GoogleLogin([FromForm] string idToken)
         {
             var result = await _logInService.GoogleLogin(idToken);
             if (result == null)

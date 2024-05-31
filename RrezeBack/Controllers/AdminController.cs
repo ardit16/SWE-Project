@@ -66,7 +66,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("Change-Password")]
-        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordDto changePasswordDto)
+        public async Task<IActionResult> ChangePassword([FromForm] ChangePasswordDto changePasswordDto)
         {
             var result = await _adminService.ChangePassword(changePasswordDto);
             if (result == -1)

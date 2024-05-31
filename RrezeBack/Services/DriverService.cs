@@ -62,6 +62,10 @@ public class DriverService
             {
                 Directory.CreateDirectory(profilePhotosDirectoryPath);
             }
+            if (File.Exists(profilePhotoFilePath))
+            {
+                File.Delete(profilePhotoFilePath);
+            }
 
             using (var stream = new FileStream(profilePhotoFilePath, FileMode.Create))
             {
@@ -86,6 +90,11 @@ public class DriverService
             if (!Directory.Exists(licensePhotosDirectoryPath))
             {
                 Directory.CreateDirectory(licensePhotosDirectoryPath);
+            }
+
+            if (File.Exists(licensePhotoFilePath))
+            {
+                File.Delete(licensePhotoFilePath);
             }
 
             using (var stream = new FileStream(licensePhotoFilePath, FileMode.Create))
@@ -189,7 +198,7 @@ public class DriverService
 
             var paymentMethod = new PaymentMethod
             {
-                DriverID= paymentMethodDto.RiderID,
+                DriverID= paymentMethodDto.DriverID,
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
@@ -204,29 +213,86 @@ public class DriverService
 
         public async Task<bool> AddNewCar(int driverId, VehicleDto vehicleDto)
         {
-            var driver = await _context.Drivers.FindAsync(driverId);
-            if (driver == null)
+            try
             {
-                return false;
+                var driver = await _context.Drivers.FindAsync(driverId);
+                if (driver == null)
+                {
+                    return false;
+                }
+
+                var vehicle = new Vehicle
+                {
+                    Model = vehicleDto.Model,
+                    Make = vehicleDto.Make,
+                    Year = vehicleDto.Year,
+                    Color = vehicleDto.Color,
+                    LicensePlateNumber = vehicleDto.LicensePlateNumber,
+                    NumberOfSeats = vehicleDto.NumberOfSeats,
+                    VehicleStatus = vehicleDto.VehicleStatus,
+                    InsuranceExpiryDate = vehicleDto.InsuranceExpiryDate,
+                    RegistrationExpiryDate = vehicleDto.RegistrationExpiryDate,
+                    DriverID = driverId
+                };
+
+                // Save the first vehicle photo
+                string vehiclePhoto1FileName = $"{driverId}_vehicle.jpg";
+                string vehiclePhotosDirectoryPath1 = @"C:/Users/ardit/Desktop/vehicle/first";
+                if (!Directory.Exists(vehiclePhotosDirectoryPath1))
+                {
+                    Directory.CreateDirectory(vehiclePhotosDirectoryPath1);
+                }
+                string vehiclePhoto1FilePath = Path.Combine(vehiclePhotosDirectoryPath1, vehiclePhoto1FileName);
+                using (var stream = new FileStream(vehiclePhoto1FilePath, FileMode.Create))
+                {
+                    await vehicleDto.photo1.CopyToAsync(stream);
+                }
+                vehicle.ProfilePicture1Path = vehiclePhoto1FilePath;
+
+                // Save the second vehicle photo if it exists
+                if (vehicleDto.photo2 != null)
+                {
+                    string vehiclePhoto2FileName = $"{driverId}_vehicle.jpg";
+                    string vehiclePhotosDirectoryPath2 = @"C:/Users/ardit/Desktop/vehicle/second";
+                    if (!Directory.Exists(vehiclePhotosDirectoryPath2))
+                    {
+                        Directory.CreateDirectory(vehiclePhotosDirectoryPath2);
+                    }
+                    string vehiclePhoto2FilePath = Path.Combine(vehiclePhotosDirectoryPath2, vehiclePhoto2FileName);
+                    using (var stream = new FileStream(vehiclePhoto2FilePath, FileMode.Create))
+                    {
+                        await vehicleDto.photo2.CopyToAsync(stream);
+                    }
+                    vehicle.ProfilePicture2Path = vehiclePhoto2FilePath;
+                }
+
+                // Save the third vehicle photo if it exists
+                if (vehicleDto.photo3 != null)
+                {
+                    string vehiclePhoto3FileName = $"{driverId}_vehicle.jpg";
+                    string vehiclePhotosDirectoryPath3 = @"C:/Users/ardit/Desktop/vehicle/third";
+                    if (!Directory.Exists(vehiclePhotosDirectoryPath3))
+                    {
+                        Directory.CreateDirectory(vehiclePhotosDirectoryPath3);
+                    }
+                    string vehiclePhoto3FilePath = Path.Combine(vehiclePhotosDirectoryPath3, vehiclePhoto3FileName);
+                    using (var stream = new FileStream(vehiclePhoto3FilePath, FileMode.Create))
+                    {
+                        await vehicleDto.photo3.CopyToAsync(stream);
+                    }
+                    vehicle.ProfilePicture3Path = vehiclePhoto3FilePath;
+                }
+
+                await _context.Vehicles.AddAsync(vehicle);
+                await _context.SaveChangesAsync();
+
+                return true;
             }
-
-            var vehicle = new Vehicle
+            catch (Exception ex)
             {
-                Model = vehicleDto.Model,
-                Make = vehicleDto.Make,
-                Year = vehicleDto.Year,
-                Color = vehicleDto.Color,
-                LicensePlateNumber = vehicleDto.LicensePlateNumber,
-                NumberOfSeats = vehicleDto.NumberOfSeats,
-                VehicleStatus = vehicleDto.VehicleStatus,
-                InsuranceExpiryDate = vehicleDto.InsuranceExpiryDate,
-                RegistrationExpiryDate = vehicleDto.RegistrationExpiryDate,
-                DriverID = driverId
-            };
-
-            await _context.Vehicles.AddAsync(vehicle);
-            await _context.SaveChangesAsync();
-            return true;
+                // Optionally log the exception
+                throw;
+            }
         }
 
         public async Task<List<Vehicle>> ViewCars(int driverId)

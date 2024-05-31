@@ -20,7 +20,8 @@ namespace RrezeBack.Data.Model
         public int DriverID { get; set; }
         [ForeignKey("DriverID")]
         public Driver Driver { get; set; }
-
-       
+        public string ProfilePicture1Path { get; internal set; }
+        public string? ProfilePicture2Path { get; internal set; }
+        public string? ProfilePicture3Path { get; internal set; }
     }
 }

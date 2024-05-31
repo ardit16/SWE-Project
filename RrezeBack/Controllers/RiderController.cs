@@ -27,7 +27,7 @@ namespace RrezeBack.Controllers
 
         [HttpPut("{riderId}/CHANGETWOFA")]
 
-        public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromBody] twofadto twofadto)
+        public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromForm] twofadto twofadto)
         {
             if (riderId != twofadto.RideriId) return BadRequest("Rider ID mismatch");
 
@@ -38,7 +38,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("{riderId}/changepassword")]
-        public async Task<IActionResult> ChangePassword(int riderId, [FromBody] ChangePasswordDto changePasswordDto)
+        public async Task<IActionResult> ChangePassword(int riderId, [FromForm] ChangePasswordDto changePasswordDto)
         {
             if (riderId != changePasswordDto.Id)
                 return BadRequest("Rider ID mismatch");
@@ -84,7 +84,7 @@ namespace RrezeBack.Controllers
         }
         
         [HttpPost("feedback")]
-        public async Task<IActionResult> SubmitFeedback([FromBody] FeedbackDTO feedbackDto)
+        public async Task<IActionResult> SubmitFeedback([FromForm] FeedbackDTO feedbackDto)
         {
             var result = await _riderService.SubmitFeedback(feedbackDto);
             if (!result) return BadRequest("Feedback submission failed");
@@ -93,7 +93,7 @@ namespace RrezeBack.Controllers
         }
 
         [HttpPost("{riderId}/paymentmethod")]
-        public async Task<IActionResult> AddPaymentMethod(int riderId, [FromBody] PaymentMethodDTO paymentMethodDto)
+        public async Task<IActionResult> AddPaymentMethod(int riderId, [FromForm] PaymentMethodDTO paymentMethodDto)
         {
             var result = await _riderService.AddPaymentMethod(paymentMethodDto);
             if (!result) return BadRequest("Failed to add payment method");

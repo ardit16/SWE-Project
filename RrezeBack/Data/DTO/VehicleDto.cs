@@ -9,4 +9,8 @@
     public string VehicleStatus { get; set; }
     public string InsuranceExpiryDate { get; set; }
     public string RegistrationExpiryDate { get; set; }
+
+    public IFormFile photo1 { get; set; }
+    public IFormFile? photo2 { get; set; }
+    public IFormFile? photo3 { get; set; }
 }

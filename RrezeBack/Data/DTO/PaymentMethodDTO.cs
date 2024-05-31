@@ -5,8 +5,8 @@ namespace RrezeBack.Data.DTO
 {
     public class PaymentMethodDTO
     {
-        public int RiderID { get; set; }
-        public int c { get; set; }
+        public int? RiderID { get; set; }
+        public int? DriverID { get; set; } 
         public string PaymentType { get; set; }
         public string CardNumber { get; set; }
         public string ExpiryDate { get; set; }

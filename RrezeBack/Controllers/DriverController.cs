@@ -15,7 +15,7 @@ public class DriverController : ControllerBase
 
 
     [HttpPost("{driverId}/change-two-factor")]
-    public async Task<IActionResult> ChangeTwoFactorAuthentication(int driverId, [FromBody] twofadto dto)
+    public async Task<IActionResult> ChangeTwoFactorAuthentication(int driverId, [FromForm] twofadto dto)
     {
         var result = await _driverService.ChangeTwoFactorAuthentication(driverId, dto.TwoFactorEnabled);
         if (!result)
@@ -48,7 +48,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/change-password")]
-    public async Task<IActionResult> ChangePassword(int driverId, [FromBody] ChangePasswordDto dto)
+    public async Task<IActionResult> ChangePassword(int driverId, [FromForm] ChangePasswordDto dto)
     {
         var result = await _driverService.ChangePassword(dto);
         if (result == -1)
@@ -63,7 +63,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/set-status")]
-    public async Task<IActionResult> SetStatusToAvailable(int driverId, [FromBody] bool status)
+    public async Task<IActionResult> SetStatusToAvailable(int driverId, [FromForm] bool status)
     {
         var result = await _driverService.SetStatusToAvailable(driverId, status);
         if (!result)
@@ -74,7 +74,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/accept-ride/{rideId}")]
-    public async Task<IActionResult> AcceptRide(int driverId, int rideId, [FromBody] bool accept)
+    public async Task<IActionResult> AcceptRide(int driverId, int rideId, [FromForm] bool accept)
     {
         var result = await _driverService.AcceptRide(driverId, rideId, accept);
         if (!result)
@@ -97,7 +97,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/leave-feedback")]
-    public async Task<IActionResult> LeaveFeedback(int driverId, [FromBody] FeedbackDTO feedbackDto)
+    public async Task<IActionResult> LeaveFeedback(int driverId, [FromForm] FeedbackDTO feedbackDto)
     {
         var result = await _driverService.LeaveFeedback(driverId, feedbackDto);
         if (!result)
@@ -108,7 +108,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/add-payment-method")]
-    public async Task<IActionResult> AddPaymentMethod(int driverId, [FromBody] PaymentMethodDTO paymentMethodDto)
+    public async Task<IActionResult> AddPaymentMethod(int driverId, [FromForm] PaymentMethodDTO paymentMethodDto)
     {
         var result = await _driverService.AddPaymentMethod(driverId, paymentMethodDto);
         if (!result)
@@ -119,7 +119,7 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/add-new-car")]
-    public async Task<IActionResult> AddNewCar(int driverId, [FromBody] VehicleDto vehicleDto)
+    public async Task<IActionResult> AddNewCar(int driverId, VehicleDto vehicleDto )
     {
         var result = await _driverService.AddNewCar(driverId, vehicleDto);
         if (!result)
