@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rreze - FAQ</title>
+    <link rel="stylesheet" type="text/css" href="./assets/styles/faq_style.css">
+    <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="navbar">
+        <div class="left">
+            <a href="#">Rreze</a>
+            <a href="#">Ride</a>
+            <a href="#">Drive</a>
+        </div>
+        <div class="right">
+            <a href="#">Help</a>
+            <div class="dropdown">
+                <div class="dropdown-toggle" onclick="toggleDropdown(event, 'login-dropdown')">Log In</div>
+                <div id="login-dropdown" class="dropdown-content">
+                    <a href="#">To drive</a>
+                    <a href="#">To ride</a>
+                </div>
+            </div>
+            <div class="dropdown">
+                <div class="dropdown-toggle" onclick="toggleDropdown(event, 'signup-dropdown')">Sign Up</div>
+                <div id="signup-dropdown" class="dropdown-content">
+                    <a href="#">To drive</a>
+                    <a href="#">To ride</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="divider">
+    <div class="wrapper">
+        <div class="faq-container">
+            <h1>Frequently Asked Questions</h1>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>How do I sign up as a rider?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can sign up as a rider by clicking the "Sign Up" button on the top right and selecting "To ride". Follow the instructions to complete your registration.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>How do I become a driver?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>To become a driver, click on the "Sign Up" button and select "To drive". Fill in the necessary information and submit your application. We will review your details and get back to you.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>What safety measures does Rreze have in place?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>We prioritize safety by conducting background checks on all drivers, offering in-app safety features, and providing 24/7 support. </p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>How do I make a payment?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Payments can be made through the app using a credit card or cash. Simply select your preferred payment method before booking a ride.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>What if I need help during my ride?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>If you need help during your ride, you can use the in-app emergency button to contact our support team or emergency services.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>What should I do if I left something in the car?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>If you left something in the car, contact our support team through the app or website. Provide details of the lost item and the ride, and we will assist you in recovering it.</p>
+                </div>
+            </div>
+            <div class="faq">
+                <div class="faq-question" onclick="toggleFaq(event)">
+                    <h2>How do I provide feedback about my ride?</h2>
+                    <i class="fa fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>You can provide feedback about your ride through the app after your trip has ended. Rate your driver and leave comments about your experience to help us improve our services.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <hr class="divider">
+        <div id="year">
+            <h6>© <span id="current-year"></span> by Rreze</h6>
+        </div>
+        <div id="social">
+            <h6><i class="fa-brands fa-facebook"></i> <i class="fa-brands fa-instagram"></i> <i class="fa-brands fa-youtube"></i> <i class="fa-brands fa-linkedin"></i></h6>
+        </div>
+    </footer>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/faq_script.js"></script>
+</body>
+</html>
