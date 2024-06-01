@@ -2,72 +2,74 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('signup-form').addEventListener('submit', async function(event) {
         event.preventDefault();
         
-        const formData = {
-            Name: document.getElementById('name').value,
-            Surname: document.getElementById('surname').value,
-            Email: document.getElementById('email').value,
-            Password: document.getElementById('password').value,
-            Birthday: document.getElementById('birthday').value,
-            Phone: document.getElementById('phone-number').value,
-            Two_Fa: document.getElementById('2fa').checked
-        };
+        const formData = new FormData();
+        const name = document.getElementById('name').value;
+        const surname = document.getElementById('surname').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+        const birthday = document.getElementById('birthday').value;
+        const phoneNumber = document.getElementById('phone-number').value;
+        const twoFa = document.getElementById('2fa').checked;
+        const terms = document.getElementById('terms').checked;
 
         let valid = true;
 
-        if (formData.Name.length < 2) {
+        // Validation rules
+        if (name.length < 2) {
             showError('name-error', 'Name should be at least 2 characters long');
             valid = false;
         } else {
             hideError('name-error');
         }
 
-        if (formData.Surname.length < 2) {
+        if (surname.length < 2) {
             showError('surname-error', 'Surname should be at least 2 characters long');
             valid = false;
         } else {
             hideError('surname-error');
         }
 
-        if (!validateEmail(formData.Email)) {
+        if (!validateEmail(email)) {
             showError('email-error', 'Invalid email address');
             valid = false;
         } else {
             hideError('email-error');
         }
 
-        if (formData.Password.length < 6 || !/\d/.test(formData.Password) || !/[a-zA-Z]/.test(formData.Password)) {
+        if (password.length < 6 || !/\d/.test(password) || !/[a-zA-Z]/.test(password)) {
             showError('password-error', 'Password should be at least 6 characters long with at least one letter and one number');
             valid = false;
         } else {
             hideError('password-error');
         }
 
-        if (formData.Password !== document.getElementById('confirm-password').value) {
+        if (confirmPassword !== password) {
             showError('confirm-password-error', 'Passwords do not match');
             valid = false;
         } else {
             hideError('confirm-password-error');
         }
 
-        const age = calculateAge(formData.Birthday);
-        if (!formData.Birthday) {
+        const age = calculateAge(birthday);
+        if (!birthday) {
             showError('birthday-error', 'Birthday is required');
             valid = false;
-        } else if (age < 18) {
-            showError('birthday-error', 'You should be at least 18 years old');
+        } else if (age < 21) {
+            showError('birthday-error', 'You should be at least 21 years old');
             valid = false;
         } else {
             hideError('birthday-error');
         }
 
-        if (!/^\d{10}$/.test(formData.Phone)) {
+        if (!/^\d{10}$/.test(phoneNumber)) {
             showError('phone-number-error', 'Phone number should have 10 digits');
             valid = false;
         } else {
             hideError('phone-number-error');
         }
 
-        if (!document.getElementById('terms').checked) {
+        if (!terms) {
             showError('terms-error', 'You must agree to the Terms and Conditions');
             valid = false;
         } else {
@@ -78,19 +80,28 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
+        formData.append('Name', name);
+        formData.append('Surname', surname);
+        formData.append('Email', email);
+        formData.append('Password', password);
+        formData.append('Birthday', birthday);
+        formData.append('Phone', phoneNumber);
+        formData.append('Two_Fa', twoFa);
+
         try {
             const response = await fetch('http://localhost:5179/api/SingUp/RiderSignup', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
+                body: formData
             });
 
+            const responseBody = await response.text();
+            console.log("Response Status:", response.status);
+            console.log("Response Body:", responseBody);
+
             if (response.ok) {
-                showModal('Rider registered successfully.');
+                showModal('Rider registered successfully.',1);
             } else {
-                showModal('Rider couldn\'t be registered, please try again later.');
+                showModal(responseBody,0);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -98,10 +109,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function showModal(message) {
+    function showModal(message,okv) {
         const modal = document.getElementById('modal');
         const modalMessage = document.getElementById('modal-message');
         modalMessage.textContent = message;
+
+        if (okv==1) {
+            const homepageButton = document.createElement('button');
+            homepageButton.textContent = 'Log in';
+            homepageButton.onclick = function() {
+                window.location.href = 'login_rider.html';
+            };
+            modalMessage.appendChild(document.createElement('br')); // Add a line break
+            modalMessage.appendChild(homepageButton);
+        }
+        
         modal.style.display = 'block';
 
         const closeButton = document.getElementById('close-button');

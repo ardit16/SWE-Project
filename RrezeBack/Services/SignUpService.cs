@@ -52,10 +52,17 @@ namespace RrezeBack.Services
         {
             try
             {
-                var existingUser = await _context.Drivers.Where(e => e.Email == driverDto.Email).FirstOrDefaultAsync();
-                if (existingUser != null)
+                var existingEmailUser = await _context.Drivers.Where(e => e.Email == driverDto.Email).FirstOrDefaultAsync();
+                var existingPhoneUser = await _context.Drivers.Where(e => e.PhoneNumber == driverDto.Phone).FirstOrDefaultAsync();
+
+                if (existingEmailUser != null)
                 {
-                    return null;
+                    throw new Exception("Email already exists.");
+                }
+
+                if (existingPhoneUser != null)
+                {
+                    throw new Exception("Phone number already exists.");
                 }
 
                 var newUser = new Driver
@@ -77,7 +84,7 @@ namespace RrezeBack.Services
                 await _context.SaveChangesAsync();
 
                 string profilePhotoFileName = $"{newUser.DriverID}_profile.jpg";
-                string profilePhotosDirectoryPath = @"C:/Users/ardit/Desktop/profile";
+                string profilePhotosDirectoryPath = @"C:Users/Megi Dervishi/OneDrive/Desktop/driverslicense";
 
                 if (!Directory.Exists(profilePhotosDirectoryPath))
                 {
@@ -91,7 +98,7 @@ namespace RrezeBack.Services
                 }
 
                 string licensePhotoFileName = $"{newUser.DriverID}_license.jpg";
-                string licensePhotosDirectoryPath = @"C:/Users/ardit/Desktop/driverslicense";   
+                string licensePhotosDirectoryPath = @"C:Users/Megi Dervishi/OneDrive/Desktop/driverslicense";   
 
                 if (!Directory.Exists(licensePhotosDirectoryPath))
                 {
@@ -104,11 +111,12 @@ namespace RrezeBack.Services
                     await driverDto.DriverLicense.CopyToAsync(stream);
                 }
 
+                Console.WriteLine("Driver registered successfully.");
                 return newUser;
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
 
@@ -116,10 +124,17 @@ namespace RrezeBack.Services
         {
             try
             {
-                var existingUser = await _context.Riders.Where(e => e.Email == riderDto.Email).FirstOrDefaultAsync();
-                if (existingUser != null)
+                var existingEmailUser = await _context.Riders.Where(e => e.Email == riderDto.Email).FirstOrDefaultAsync();
+                var existingPhoneUser = await _context.Riders.Where(e => e.PhoneNumber == riderDto.Phone).FirstOrDefaultAsync();
+
+                if (existingEmailUser != null)
                 {
-                    return null;
+                    throw new Exception("Email already exists.");
+                }
+
+                if (existingPhoneUser != null)
+                {
+                    throw new Exception("Phone number already exists.");
                 }
 
                 var newUser = new Rider
@@ -138,12 +153,13 @@ namespace RrezeBack.Services
 
                 await _context.Riders.AddAsync(newUser);
                 await _context.SaveChangesAsync();
-                
+
+                Console.WriteLine("Rider registered successfully.");
                 return newUser;
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception(ex.Message);
             }
         }
         public async Task<bool> SignUpAdminAsync(AdminSignUpDTO adminSignUpDto)

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('signup-form').addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent the form from submitting the default way
+        event.preventDefault(); 
 
         const formData = new FormData();
         const name = document.getElementById('name').value;
@@ -112,10 +112,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 body: formData
             });
 
+            const responseBody = await response.text();
+            console.log("Response Status:", response.status);
+            console.log("Response Body:", responseBody);
+
             if (response.ok) {
-                showModal('Rider registered successfully.');
+                showModal('Driver registered successfully. Please wait for verification!',1);
             } else {
-                showModal('Rider couldn\'t be registered, please try again later.');
+                showModal(responseBody,0);
             }
         } catch (error) {
             console.error('Error:', error);
@@ -123,10 +127,21 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    function showModal(message) {
+    function showModal(message,okv) {
         const modal = document.getElementById('modal');
         const modalMessage = document.getElementById('modal-message');
         modalMessage.textContent = message;
+
+        if (okv==1) {
+            const homepageButton = document.createElement('button');
+            homepageButton.textContent = 'Go to Homepage';
+            homepageButton.onclick = function() {
+                window.location.href = 'index.html';
+            };
+            modalMessage.appendChild(document.createElement('br')); // Add a line break
+            modalMessage.appendChild(homepageButton);
+        }
+        
         modal.style.display = 'block';
 
         const closeButton = document.getElementById('close-button');

@@ -31,23 +31,29 @@ namespace RrezeBack.Controllers
         [HttpPost("DriverSignup")]
         public async Task<IActionResult> SignUpDriver([FromForm] SignUpDriverDto driverDto)
         {
-            var driver = await _signUpService.SignUpDriver(driverDto);
-            if (driver == null)
+            try
             {
-                return BadRequest("Email already exists.");
+                var driver = await _signUpService.SignUpDriver(driverDto);
+                return Ok("Driver registered successfully.");
             }
-            return Ok("Driver registered successfully.");
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("RiderSignup")]
         public async Task<IActionResult> SignUpRider([FromForm] SignUpRiderDto riderDto)
         {
-            var rider = await _signUpService.SignUpRider(riderDto);
-            if (rider == null)
+            try
             {
-                return BadRequest("Email already exists.");
+                var driver = await _signUpService.SignUpRider(riderDto);
+                return Ok("Rider registered successfully.");
             }
-            return Ok("Rider registered successfully.");
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost("google-signup-rider")]
