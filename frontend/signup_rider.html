@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - ride</title>
+    <title>Sign Up - Ride</title>
     <link rel="stylesheet" type="text/css" href="./assets/styles/signup_style.css">
     <link rel="stylesheet" type="text/css" href="./assets/styles/headerfooter_style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
@@ -29,54 +29,69 @@
                     <form id="signup-form">
                         <div class="left-section">
                             <div class="input-group">
-                                <input type="text" id="name" required>
+                                <input type="text" id="name">
                                 <label for="name">Name</label>
                                 <i class='bx bx-user'></i>
+                                <span class="error-message" id="name-error"></span>
                             </div>
                             <div class="input-group">
-                                <input type="text" id="surname" required>
+                                <input type="text" id="surname">
                                 <label for="surname">Surname</label>
                                 <i class='bx bx-user'></i>
+                                <span class="error-message" id="surname-error"></span>
                             </div>
                             <div class="input-group">
-                                <input type="email" id="email" required>
+                                <input type="email" id="email">
                                 <label for="email">Email</label>
                                 <i class='bx bx-envelope'></i>
+                                <span class="error-message" id="email-error"></span>
                             </div>
                             <div class="input-group">
-                                <input type="password" id="password" required>
+                                <input type="password" id="password">
                                 <label for="password">Password</label>
                                 <i class='bx bx-lock'></i>
+                                <span class="error-message" id="password-error"></span>
                             </div>
                             <div class="input-group">
-                                <input type="password" id="confirm-password" required>
+                                <input type="password" id="confirm-password">
                                 <label for="confirm-password">Confirm Password</label>
                                 <i class='bx bx-lock'></i>
+                                <span class="error-message" id="confirm-password-error"></span>
                             </div>
                         </div>
                         <div class="right-section">
                             <div class="input-group">
-                                <input type="date" id="birthday" required>
+                                <input type="date" id="birthday">
                                 <label for="birthday">Birthday</label>
                                 <i class='bx bx-calendar'></i>
+                                <span class="error-message" id="birthday-error"></span>
                             </div>
                             <div class="input-group">
-                                <input type="tel" id="phone-number" required>
+                                <input type="tel" id="phone-number">
                                 <label for="phone-number">Phone Number</label>
                                 <i class='bx bx-phone'></i>
+                                <span class="error-message" id="phone-number-error"></span>
                             </div>
                             <div class="checkbox-group">
                                 <input type="checkbox" id="2fa">
                                 <label for="2fa">Enable two-factor authentication</label>
                             </div>
                             <div class="checkbox-group">
-                                <input type="checkbox" id="terms" required>                    
+                                <input type="checkbox" id="terms">                    
                                 <label for="terms">I agree to the Terms and Conditions</label>
+                                <span class="error-message" id="terms-error"></span>
                             </div>
                             <button type="submit" class="signup-button">Confirm</button>
                         </div>
                     </form>
                 </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-button">&times;</span>
+                <p id="modal-message"></p>
             </div>
         </div>
         <footer>
@@ -89,7 +104,7 @@
             </div>
         </footer>
     </div>
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/signuprider_script.js"></script>
 </body>
-<script src="assets/scripts/headerfooter_script.js"></script>
-<script src="assets/scripts/signuprider_script.js"></script>
 </html>
