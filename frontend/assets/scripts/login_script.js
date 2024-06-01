@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
+    const googleLoginButton = document.querySelector('.google-login');
 
     loginForm.addEventListener('submit', async function(event) {
         event.preventDefault(); // Prevent the default form submission
@@ -56,4 +57,43 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('An error occurred. Please try again.');
         }
     });
+
+    googleLoginButton.addEventListener('click', function() {
+        google.accounts.id.initialize({
+            client_id: '176016010893-88f1vpbjug03ft6egsdl4i09d6pku1c3.apps.googleusercontent.com',
+            callback: handleGoogleSignIn
+        });
+
+        google.accounts.id.prompt();
+    });
+
+    function handleGoogleSignIn(response) {
+        console.log('Encoded JWT ID token: ' + response.credential);
+
+        fetch('http://localhost:5179/api/SingUp/google-signup-rider', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ idToken: response.credential })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data) {
+                console.log('Google Sign-In result:', data);
+                localStorage.setItem('riderName', data.name);
+                localStorage.setItem('riderSurname', data.surname);
+                localStorage.setItem('riderId', data.id);
+
+                alert('Login successful');
+                window.location.href = 'home_rider.html';
+            } else {
+                alert('Error: User already exists or invalid role.');
+            }
+        })
+        .catch(error => {
+            console.error('Google Sign-In error:', error);
+            alert('An error occurred during Google Sign-In. Please try again.');
+        });
+    }
 });
