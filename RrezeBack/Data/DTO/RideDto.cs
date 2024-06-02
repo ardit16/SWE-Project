@@ -15,10 +15,7 @@
         public bool RideStatus { get; set; }
         public double RideDistance { get; set; }
         public double Amount { get; set; }
-        public int DriverId { get; set; }
-        public int RiderID { get; set; }
-
-
+        public int? DriverId { get; set; }
+        public int? RiderID { get; set; }
     }
-
 }

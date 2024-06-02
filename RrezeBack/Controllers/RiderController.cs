@@ -54,11 +54,25 @@ namespace RrezeBack.Controllers
         [HttpPost("requestride")]
         public async Task<IActionResult> RequestRide([FromBody] RideDTO rideRequestDto)
         {
-            var result = await _riderService.RequestRide(rideRequestDto);
-            if (!result) return BadRequest("Ride request failed");
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-            return Ok("Ride requested successfully");
+            try
+            {
+                var result = await _riderService.RequestRide(rideRequestDto);
+                if (!result) return BadRequest("Ride request failed");
+
+                return Ok("Ride requested successfully");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
+
+
 
         [HttpPost("cancelride/{riderid}")]
         public async Task<IActionResult> CancelRide( string riderid)

@@ -130,29 +130,43 @@ namespace RrezeBack.Services
         }
         public async Task<bool> RequestRide(RideDTO rideRequestDto)
         {
-            var ride = new Ride
+            try
             {
-                RiderID= rideRequestDto.RiderID,
-                PickupLocationLONG = rideRequestDto.PickupLocationLONG,
-                PickupLocationLAT = rideRequestDto.PickupLocationLAT,
-                PickUpName = rideRequestDto.PickUpName,
-                DropOffLocationLONG = rideRequestDto.DropOffLocationLONG,
-                DropOffLocationLAT = rideRequestDto.DropOffLocationLAT,
-                DropOffName = rideRequestDto.DropOffName,
-                RideDate = rideRequestDto.RideDate,
-                RideStartTime = rideRequestDto.RideStartTime,
-                RideStatus = false, 
-                Amount = rideRequestDto.Amount,
-                RideDistance = rideRequestDto.RideDistance,
-                RideEndTime = rideRequestDto.RideEndTime,
-                DriverID=rideRequestDto.DriverId,
-            };
+                var ride = new Ride
+                {
+                    RiderID = rideRequestDto.RiderID,
+                    PickupLocationLONG = rideRequestDto.PickupLocationLONG,
+                    PickupLocationLAT = rideRequestDto.PickupLocationLAT,
+                    PickUpName = rideRequestDto.PickUpName,
+                    DropOffLocationLONG = rideRequestDto.DropOffLocationLONG,
+                    DropOffLocationLAT = rideRequestDto.DropOffLocationLAT,
+                    DropOffName = rideRequestDto.DropOffName,
+                    RideDate = rideRequestDto.RideDate,
+                    RideStartTime = rideRequestDto.RideStartTime,
+                    RideStatus = false,
+                    Amount = rideRequestDto.Amount,
+                    RideDistance = rideRequestDto.RideDistance,
+                    RideEndTime = rideRequestDto.RideEndTime,
+                    DriverID = rideRequestDto.DriverId,
+                };
 
-            _context.Rides.Add(ride);
-            await _context.SaveChangesAsync();
+                _context.Rides.Add(ride);
+                await _context.SaveChangesAsync();
 
-            return true;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                return false;
+            }
         }
+
+
         public async Task<int> CancelRide(int rideId)
         {
             var ride = await _context.Rides.FindAsync(rideId);
