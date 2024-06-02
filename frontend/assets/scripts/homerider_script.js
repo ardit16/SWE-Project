@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', async function() {
     } catch (error) {
         console.error('Error fetching payment methods:', error);
     }
+
+    document.getElementById('logout').addEventListener('click', logout);
 });
 
 async function fetchPaymentMethods(riderId) {
@@ -247,6 +249,14 @@ function showModal(message) {
             modal.style.display = 'none';
         }
     };
+}
+
+function logout(event) {
+    event.preventDefault();
+    localStorage.removeItem('riderName');
+    localStorage.removeItem('riderSurname');
+    localStorage.removeItem('riderId');
+    window.location.href = 'index.html'; 
 }
 
 async function checkRideStatus(riderId) {

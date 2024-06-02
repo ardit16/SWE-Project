@@ -11,8 +11,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     try {
         const driverStatus = await fetchDriverStatus(driverId);
         updateStatusText(driverStatus);
+        const vehicles = await fetchDriverVehicles(driverId);
+        populateVehicleDropdown(vehicles);
     } catch (error) {
-        console.error('Error fetching driver status:', error);
+        console.error('Error:', error);
     }
 
     const changeStatusButton = document.getElementById('change-status');
@@ -24,6 +26,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             console.error('Error changing driver status:', error);
         }
     });
+    document.getElementById('logout').addEventListener('click', logout);
 });
 
 async function fetchDriverStatus(driverId) {
@@ -32,11 +35,44 @@ async function fetchDriverStatus(driverId) {
         if (!response.ok) {
             throw new Error(`Failed to fetch driver status. Status: ${response.status}`);
         }
-        const { status } = await response.json();
+        const status = await response.json();
         return status;
     } catch (error) {
         console.error('Error:', error);
         return false; // Default to offline if there's an error
+    }
+}
+
+async function fetchDriverVehicles(driverId) {
+    try {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/view-cars`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch driver vehicles. Status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error:', error);
+        return [];
+    }
+}
+
+function populateVehicleDropdown(vehicles) {
+    const vehicleDropdown = document.getElementById('vehicle-dropdown');
+    vehicleDropdown.innerHTML = '';
+    const verifiedVehicles = vehicles.filter(vehicle => vehicle.vehicleStatus === "Verified");
+
+    if (verifiedVehicles.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No verified vehicles';
+        vehicleDropdown.appendChild(option);
+    } else {
+        verifiedVehicles.forEach(vehicle => {
+            const option = document.createElement('option');
+            option.value = vehicle.licensePlateNumber;
+            option.textContent = vehicle.licensePlateNumber;
+            vehicleDropdown.appendChild(option);
+        });
     }
 }
 
@@ -53,12 +89,20 @@ async function toggleDriverStatus(driverId) {
         if (!response.ok) {
             throw new Error(`Failed to change driver status. Status: ${response.status}`);
         }
-        const { status } = await response.json();
+        const status = await response.json();
         return status;
     } catch (error) {
         console.error('Error:', error);
         throw error;
     }
+}
+
+function logout(event) {
+    event.preventDefault();
+    localStorage.removeItem('driverName');
+    localStorage.removeItem('driverSurname');
+    localStorage.removeItem('driverId');
+    window.location.href = 'index.html'; 
 }
 
     // Simulate receiving ride requests
