@@ -91,6 +91,22 @@ namespace RrezeBack.Controllers
             return Ok("Payment method added successfully");
         }
 
+        [HttpDelete("{riderId}/paymentmethods/{paymentMethodId}")]
+        public async Task<IActionResult> DeletePaymentMethod(int riderId, int paymentMethodId)
+        {
+            var result = await _riderService.DeletePaymentMethod(riderId, paymentMethodId);
+            if (!result) return NotFound("Payment method not found");
+
+            return Ok("Payment method deleted successfully.");
+        }
+
+        [HttpGet("{riderId}/paymentmethods")]
+        public async Task<IActionResult> GetPaymentMethods(int riderId)
+        {
+            var paymentMethods = await _riderService.GetPaymentMethods(riderId);
+            return Ok(paymentMethods);
+        }
+
         [HttpGet("{riderId}/rating")]
         public async Task<IActionResult> CheckRating(int riderId)
         {

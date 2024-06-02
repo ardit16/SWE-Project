@@ -34,16 +34,20 @@
                     <h2>Add new credit card</h2>
                     <form id="add-card-form">
                         <label for="card-number">Card Number:</label>
-                        <input type="text" id="card-number" name="card-number" required>
+                        <input type="text" id="card-number" name="card-number" maxlength="19" required>
+                        <small class="error-message" id="card-number-error"></small>
 
                         <label for="card-name">Card Name:</label>
                         <input type="text" id="card-name" name="card-name" required>
+                        <small class="error-message" id="card-name-error"></small>
 
                         <label for="card-expiration">Expiry Date:</label>
-                        <input type="text" id="card-expiration" name="card-expiration" placeholder="MM/YY" required>
+                        <input type="text" id="card-expiration" name="card-expiration" maxlength="5" placeholder="MM/YY" required>
+                        <small class="error-message" id="card-expiration-error"></small>
 
                         <label for="card-cvs">CVV:</label>
-                        <input type="text" id="card-cvs" name="card-cvs" required>
+                        <input type="text" id="card-cvs" name="card-cvs" maxlength="3" required>
+                        <small class="error-message" id="card-cvs-error"></small>
 
                         <button type="submit">Add Card</button>
                     </form>
@@ -51,6 +55,13 @@
             </div>
         </div>
     </div>
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button" id="close-button">&times;</span>
+                <p id="modal-message"></p>
+            </div>
+        </div>
     <script src="assets/scripts/headerfooter_script.js"></script>
     <script src="assets/scripts/mywalletr_script.js"></script>
 </body>

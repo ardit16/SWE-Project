@@ -17,7 +17,9 @@ namespace RrezeBack.Services
     Task<bool> RequestRide(RideDTO rideRequestDto);
     Task<int> CancelRide(int Riderid);
     Task<bool> SubmitFeedback(FeedbackDTO feedbackDto);
-    Task<bool> AddPaymentMethod( PaymentMethodDTO paymentMethodDto);
+    Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto);
+    Task<bool> DeletePaymentMethod(int riderId, int paymentMethodId);
+    Task<IEnumerable<PaymentMethodDTO>> GetPaymentMethods(int riderId);
     Task<float> CheckRating(int riderId);
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
     Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
@@ -200,7 +202,6 @@ namespace RrezeBack.Services
         }
         public async Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto)
         {
-            // Check if Rider exists
             var rider = await _context.Riders.FindAsync(paymentMethodDto.RiderID);
 
             if (rider == null)
@@ -210,7 +211,7 @@ namespace RrezeBack.Services
 
             var paymentMethod = new PaymentMethod
             {
-                RiderID = paymentMethodDto.RiderID, 
+                RiderID = paymentMethodDto.RiderID,
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
@@ -226,14 +227,45 @@ namespace RrezeBack.Services
             }
             catch (DbUpdateException ex)
             {
-                // Log the exception message and inner exception for detailed error information
                 Console.WriteLine($"An error occurred while saving the payment method: {ex.Message}");
                 if (ex.InnerException != null)
                 {
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 }
-                throw; // Re-throw the exception to be handled by the calling code
+                throw;
             }
+        }
+
+        public async Task<bool> DeletePaymentMethod(int riderId, int paymentMethodId)
+        {
+            var paymentMethod = await _context.PaymentMethod
+                .FirstOrDefaultAsync(pm => pm.RiderID == riderId && pm.PaymentId == paymentMethodId);
+
+            if (paymentMethod == null)
+            {
+                return false;
+            }
+
+            _context.PaymentMethod.Remove(paymentMethod);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<PaymentMethodDTO>> GetPaymentMethods(int riderId)
+        {
+            return await _context.PaymentMethod
+                .Where(pm => pm.RiderID == riderId)
+                .Select(pm => new PaymentMethodDTO
+                {
+                    PaymentId = pm.PaymentId,
+                    RiderID = pm.RiderID,
+                    PaymentType = pm.PaymentType,
+                    CardNumber = pm.CardNumber,
+                    ExpiryDate = pm.ExpiryDate,
+                    CVV = pm.CVV,
+                    CardName = pm.CardName
+                })
+                .ToListAsync();
         }
         public async Task<float> CheckRating(int riderId)
         {
