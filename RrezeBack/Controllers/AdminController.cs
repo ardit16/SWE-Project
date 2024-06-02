@@ -107,6 +107,26 @@ namespace RrezeBack.Controllers
             }
             return Ok("Password changed successfully.");
         }
+        [HttpGet("Get-All-Vehicles")]
+        public async Task<IActionResult> GetAllVehicles()
+        {
+            var vehicles = await _adminService.GetAllVehiclesAsync();
+            return Ok(vehicles);
+        }
+
+        [HttpDelete("Delete-Vehicle/{vehicleId}")]
+        public async Task<IActionResult> DeleteVehicle(int vehicleId)
+        {
+            var result = await _adminService.DeleteVehicleAsync(vehicleId);
+            if (result)
+            {
+                return Ok(new { message = "Vehicle deleted successfully." });
+            }
+            else
+            {
+                return NotFound(new { message = "Vehicle not found." });
+            }
+        }
 
     }
 }

@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
+using RrezeBack.Data.Model;
 
 namespace RrezeBack.Services
 {
@@ -20,6 +21,8 @@ namespace RrezeBack.Services
         Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
         Task<List<DriverDTO>> GetAllDriversAsync();
         Task<bool> VerifyVehicleAsync(int vehicleId);
+        Task<IEnumerable<Vehicle>> GetAllVehiclesAsync();
+        Task<bool> DeleteVehicleAsync(int vehicleId);
     }
 
     public class AdminService : IAdminService
@@ -46,7 +49,6 @@ namespace RrezeBack.Services
 
             };
         }
-
         public async Task<List<DriverDTO>> GetAllDriversAsync()
         {
             var drivers = await _context.Drivers.ToListAsync();
@@ -68,8 +70,6 @@ namespace RrezeBack.Services
 
             }).ToList();
         }
-
-
         public async Task<bool> AcceptNewDriverAsync(int DriverId)
         {
             var driver = await _context.Drivers.FindAsync(DriverId);
@@ -100,9 +100,6 @@ namespace RrezeBack.Services
 
             return true;
         }
-
-
-
         public async Task<bool> DeleteRiderAsync(int userId)
         {
             var user = await _context.Riders.FindAsync(userId);
@@ -115,7 +112,6 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
         public async Task<bool> DeleteDriverAsync(int userId)
         {
             var user = await _context.Drivers.FindAsync(userId);
@@ -128,7 +124,6 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
-
         public async Task<IEnumerable<RideDTO>> GetRidesAsync()
         {
             var rides = await _context.Rides.ToListAsync();
@@ -145,7 +140,6 @@ namespace RrezeBack.Services
                 RiderID = ride.RiderID,
             }).ToList();
         }
-
         public async Task<IEnumerable<FeedbackDTO>> GetRatingsAsync()
         {
             var feedbacks = await _context.Feedbacks.ToListAsync();
@@ -160,7 +154,6 @@ namespace RrezeBack.Services
                 RiderComment = feedback.RiderComment,
             }).ToList();
         }
-
         private bool VerifyPassword(string storedHash, string providedPassword)
         {
             var parts = storedHash.Split(':', 2);
@@ -181,7 +174,6 @@ namespace RrezeBack.Services
 
             return storedSubkey == hashedProvidedPassword;
         }
-
         private string HashPassword(string password)
         {
             byte[] salt = new byte[128 / 8];
@@ -199,7 +191,6 @@ namespace RrezeBack.Services
 
             return $"{Convert.ToBase64String(salt)}:{hashed}";
         }
-
         public async Task<int> ChangePassword(ChangePasswordDto dto)
         {
             try
@@ -224,6 +215,22 @@ namespace RrezeBack.Services
             {
                 throw;
             }
+        }
+        public async Task<IEnumerable<Vehicle>> GetAllVehiclesAsync()
+        {
+            return await _context.Vehicles.ToListAsync();
+        }
+        public async Task<bool> DeleteVehicleAsync(int vehicleId)
+        {
+            var vehicle = await _context.Vehicles.FindAsync(vehicleId);
+            if (vehicle == null)
+            {
+                return false;
+            }
+
+            _context.Vehicles.Remove(vehicle);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }
