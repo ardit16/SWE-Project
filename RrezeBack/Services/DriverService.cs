@@ -25,6 +25,8 @@ public class DriverService
         Task<List<Ride>> ViewRides(int driverId);
         Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId);
         Task<bool> AssignDriverToRide(int rideId, int driverId);
+        Task<bool> GetDriverStatus(int driverId);
+        Task<bool> ToggleDriverStatus(int driverId);
     }
 
     public class DriverServices: IDriverService
@@ -453,6 +455,31 @@ public class DriverService
                     DriverComment = f.DriverComment
                 })
                 .ToListAsync();
+        }
+
+        public async Task<bool> GetDriverStatus(int driverId)
+        {
+            var driver = await _context.Drivers.FindAsync(driverId);
+            if (driver == null)
+            {
+                throw new Exception("Driver not found.");
+            }
+
+            return driver.status;
+        }
+
+        public async Task<bool> ToggleDriverStatus(int driverId)
+        {
+            var driver = await _context.Drivers.FindAsync(driverId);
+            if (driver == null)
+            {
+                throw new Exception("Driver not found.");
+            }
+
+            driver.status = !driver.status;
+            await _context.SaveChangesAsync();
+
+            return driver.status;
         }
     }
 }

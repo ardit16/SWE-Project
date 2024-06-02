@@ -197,4 +197,32 @@ public class DriverController : ControllerBase
         var feedbacks = await _driverService.GetDriverFeedbacks(driverId);
         return Ok(feedbacks);
     }
+
+    [HttpGet("{driverId}/status")]
+    public async Task<IActionResult> GetDriverStatus(int driverId)
+    {
+        try
+        {
+            var status = await _driverService.GetDriverStatus(driverId);
+            return Ok(new { status });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
+    [HttpPost("{driverId}/toggle-status")]
+    public async Task<IActionResult> ToggleDriverStatus(int driverId)
+    {
+        try
+        {
+            var status = await _driverService.ToggleDriverStatus(driverId);
+            return Ok(new { status });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 }

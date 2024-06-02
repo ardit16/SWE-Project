@@ -1,24 +1,65 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async function() {
     const driverName = localStorage.getItem('driverName');
     const driverSurname = localStorage.getItem('driverSurname');
+    const driverId = localStorage.getItem('driverId');
     console.log('Retrieved driver name:', driverName);
     if (driverName && driverSurname) {
         document.getElementById('driver-name').textContent = driverName + ' ' + driverSurname;
         document.getElementById('fullname').textContent = driverName + ' ' + driverSurname;
     }
-    
-    const changeStatusButton = document.getElementById('change-status');
-    const status = document.getElementById('status');
-    const requestBoxesContainer = document.getElementById('request-boxes');
-    let online = false;
 
-    changeStatusButton.addEventListener('click', () => {
-        online = !online;
-        status.textContent = online ? 'Online' : 'Offline';
-        if (!online) {
-            clearRequests();
+    try {
+        const driverStatus = await fetchDriverStatus(driverId);
+        updateStatusText(driverStatus);
+    } catch (error) {
+        console.error('Error fetching driver status:', error);
+    }
+
+    const changeStatusButton = document.getElementById('change-status');
+    changeStatusButton.addEventListener('click', async () => {
+        try {
+            const newStatus = await toggleDriverStatus(driverId);
+            updateStatusText(newStatus);
+        } catch (error) {
+            console.error('Error changing driver status:', error);
         }
     });
+});
+
+async function fetchDriverStatus(driverId) {
+    try {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/status`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch driver status. Status: ${response.status}`);
+        }
+        const { status } = await response.json();
+        return status;
+    } catch (error) {
+        console.error('Error:', error);
+        return false; // Default to offline if there's an error
+    }
+}
+
+function updateStatusText(status) {
+    const statusElement = document.getElementById('status');
+    statusElement.textContent = status ? 'Online' : 'Offline';
+}
+
+async function toggleDriverStatus(driverId) {
+    try {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/toggle-status`, {
+            method: 'POST'
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to change driver status. Status: ${response.status}`);
+        }
+        const { status } = await response.json();
+        return status;
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
+}
 
     // Simulate receiving ride requests
     setInterval(() => {
@@ -89,7 +130,6 @@ document.addEventListener('DOMContentLoaded', () => {
             requestBoxesContainer.removeChild(requestBoxesContainer.firstChild);
         }
     }
-});
 
 async function initMap() {
     var mapOptions = {
