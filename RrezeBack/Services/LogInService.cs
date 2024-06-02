@@ -11,6 +11,7 @@ using System;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Google.Apis.Auth;
+using Azure;
 
 namespace RrezeBack.Services
 {
@@ -149,6 +150,7 @@ namespace RrezeBack.Services
                 {
                     Id = result.RiderID,
                     Name = result.Name,
+                    Surname=result.Surname,
                     Email = result.Email,
                     TwoFactorEnabled = result.TwoFactorEnabled
                 };
@@ -182,9 +184,19 @@ namespace RrezeBack.Services
                 {
                     return null;
                 }
-                if(!result.Verified)
+
+                var response = new
                 {
-                    return new { Error = "Driver not verified!" };
+                    Id = result.DriverID,
+                    Name = result.Name,
+                    Surname = result.Surname,
+                    Email = result.Email,
+                    TwoFactorEnabled = result.TwoFactorEnabled,
+                    Verified=result.Verified
+                };
+
+                if (!result.Verified)
+                {
                     return new { response.Email, response.Verified, Error = "Driver not verified!", };
                 }
                 if (result.TwoFactorEnabled)
@@ -196,13 +208,7 @@ namespace RrezeBack.Services
                 }
                 else
                 {
-                    return new
-                    {
-                        Id = result.DriverID,
-                        Name = result.Name,
-                        Surname = result.Surname,
-                        TwoFactorEnabled = false
-                    };
+                    return response;
                 }
             }
             catch (Exception ex)
