@@ -288,31 +288,28 @@ public class DriverService
 
         public async Task<bool> AddNewCar(int driverId, VehicleDto vehicleDto)
         {
-            try
+            var driver = await _context.Drivers.FindAsync(driverId);
+            if (driver == null) return false;
+
+            var vehicle = new Vehicle
             {
-                var driver = await _context.Drivers.FindAsync(driverId);
-                if (driver == null)
-                {
-                    return false;
-                }
+                Model = vehicleDto.Model,
+                Make = vehicleDto.Make,
+                Year = vehicleDto.Year,
+                Color = vehicleDto.Color,
+                LicensePlateNumber = vehicleDto.LicensePlateNumber,
+                NumberOfSeats = vehicleDto.NumberOfSeats,
+                VehicleStatus = "unverified",
+                InsuranceExpiryDate = vehicleDto.InsuranceExpiryDate,
+                RegistrationExpiryDate = vehicleDto.RegistrationExpiryDate,
+                DriverID = driverId
+            };
 
-                var vehicle = new Vehicle
-                {
-                    Model = vehicleDto.Model,
-                    Make = vehicleDto.Make,
-                    Year = vehicleDto.Year,
-                    Color = vehicleDto.Color,
-                    LicensePlateNumber = vehicleDto.LicensePlateNumber,
-                    NumberOfSeats = vehicleDto.NumberOfSeats,
-                    VehicleStatus = vehicleDto.VehicleStatus,
-                    InsuranceExpiryDate = vehicleDto.InsuranceExpiryDate,
-                    RegistrationExpiryDate = vehicleDto.RegistrationExpiryDate,
-                    DriverID = driverId
-                };
-
-                // Save the first vehicle photo
+            // Save the first vehicle photo if it exists
+            if (vehicleDto.photo1 != null)
+            {
                 string vehiclePhoto1FileName = $"{driverId}_vehicle.jpg";
-                string vehiclePhotosDirectoryPath1 = @"C:/Users/ardit/Desktop/vehicle/first";
+                string vehiclePhotosDirectoryPath1 = @"C:Users/Megi Dervishi/OneDrive/Desktop/vehicle/first";
                 if (!Directory.Exists(vehiclePhotosDirectoryPath1))
                 {
                     Directory.CreateDirectory(vehiclePhotosDirectoryPath1);
@@ -323,12 +320,13 @@ public class DriverService
                     await vehicleDto.photo1.CopyToAsync(stream);
                 }
                 vehicle.ProfilePicture1Path = vehiclePhoto1FilePath;
+            }
 
                 // Save the second vehicle photo if it exists
                 if (vehicleDto.photo2 != null)
                 {
                     string vehiclePhoto2FileName = $"{driverId}_vehicle.jpg";
-                    string vehiclePhotosDirectoryPath2 = @"C:/Users/ardit/Desktop/vehicle/second";
+                    string vehiclePhotosDirectoryPath2 = @"C:Users/Megi Dervishi/OneDrive/Desktop/vehicle/second";
                     if (!Directory.Exists(vehiclePhotosDirectoryPath2))
                     {
                         Directory.CreateDirectory(vehiclePhotosDirectoryPath2);
@@ -345,7 +343,7 @@ public class DriverService
                 if (vehicleDto.photo3 != null)
                 {
                     string vehiclePhoto3FileName = $"{driverId}_vehicle.jpg";
-                    string vehiclePhotosDirectoryPath3 = @"C:/Users/ardit/Desktop/vehicle/third";
+                    string vehiclePhotosDirectoryPath3 = @"C:Users/Megi Dervishi/OneDrive/Desktop/vehicle/third";
                     if (!Directory.Exists(vehiclePhotosDirectoryPath3))
                     {
                         Directory.CreateDirectory(vehiclePhotosDirectoryPath3);
@@ -358,16 +356,9 @@ public class DriverService
                     vehicle.ProfilePicture3Path = vehiclePhoto3FilePath;
                 }
 
-                await _context.Vehicles.AddAsync(vehicle);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Optionally log the exception
-                throw;
-            }
+            await _context.Vehicles.AddAsync(vehicle);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<Vehicle>> ViewCars(int driverId)

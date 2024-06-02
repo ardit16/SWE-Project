@@ -143,25 +143,21 @@ public class DriverController : ControllerBase
     }
 
     [HttpPost("{driverId}/add-new-car")]
-    public async Task<IActionResult> AddNewCar(int driverId, VehicleDto vehicleDto )
+    public async Task<IActionResult> AddNewCar(int driverId, [FromForm] VehicleDto vehicleDto)
     {
         var result = await _driverService.AddNewCar(driverId, vehicleDto);
-        if (!result)
-        {
-            return NotFound("Driver not found.");
-        }
-        return Ok(result);
+        if (!result) return NotFound("Driver not found.");
+
+        return Ok("Vehicle added successfully.");
     }
 
     [HttpGet("{driverId}/view-cars")]
     public async Task<IActionResult> ViewCars(int driverId)
     {
-        var result = await _driverService.ViewCars(driverId);
-        if (result == null || !result.Any())
-        {
-            return NotFound("No cars found for the driver.");
-        }
-        return Ok(result);
+        var cars = await _driverService.ViewCars(driverId);
+        if (!cars.Any()) return NotFound("No cars found for the driver.");
+
+        return Ok(cars);
     }
 
     [HttpGet("{driverId}/view-rides")]
