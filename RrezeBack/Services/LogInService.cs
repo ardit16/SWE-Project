@@ -155,6 +155,7 @@ namespace RrezeBack.Services
                 {
                     Id = result.RiderID,
                     Name = result.Name,
+                    Surname = result.Surname,
                     Email = result.Email,
                     TwoFactorEnabled = result.TwoFactorEnabled
                 };
@@ -189,26 +190,32 @@ namespace RrezeBack.Services
                 {
                     return null;
                 }
-                if(!result.Verified)
+
+                var response = new
                 {
-                    return new { Error = "Driver not verified!" };
+                    Id = result.DriverID,
+                    Name = result.Name,
+                    Surname = result.Surname,
+                    Email = result.Email,
+                    Verified = result.Verified,
+                    TwoFactorEnabled = result.TwoFactorEnabled
+                };
+
+                if (!result.Verified)
+                {
+                    return new { response.Email, response.Verified, Error = "Driver not verified!" };
                 }
+
                 if (result.TwoFactorEnabled)
                 {
                     var code = GenerateRandomCode();
                     await Send2FAEmail(result.Email, code);
                     _memoryCache.Set(result.Email, code, TimeSpan.FromMinutes(1));
-                    return new { Email = result.Email, TwoFactorEnabled = true };
+                    return new { response.Email, response.Verified, response.TwoFactorEnabled };
                 }
                 else
                 {
-                    return new
-                    {
-                        Id = result.DriverID,
-                        Name = result.Name,
-                        Surname = result.Surname,
-                        TwoFactorEnabled = false
-                    };
+                    return response;
                 }
             }
             catch (Exception ex)
@@ -290,6 +297,7 @@ namespace RrezeBack.Services
                 return false;
             }
         }
+
         public async Task<object> GoogleLogin(string idToken)
         {
             var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);

@@ -42,7 +42,7 @@ namespace RrezeBack.Controllers
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 
@@ -53,11 +53,15 @@ namespace RrezeBack.Controllers
             {
                 var result = await _logInService.LogInDriver(dto);
                 if (result == null) { return NotFound(); }
+                if (result is IDictionary<string, object> dict && dict.ContainsKey("Error"))
+                {
+                    return BadRequest(dict["Error"]);
+                }
                 return Ok(result);
             }
             catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex.Message);
             }
         }
 

@@ -31,7 +31,7 @@
                     <div class="input-group">
                         <input type="text" id="code" required>
                     </div>
-                    <button type="button" class="resend-button">Resend</button>
+                    <button type="button" class="resend-button" id="resend-button">Resend</button>
                     <button type="submit" class="verify-button">Verify</button>
                     <p>Can not verify? <a href="login_driver.html"> Back to login</a></p>                    
                 </form>
@@ -48,6 +48,14 @@
     </div>
     </footer>
     </div>
+        <!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close-button" id="close-button">&times;</span>
+        <p id="modal-message"></p>
+    </div>
+</div>
 </body>
 <script src="assets/scripts/headerfooter_script.js"></script>
+<script src="assets/scripts/2fa_d_script.js"></script>
 </html>

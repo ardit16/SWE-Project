@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!birthday) {
             showError('birthday-error', 'Birthday is required');
             valid = false;
-        } else if (age < 21) {
+        } else if (age < 18) {
             showError('birthday-error', 'You should be at least 21 years old');
             valid = false;
         } else {
