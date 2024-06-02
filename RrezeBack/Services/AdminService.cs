@@ -18,6 +18,7 @@ namespace RrezeBack.Services
         Task<IEnumerable<RideDTO>> GetRidesAsync();
         Task<IEnumerable<FeedbackDTO>> GetRatingsAsync();
         Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
+        Task<List<DriverDTO>> GetAllDriversAsync();
     }
 
     public class AdminService : IAdminService
@@ -44,6 +45,29 @@ namespace RrezeBack.Services
 
             };
         }
+
+        public async Task<List<DriverDTO>> GetAllDriversAsync()
+        {
+            var drivers = await _context.Drivers.ToListAsync();
+            return drivers.Select(driver => new DriverDTO
+            {
+                DriverID=driver.DriverID,
+                Name = driver.Name,
+                Surname = driver.Surname,
+                Birthday = driver.Birthday,
+                Email = driver.Email,
+                PhoneNumber = driver.PhoneNumber,
+                Verified = driver.Verified,
+                DateAdded=driver.DateAdded,
+                ProfilePicturePath=driver.ProfilePicturePath,
+                DriverLicensepath=driver.DriverLicensepath, 
+                status=driver.status,
+                ovrating=driver.ovrating,
+                TwoFactorEnabled=driver.TwoFactorEnabled,
+
+            }).ToList();
+        }
+
 
         public async Task<bool> AcceptNewDriverAsync(int DriverId)
         {

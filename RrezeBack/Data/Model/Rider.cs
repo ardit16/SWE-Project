@@ -17,7 +17,7 @@ namespace RrezeBack.Data.Model
         public bool TwoFactorEnabled { get; set; }
         public float ovrating { get; set; }
         public string? ProfilePicturePath { get; set; }
-        public string? DriverLicensepath { get; set; }
+       
         
         public DateTime DateAdded { get; set; }
 

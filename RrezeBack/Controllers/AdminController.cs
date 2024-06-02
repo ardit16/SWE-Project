@@ -35,6 +35,13 @@ namespace RrezeBack.Controllers
             }
             return Ok("Driver accepted successfully.");
         }
+        [HttpGet("Get-All-Drivers")]
+        public async Task<IActionResult> GetAllDrivers()
+        {
+            var drivers = await _adminService.GetAllDriversAsync();
+            return Ok(drivers);
+        }
+
 
         [HttpDelete("Delete-Rider/{riderId}")]
         public async Task<IActionResult> DeleteRider(int riderId)
