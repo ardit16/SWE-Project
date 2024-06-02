@@ -25,6 +25,20 @@ namespace RrezeBack.Controllers
             if (admin == null) return NotFound();
             return Ok(admin);
         }
+
+        [HttpPost("verify/{vehicleId}")]
+        public async Task<IActionResult> VerifyVehicle(int vehicleId)
+        {
+            var result = await _adminService.VerifyVehicleAsync(vehicleId);
+            if (result)
+            {
+                return Ok(new { message = "Vehicle verified successfully." });
+            }
+            else
+            {
+                return NotFound(new { message = "Vehicle not found." });
+            }
+        }
         [HttpPost("Accept-Driver/{driverId}")]
         public async Task<IActionResult> AcceptNewDriver(int driverId)
         {

@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const vehicleBox = document.createElement('div');
             vehicleBox.classList.add('vehicle-box');
 
-            if (vehicle.vehicleStatus === "verified") {
+            if (vehicle.vehicleStatus === "Verified") {
                 vehicleBox.classList.add('verified'); // Add verified class for green background
             } else {
                 vehicleBox.classList.add('unverified'); // Add unverified class for red background

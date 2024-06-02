@@ -19,6 +19,7 @@ namespace RrezeBack.Services
         Task<IEnumerable<FeedbackDTO>> GetRatingsAsync();
         Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
         Task<List<DriverDTO>> GetAllDriversAsync();
+        Task<bool> VerifyVehicleAsync(int vehicleId);
     }
 
     public class AdminService : IAdminService
@@ -82,6 +83,25 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> VerifyVehicleAsync(int vehicleId)
+        {
+            var vehicle = await _context.Vehicles.FindAsync(vehicleId);
+            if (vehicle == null)
+            {
+                return false;
+            }
+
+            if (vehicle.VehicleStatus != "Verified")
+            {
+                vehicle.VehicleStatus = "Verified";
+                _context.Vehicles.Update(vehicle);
+                await _context.SaveChangesAsync();
+            }
+
+            return true;
+        }
+
+
 
         public async Task<bool> DeleteRiderAsync(int userId)
         {
