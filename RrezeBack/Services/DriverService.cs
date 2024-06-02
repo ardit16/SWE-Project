@@ -8,6 +8,7 @@ public class DriverService
 {
     public interface IDriverService
     {
+        Task<DriverDTO> GetDriverProfile(int driverId);
         Task<bool> ChangeTwoFactorAuthentication(int driverId, bool enable2FA);
         Task<bool> ChangeProfilePicture(int driverId, IFormFile newProfilePicture);
         Task<bool> ChangeDriverLicensePhoto(int driverId, IFormFile newDriverLicense);
@@ -21,6 +22,7 @@ public class DriverService
         Task<List<Vehicle>> ViewCars(int driverId);
         Task<List<PaymentMethod>> ViewPaymentMethods(int driverId);
         Task<List<Ride>> ViewRides(int driverId);
+        Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId);
     }
 
     public class DriverServices: IDriverService
@@ -32,7 +34,26 @@ public class DriverService
             _context = context;
         }
 
- 
+        public async Task<DriverDTO> GetDriverProfile(int driverId)
+        {
+            var driver = await _context.Drivers.FindAsync(driverId);
+            if (driver == null) return null;
+
+            return new DriverDTO
+            {
+                DriverID = driver.DriverID,
+                Name = driver.Name,
+                Surname = driver.Surname,
+                Email = driver.Email,
+                Birthday = driver.Birthday,
+                PhoneNumber = driver.PhoneNumber,
+                TwoFactorEnabled = driver.TwoFactorEnabled,
+                status = driver.status,
+                Verified = driver.Verified,
+                ovrating = driver.ovrating,
+                DateAdded = driver.DateAdded
+            };
+        }
 
         public async Task<bool> ChangeTwoFactorAuthentication(int driverId, bool enable2FA)
         {
@@ -352,6 +373,21 @@ public class DriverService
                 numBytesRequested: 256 / 8));
 
             return $"{Convert.ToBase64String(salt)}:{hashed}";
+        }
+
+        public async Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId)
+        {
+            return await _context.Feedbacks
+                .Where(f => f.DriverID == driverId)
+                .Select(f => new FeedbackDTO
+                {
+                    RiderID = f.RiderID,
+                    DriverID = f.DriverID,
+                    RideID = f.RideID,
+                    DriverRating = f.DriverRating,
+                    DriverComment = f.DriverComment
+                })
+                .ToListAsync();
         }
     }
 }

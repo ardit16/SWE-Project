@@ -1,26 +1,25 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const riderId = localStorage.getItem('riderId');
-    console.log('Retrieved rider ID:', riderId);
-    if (!riderId) {
-        window.location.href = 'login_rider.html';
-        return;
-    }
+    const driverId = localStorage.getItem('driverId');
+    console.log('Retrieved driver ID:', driverId);
 
     try {
-        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}`);
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}`);
         if (!response.ok) {
-            throw new Error('Failed to fetch rider profile.');
+            throw new Error('Failed to fetch driver profile.');
         }
 
-        const rider = await response.json();
-        document.getElementById('name').textContent = rider.name;
-        document.getElementById('surname').textContent = rider.surname;
-        document.getElementById('email').textContent = rider.email;
-        document.getElementById('phone-number').textContent = rider.phoneNumber;
-        document.getElementById('two-factor').textContent = rider.twoFactorEnabled ? 'Yes' : 'No';
+        const driver = await response.json();
+        document.getElementById('name').textContent = driver.name;
+        document.getElementById('surname').textContent = driver.surname;
+        document.getElementById('email').textContent = driver.email;
+        document.getElementById('phone-number').textContent = driver.phoneNumber;
+        document.getElementById('two-factor').textContent = driver.twoFactorEnabled ? 'Yes' : 'No';
 
-        const profilePhoto = rider.profilePicturePath ? rider.profilePicturePath : './assets/images/user.jpg';
+        const profilePhoto = driver.profilePicturePath ? driver.profilePicturePath : './assets/images/user.jpg';
         document.getElementById('profile-photo').src = profilePhoto;
+
+        const licensePhoto = driver.licensePhotoPath ? driver.licensePhotoPath : './assets/images/license.jpg';
+        document.getElementById('license-photo').src = licensePhoto;
     } catch (error) {
         console.error('Error:', error);
     }
@@ -33,15 +32,14 @@ document.getElementById('edit-photo').addEventListener('click', function() {
 
 document.getElementById('profile-upload').addEventListener('change', async (event) => {
     const file = event.target.files[0];
-    const riderId = localStorage.getItem('riderId');
+    const driverId = localStorage.getItem('driverId');
     if (file) {
         const formData = new FormData();
-        formData.append('RiderId', riderId);
-        formData.append('ProfilePicture', file);
+        formData.append('newProfilePicture', file);
 
         try {
-            const response = await fetch(`http://localhost:5179/api/Rider/profilepicture`, {
-                method: 'PUT',
+            const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/change-profile-picture`, {
+                method: 'POST',
                 body: formData
             });
 
@@ -51,12 +49,44 @@ document.getElementById('profile-upload').addEventListener('change', async (even
 
             const reader = new FileReader();
             reader.onload = (e) => {
-                document.getElementById('profile-photo').src = e.target.result;
+                document.querySelector('.profile-photo img').src = e.target.result;
             };
             reader.readAsDataURL(file);
         } catch (error) {
             console.error('Error:', error);
-            showModal('Error uploading profile picture.');
+        }
+    }
+});
+
+// License Photo Upload
+document.getElementById('edit-license').addEventListener('click', function() {
+    document.getElementById('license-upload').click();
+});
+
+document.getElementById('license-upload').addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    const driverId = localStorage.getItem('driverId');
+    if (file) {
+        const formData = new FormData();
+        formData.append('newDriverLicense', file);
+
+        try {
+            const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/change-driver-license`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to upload driver license photo.');
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.querySelector('.license-photo img').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } catch (error) {
+            console.error('Error:', error);
         }
     }
 });
@@ -69,7 +99,7 @@ document.getElementById('change-password').addEventListener('click', function() 
 
 // Toggle 2FA Status
 document.getElementById('change-2fa').addEventListener('click', async function() {
-    const riderId = localStorage.getItem('riderId');
+    const driverId = localStorage.getItem('driverId');
     const twoFactorElement = document.getElementById('two-factor');
     const enable2FA = twoFactorElement.textContent === 'No';
 
@@ -77,30 +107,28 @@ document.getElementById('change-2fa').addEventListener('click', async function()
     formData.append('TwoFactorEnabled', enable2FA);
 
     try {
-        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}/change-two-factor`, {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/change-two-factor`, {
             method: 'POST',
             body: formData
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(errorText);
+            throw new Error('Failed to change two-factor authentication.');
         }
 
         showModal('Two-factor authentication updated successfully.');
         twoFactorElement.textContent = enable2FA ? 'Yes' : 'No';
     } catch (error) {
         console.error('Error:', error);
-        showModal(`Error: ${error.message}`);
     }
 });
 
 // Confirm Password Change
 document.getElementById('confirm-password-change').addEventListener('click', async function() {
-    const riderId = localStorage.getItem('riderId');
     const currentPassword = document.getElementById('current-password').value;
     const newPassword = document.getElementById('new-password').value;
     const confirmNewPassword = document.getElementById('confirm-new-password').value;
+    const driverId = localStorage.getItem('driverId');
 
     if (newPassword !== confirmNewPassword) {
         showModal('New passwords do not match.');
@@ -108,27 +136,24 @@ document.getElementById('confirm-password-change').addEventListener('click', asy
     }
 
     const formData = new FormData();
-    formData.append('Id', riderId);
+    formData.append('Id', driverId);
     formData.append('Password', currentPassword);
     formData.append('NewPassword', newPassword);
 
     try {
-        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}/change-password`, {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}/change-password`, {
             method: 'POST',
             body: formData
         });
 
         if (!response.ok) {
-            const errorText = await response.text();
-            showModal(`Error: ${errorText}`);
-            return;
+            throw new Error('Failed to change password.');
         }
 
         showModal('Password changed successfully.');
         document.getElementById('password-fields').style.display = 'none';
     } catch (error) {
         console.error('Error:', error);
-        showModal(`Error: ${error.message}`);
     }
 });
 

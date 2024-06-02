@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const driverName = localStorage.getItem('driverName');
+    const driverSurname = localStorage.getItem('driverSurname');
+    console.log('Retrieved driver name:', driverName);
+    if (driverName && driverSurname) {
+        document.getElementById('driver-name').textContent = driverName + ' ' + driverSurname;
+        document.getElementById('fullname').textContent = driverName + ' ' + driverSurname;
+    }
+    
     const changeStatusButton = document.getElementById('change-status');
     const status = document.getElementById('status');
     const requestBoxesContainer = document.getElementById('request-boxes');

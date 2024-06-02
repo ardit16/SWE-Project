@@ -22,34 +22,34 @@
             <div class="account-container">
                 <h1>Account Information</h1>
                 <div class="left-section">
-                <div class="profile-photo">
-                    <img src="assets/images/user.jpg" alt="Profile Photo" id="profile-photo">
-                    <i class="fas fa-pencil-alt" id="edit-photo"></i>
-                    <input type="file" accept="image/*" id="profile-upload" style="display: none;">
-                </div>
-                <div class="account-info">
-                    <div class="info-item">
-                        <span>Name:</span>
-                        <span id="name">Megi</span>
+                    <div class="profile-photo">
+                        <img src="assets/images/user.jpg" alt="Profile Photo" id="profile-photo">
+                        <i class="fas fa-pencil-alt" id="edit-photo"></i>
+                        <input type="file" accept="image/*" id="profile-upload" style="display: none;">
                     </div>
-                    <div class="info-item">
-                        <span>Surname:</span>
-                        <span id="surname">Dervishi</span>
+                    <div class="account-info">
+                        <div class="info-item">
+                            <span>Name:</span>
+                            <span id="name">Megi</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Surname:</span>
+                            <span id="surname">Dervishi</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Email:</span>
+                            <span id="email">megidervishi5@gmail.com</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Phone number:</span>
+                            <span id="phone-number">+355686268882</span>
+                        </div>
+                        <div class="info-item">
+                            <span>Two factor authentication:</span>
+                            <span id="two-factor">Yes</span>
+                            <button id="change-2fa">Change</button>
+                        </div>                    
                     </div>
-                    <div class="info-item">
-                        <span>Email:</span>
-                        <span id="email">megidervishi5@gmail.com</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Phone number:</span>
-                        <span id="phone-number">+355686268882</span>
-                    </div>
-                    <div class="info-item">
-                        <span>Two factor authentication:</span>
-                        <span id="two-factor">Yes</span>
-                        <button id="change-2fa">Change</button>
-                    </div>                    
-                </div>
                 </div>
                 <div class="right-section">
                     <div class="info-item password-change">
@@ -61,7 +61,15 @@
                         <input type="password" id="confirm-new-password" placeholder="Confirm New Password">
                         <button id="confirm-password-change">Confirm</button>
                     </div>                    
+                </div>
             </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-button">&times;</span>
+            <p id="modal-message"></p>
         </div>
     </div>
     <script src="assets/scripts/headerfooter_script.js"></script>

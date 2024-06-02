@@ -25,40 +25,30 @@ namespace RrezeBack.Controllers
             return Ok(rider);
         }
 
-        [HttpPut("{riderId}/CHANGETWOFA")]
-
-        public async Task<IActionResult> UpdateRiderProfile(int riderId, [FromForm] twofadto twofadto)
+        [HttpPost("{riderId}/change-two-factor")]
+        public async Task<IActionResult> ChangeTwoFactorAuthentication(int riderId, [FromForm] twofadto dto)
         {
-            if (riderId != twofadto.RideriId) return BadRequest("Rider ID mismatch");
-
-            var result = await _riderService.UpdateRiderTWOFA(riderId, twofadto);
-            if (!result) return NotFound("");
-
-            return Ok("Two-factor authentication updated successfully");
+            var result = await _riderService.ChangeTwoFactorAuthentication(riderId, dto.TwoFactorEnabled);
+            if (!result)
+            {
+                return NotFound("Rider not found.");
+            }
+            return Ok(result);
         }
 
-        [HttpPost("{riderId}/changepassword")]
-        public async Task<IActionResult> ChangePassword(int riderId, [FromForm] ChangePasswordDto changePasswordDto)
+        [HttpPost("{riderId}/change-password")]
+        public async Task<IActionResult> ChangePassword(int riderId, [FromForm] ChangePasswordDto dto)
         {
-            if (riderId != changePasswordDto.Id)
-                return BadRequest("Rider ID mismatch");
-
-            var result = await _riderService.ChangePassword(changePasswordDto);
-            switch (result)
+            var result = await _riderService.ChangePassword(dto);
+            if (result == -1)
             {
-                case -1:
-                    return NotFound("Rider not found.");
-                case -2:
-                    return BadRequest("Invalid current password.");
-                case 0:
-                    return BadRequest("Password change failed.");
-                default:
-                    return Ok("Password changed successfully.");
+                return NotFound("Rider not found.");
             }
-            if (riderId != changePasswordDto.Id) return BadRequest("Rider ID mismatch");
-            if (result <= 0) return BadRequest("Password change failed");
-
-            return NoContent(); // Consider using Ok() if you want to return a confirmation message.
+            else if (result == -2)
+            {
+                return BadRequest("Incorrect current password.");
+            }
+            return Ok(result);
         }
 
         [HttpPost("requestride")]
@@ -125,6 +115,13 @@ namespace RrezeBack.Controllers
             }
 
             return Ok("Profile picture updated successfully");
+        }
+
+        [HttpGet("{riderId}/feedbacks")]
+        public async Task<IActionResult> GetRiderFeedbacks(int riderId)
+        {
+            var feedbacks = await _riderService.GetRiderFeedbacks(riderId);
+            return Ok(feedbacks);
         }
 
 

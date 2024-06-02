@@ -165,7 +165,7 @@ namespace RrezeBack.Services
                     var code = GenerateRandomCode();
                     await Send2FAEmail(result.Email, code);
                     _memoryCache.Set(result.Email, code, TimeSpan.FromMinutes(1));
-                    return new { response.Email, response.TwoFactorEnabled };
+                    return new { response.Email, response.TwoFactorEnabled, response.Id, response.Name, response.Surname };
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace RrezeBack.Services
 
                 if (!result.Verified)
                 {
-                    return new { response.Email, response.Verified, Error = "Driver not verified!" };
+                    return new { response.Email, response.Verified, Error = "Driver not verified!", };
                 }
 
                 if (result.TwoFactorEnabled)
@@ -211,7 +211,7 @@ namespace RrezeBack.Services
                     var code = GenerateRandomCode();
                     await Send2FAEmail(result.Email, code);
                     _memoryCache.Set(result.Email, code, TimeSpan.FromMinutes(1));
-                    return new { response.Email, response.Verified, response.TwoFactorEnabled };
+                    return new { response.Email, response.Verified, response.TwoFactorEnabled, response.Id, response.Name, response.Surname };
                 }
                 else
                 {

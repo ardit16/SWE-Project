@@ -1,22 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const feedbacksContainer = document.getElementById('feedbacks');
-    
-    const exampleFeedbacks = [
-        'Great rider, very punctual.',
-        'Pleasant experience, very polite.',
-        'Enjoyed the ride, good communication.',
-        'Would love to ride again, very friendly.',
-        'Had a great conversation during the ride.',
-        'I had an exceptional experience with this rider. They were punctual, polite, and extremely friendly. The car was clean and well-maintained, and the ride was smooth and comfortable. We had a great conversation during the trip, which made the journey even more enjoyable. This rider truly goes above and beyond to ensure a pleasant experience for their passengers. I highly recommend them to anyone looking for a reliable and friendly ride-sharing experience. I would not hesitate to ride with them again in the future.'
-    ];
+document.addEventListener('DOMContentLoaded', async () => {
+    const riderId = localStorage.getItem('riderId');
 
-    exampleFeedbacks.forEach(feedback => addFeedback(feedback));
+    try {
+        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch rider profile.');
+        }
 
-    function addFeedback(feedback) {
-        const feedbackBox = document.createElement('div');
-        feedbackBox.classList.add('feedback-box');
-        feedbackBox.textContent = feedback;
+        const rider = await response.json();
+        document.getElementById('fullname').textContent = `${rider.name} ${rider.surname}`;
+        document.getElementById('days-using').textContent = `${calculateDaysUsing(rider.dateAdded)} days using Rreze`;
+        document.getElementById('contact-info').textContent = `Contact at ${rider.email} or ${rider.phoneNumber}`;
+        document.getElementById('rating').innerHTML = `<i class="fas fa-star"></i> ${rider.ovrating.toFixed(1)}`;
 
-        feedbacksContainer.appendChild(feedbackBox);
+        if (rider.profilePicturePath) {
+            document.getElementById('profile-photo').src = rider.profilePicturePath;
+        }
+
+        const feedbackResponse = await fetch(`http://localhost:5179/api/Rider/${riderId}/feedbacks`);
+        if (feedbackResponse.ok) {
+            const feedbacks = await feedbackResponse.json();
+            const feedbacksContainer = document.getElementById('feedbacks');
+            feedbacks.forEach(feedback => addFeedback(feedback.riderComment));
+        } else {
+            console.error('Failed to fetch feedbacks.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
 });
+
+function addFeedback(feedback) {
+    const feedbackBox = document.createElement('div');
+    feedbackBox.classList.add('feedback-box');
+    feedbackBox.textContent = feedback;
+
+    const feedbacksContainer = document.getElementById('feedbacks');
+    feedbacksContainer.appendChild(feedbackBox);
+}
+
+function calculateDaysUsing(dateAdded) {
+    const addedDate = new Date(dateAdded);
+    const currentDate = new Date();
+    const diffTime = Math.abs(currentDate - addedDate);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}

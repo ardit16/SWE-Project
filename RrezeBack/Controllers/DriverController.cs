@@ -13,6 +13,16 @@ public class DriverController : ControllerBase
         _driverService = driverService;
     }
 
+    [HttpGet("{driverId}")]
+    public async Task<IActionResult> GetDriverProfile(int driverId)
+    {
+        var driver = await _driverService.GetDriverProfile(driverId);
+        if (driver == null)
+        {
+            return NotFound("Driver not found.");
+        }
+        return Ok(driver);
+    }
 
     [HttpPost("{driverId}/change-two-factor")]
     public async Task<IActionResult> ChangeTwoFactorAuthentication(int driverId, [FromForm] twofadto dto)
@@ -160,5 +170,12 @@ public class DriverController : ControllerBase
             return NotFound("No rides found for the driver.");
         }
         return Ok(result);
+    }
+
+    [HttpGet("{driverId}/feedbacks")]
+    public async Task<IActionResult> GetDriverFeedbacks(int driverId)
+    {
+        var feedbacks = await _driverService.GetDriverFeedbacks(driverId);
+        return Ok(feedbacks);
     }
 }

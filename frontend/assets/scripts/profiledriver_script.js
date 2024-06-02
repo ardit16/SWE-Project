@@ -1,22 +1,47 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const feedbacksContainer = document.getElementById('feedbacks');
-    
-    const exampleFeedbacks = [
-        'Driver was on time and very professional.',
-        'Safe and smooth driving, highly recommended!',
-        'Car was clean and comfortable, excellent service.',
-        'Friendly driver, made the ride enjoyable.',
-        'Great communication and very polite.',
-        'I had an exceptional experience with this driver. They were punctual, polite, and extremely friendly. The car was spotless and well-maintained, and the ride was incredibly smooth and comfortable. The driver made sure to take the best routes, avoiding traffic and ensuring a timely arrival. I highly recommend this driver for anyone seeking a top-notch ride-sharing experience. I would gladly ride with them again in the future.'
-    ];    
+document.addEventListener('DOMContentLoaded', async () => {
+    const driverId = localStorage.getItem('driverId');
+    console.log('Retrieved driver ID:', driverId);
 
-    exampleFeedbacks.forEach(feedback => addFeedback(feedback));
+    try {
+        const response = await fetch(`http://localhost:5179/api/Driver/${driverId}`);
+        if (!response.ok) {
+            throw new Error('Failed to fetch driver profile.');
+        }
 
-    function addFeedback(feedback) {
-        const feedbackBox = document.createElement('div');
-        feedbackBox.classList.add('feedback-box');
-        feedbackBox.textContent = feedback;
+        const driver = await response.json();
+        document.getElementById('fullname').textContent = `${driver.name} ${driver.surname}`;
+        document.getElementById('days-using').textContent = `${calculateDaysUsing(driver.dateAdded)} days using Rreze`;
+        document.getElementById('contact-info').textContent = `Contact at ${driver.email} or ${driver.phoneNumber}`;
+        document.getElementById('rating').innerHTML = `<i class="fas fa-star"></i> ${driver.ovrating.toFixed(1)}`;
 
-        feedbacksContainer.appendChild(feedbackBox);
+        const profilePhoto = driver.profilePicturePath ? driver.profilePicturePath : './assets/images/user.jpg';
+        document.getElementById('profile-photo').src = profilePhoto;
+
+        const feedbackResponse = await fetch(`http://localhost:5179/api/Driver/${driverId}/feedbacks`);
+        if (feedbackResponse.ok) {
+            const feedbacks = await feedbackResponse.json();
+            const feedbacksContainer = document.getElementById('feedbacks');
+            feedbacks.forEach(feedback => addFeedback(feedback.driverComment));
+        } else {
+            console.error('Failed to fetch feedbacks.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
 });
+
+function addFeedback(feedback) {
+    const feedbackBox = document.createElement('div');
+    feedbackBox.classList.add('feedback-box');
+    feedbackBox.textContent = feedback;
+
+    const feedbacksContainer = document.getElementById('feedbacks');
+    feedbacksContainer.appendChild(feedbackBox);
+}
+
+function calculateDaysUsing(dateAdded) {
+    const addedDate = new Date(dateAdded);
+    const currentDate = new Date();
+    const diffTime = Math.abs(currentDate - addedDate);
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+}

@@ -12,8 +12,8 @@ namespace RrezeBack.Services
     public interface IRiderService
     {
     Task<RiderDTO> GetRiderProfile(int riderId);
-    Task<bool> UpdateRiderTWOFA(int Riderid, twofadto twofadto);
-    Task<int> ChangePassword(ChangePasswordDto changePasswordDto);
+    Task<bool> ChangeTwoFactorAuthentication(int riderId, bool enable2FA);
+    Task<int> ChangePassword(ChangePasswordDto dto);
     Task<bool> RequestRide(RideDTO rideRequestDto);
     Task<int> CancelRide(int Riderid);
     Task<bool> SubmitFeedback(FeedbackDTO feedbackDto);
@@ -21,6 +21,7 @@ namespace RrezeBack.Services
     Task<float> CheckRating(int riderId);
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
     Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
+    Task<IEnumerable<FeedbackDTO>> GetRiderFeedbacks(int riderId);
 
     }
     public class RiderService : IRiderService
@@ -49,15 +50,15 @@ namespace RrezeBack.Services
                 Ovrating = rider.ovrating
             };
         }
-        public async Task<bool> UpdateRiderTWOFA(int id, twofadto twofadto)
+        public async Task<bool> ChangeTwoFactorAuthentication(int riderId, bool enable2FA)
         {
-            var rider = await _context.Riders.FindAsync(twofadto.RideriId);
-            if (rider == null) return false;
-
-            rider.TwoFactorEnabled = twofadto.TwoFactorEnabled;
-            _context.Riders.Update(rider);
+            var rider = await _context.Riders.FindAsync(riderId);
+            if (rider == null)
+            {
+                return false;
+            }
+            rider.TwoFactorEnabled = enable2FA;
             await _context.SaveChangesAsync();
-
             return true;
         }
         private bool VerifyPassword(string storedHash, string providedPassword)
@@ -274,6 +275,7 @@ namespace RrezeBack.Services
                 })
                 .ToListAsync();
         }
+
         public async Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto)
         {
             var rider = await _context.Riders.FindAsync(profilePictureDto.RiderId);
@@ -301,6 +303,21 @@ namespace RrezeBack.Services
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<IEnumerable<FeedbackDTO>> GetRiderFeedbacks(int riderId)
+        {
+            return await _context.Feedbacks
+                .Where(f => f.RiderID == riderId)
+                .Select(f => new FeedbackDTO
+                {
+                    RiderID = f.RiderID,
+                    DriverID = f.DriverID,
+                    RideID = f.RideID,
+                    RiderRating = f.RiderRating,
+                    RiderComment = f.RiderComment
+                })
+                .ToListAsync();
         }
 
     }
