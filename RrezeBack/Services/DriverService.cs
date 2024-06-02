@@ -24,6 +24,7 @@ public class DriverService
         Task<List<Vehicle>> ViewCars(int driverId);
         Task<List<Ride>> ViewRides(int driverId);
         Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId);
+        Task<bool> AssignDriverToRide(int rideId, int driverId);
     }
 
     public class DriverServices: IDriverService
@@ -54,6 +55,31 @@ public class DriverService
                 ovrating = driver.ovrating,
                 DateAdded = driver.DateAdded
             };
+        }
+        public async Task<bool> AssignDriverToRide(int rideId, int driverId)
+        {
+            try
+            {
+                var ride = await _context.Rides.FindAsync(rideId);
+                if (ride == null)
+                {
+                    return false;
+                }
+
+                ride.DriverID = driverId;
+                _context.Rides.Update(ride);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                return false;
+            }
         }
 
         public async Task<bool> ChangeTwoFactorAuthentication(int driverId, bool enable2FA)

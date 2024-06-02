@@ -23,6 +23,26 @@ public class DriverController : ControllerBase
         }
         return Ok(driver);
     }
+    [HttpPost("assigndriver")]
+    public async Task<IActionResult> AssignDriverToRide([FromBody] AssignDriverDTO assignDriverDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        try
+        {
+            var result = await _driverService.AssignDriverToRide(assignDriverDto.RideID, assignDriverDto.DriverID);
+            if (!result) return BadRequest("Failed to assign driver to ride");
+
+            return Ok("Driver assigned to ride successfully");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
 
     [HttpPost("{driverId}/change-two-factor")]
     public async Task<IActionResult> ChangeTwoFactorAuthentication(int driverId, [FromForm] twofadto dto)
