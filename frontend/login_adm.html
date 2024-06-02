@@ -12,42 +12,52 @@
 </head>
 <body>
     <div class="wrapper">
-    <div class="navbar">
-        <div class="left">
-            <a href="index.html">Rreze</a>
-        </div>
-    </div>
-    <hr class="divider">
-    <div class="content">
-        <div class="login-container">
-            <div class="login-box">
-                <h2>Admin Login</h2>
-                <form>
-                    <div class="input-group">
-                        <input type="email" id="email" required>
-                        <label for="email">Email</label>
-                        <i class='bx bx-user'></i>
-                    </div>
-                    <div class="input-group">
-                        <input type="password" id="password" required>
-                        <label for="password">Password</label>
-                        <i class='bx bx-lock'></i>
-                    </div>
-                    <button type="submit" class="login-button">Login</button>                  
-                </form>
+        <div class="navbar">
+            <div class="left">
+                <a href="index.html">Rreze</a>
             </div>
         </div>
+        <hr class="divider">
+        <div class="content">
+            <div class="login-container">
+                <div class="login-box">
+                    <h2>Admin Login</h2>
+                    <form>
+                        <div class="input-group">
+                            <input type="email" id="email" required>
+                            <label for="email">Email</label>
+                            <i class='bx bx-user'></i>
+                        </div>
+                        <div class="input-group">
+                            <input type="password" id="password" required>
+                            <label for="password">Password</label>
+                            <i class='bx bx-lock'></i>
+                        </div>
+                        <button type="submit" class="login-button">Login</button>                  
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <hr class="divider">
+            <div id="year">
+                <h6>© <span id="current-year"></span> by Rreze</h6>
+            </div>
+            <div id="social">
+                <h6><i class="fa-brands fa-facebook"></i>   <i class="fa-brands fa-instagram"></i>   <i class="fa-brands fa-youtube"></i>   <i class="fa-brands fa-linkedin"></i></h6>
+            </div>
+        </footer>
     </div>
-    <footer>
-    <hr class="divider">
-    <div id="year">
-        <h6>© <span id="current-year"></span> by Rreze</h6>
+
+    <!-- Modal HTML -->
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="errorMessage"></p>
+        </div>
     </div>
-    <div id="social">
-        <h6><i class="fa-brands fa-facebook"></i>   <i class="fa-brands fa-instagram"></i>   <i class="fa-brands fa-youtube"></i>   <i class="fa-brands fa-linkedin"></i></h6>
-    </div>
-    </footer>
-    </div>
+
+    <script src="assets/scripts/headerfooter_script.js"></script>
+    <script src="assets/scripts/login_script_admin.js"></script>
 </body>
-<script src="assets/scripts/headerfooter_script.js"></script>
 </html>

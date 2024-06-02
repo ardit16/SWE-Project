@@ -24,8 +24,6 @@ namespace RrezeBack.Services
         Task<bool> ResendFa(RfaCredencialsDTO dto);
         Task<object> GoogleLogin(string idToken);
     }
-
-
     public class LogInService : ILogInService
     {
         private readonly DBContext _context;
@@ -36,7 +34,6 @@ namespace RrezeBack.Services
             _context = context;
             _memoryCache = memoryCache;
         }
-
         public string GenerateRandomCode(int length = 6)
         {
             var random = new Random();
@@ -45,7 +42,6 @@ namespace RrezeBack.Services
                 code = string.Concat(code, random.Next(0, 10).ToString());
             return code;
         }
-
         public async Task<bool> Send2FAEmail(string toEmailAddress, string twoFACode)
         {
             var fromAddress = new MailAddress("Rreze2024@gmail.com", "Rreze");
@@ -80,8 +76,6 @@ namespace RrezeBack.Services
                 return false;
             }
         }
-
-        
         private bool VerifyPassword(string storedHash, string providedPassword)
         {
             // Split the stored hash to get the salt and the hash components
@@ -155,7 +149,6 @@ namespace RrezeBack.Services
                 {
                     Id = result.RiderID,
                     Name = result.Name,
-                    Surname = result.Surname,
                     Email = result.Email,
                     TwoFactorEnabled = result.TwoFactorEnabled
                 };
@@ -178,7 +171,6 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-
         public async Task<object> LogInDriver(LoginDTO dto)
         {
             try
@@ -190,22 +182,11 @@ namespace RrezeBack.Services
                 {
                     return null;
                 }
-
-                var response = new
+                if(!result.Verified)
                 {
-                    Id = result.DriverID,
-                    Name = result.Name,
-                    Surname = result.Surname,
-                    Email = result.Email,
-                    Verified = result.Verified,
-                    TwoFactorEnabled = result.TwoFactorEnabled
-                };
-
-                if (!result.Verified)
-                {
+                    return new { Error = "Driver not verified!" };
                     return new { response.Email, response.Verified, Error = "Driver not verified!", };
                 }
-
                 if (result.TwoFactorEnabled)
                 {
                     var code = GenerateRandomCode();
@@ -215,7 +196,13 @@ namespace RrezeBack.Services
                 }
                 else
                 {
-                    return response;
+                    return new
+                    {
+                        Id = result.DriverID,
+                        Name = result.Name,
+                        Surname = result.Surname,
+                        TwoFactorEnabled = false
+                    };
                 }
             }
             catch (Exception ex)
@@ -223,7 +210,6 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-
         public async Task<object> ConfirmFaDriver(FaCredencialsDto dto)
         {
             try
@@ -252,7 +238,6 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-
         public async Task<object> ConfirmFaRider(FaCredencialsDto dto)
         {
             try
@@ -281,7 +266,6 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-
         public async Task<bool> ResendFa(RfaCredencialsDTO dto)
         {
             try
@@ -297,7 +281,6 @@ namespace RrezeBack.Services
                 return false;
             }
         }
-
         public async Task<object> GoogleLogin(string idToken)
         {
             var payload = await GoogleJsonWebSignature.ValidateAsync(idToken);
