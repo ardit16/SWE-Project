@@ -3,37 +3,63 @@ document.addEventListener('DOMContentLoaded', async function() {
     const riderSurname = localStorage.getItem('riderSurname');
     const riderId = localStorage.getItem('riderId');
     console.log('Retrieved rider name:', riderName);
-
+    
     if (riderName && riderSurname) {
         document.getElementById('rider-name').textContent = riderName + ' ' + riderSurname;
     }
 
-    const paymentMethods = await fetchPaymentMethods(riderId);
-    populatePaymentMethods(paymentMethods);
+    try {
+        const paymentMethods = await fetchPaymentMethods(riderId);
+        console.log('Payment Methods:', paymentMethods);
+        populatePaymentMethods(paymentMethods);
+    } catch (error) {
+        console.error('Error fetching payment methods:', error);
+    }
 });
 
 async function fetchPaymentMethods(riderId) {
     try {
-        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}/paymentmethod`);
+        const response = await fetch(`http://localhost:5179/api/Rider/${riderId}/paymentmethods`);
         if (!response.ok) {
-            throw new Error('Failed to fetch payment methods.');
+            throw new Error(`Failed to fetch payment methods. Status: ${response.status}`);
         }
         return await response.json();
     } catch (error) {
         console.error('Error:', error);
-        return [{ PaymentType: 'Cash' }];
+        return [{ paymentType: 'Cash' }];
     }
 }
 
 function populatePaymentMethods(paymentMethods) {
     const paymentSelect = document.getElementById('payment-method');
     paymentSelect.innerHTML = '';
+
     paymentMethods.forEach(method => {
-        const option = document.createElement('option');
-        option.value = method.PaymentType.toLowerCase().replace(' ', '-');
-        option.textContent = method.PaymentType;
-        paymentSelect.appendChild(option);
+        if (method && method.paymentType) {
+            const option = document.createElement('option');
+            if (method.paymentType.toLowerCase() === 'cash') {
+                option.value = 'cash';
+                option.textContent = 'Cash';
+            } else if (method.paymentType.toLowerCase() === 'creditcard') {
+                const lastFourDigits = method.cardNumber.slice(-4);
+                option.value = method.paymentType.toLowerCase().replace(' ', '-');
+                option.textContent = `** ${lastFourDigits}`;
+            }
+            paymentSelect.appendChild(option);
+        } else {
+            console.error('Invalid payment method format:', method);
+        }
     });
+
+    // Ensure Cash is always an option
+    if (!paymentMethods.some(method => method && method.paymentType && method.paymentType.toLowerCase() === 'cash')) {
+        const cashOption = document.createElement('option');
+        cashOption.value = 'cash';
+        cashOption.textContent = 'Cash';
+        paymentSelect.appendChild(cashOption);
+    }
+
+    console.log('Payment methods populated:', paymentSelect.innerHTML);
 }
 
 async function initMap() {
@@ -185,7 +211,9 @@ async function submitRideRequest(pickupLocation, dropoffLocation) {
 
         if (response.ok) {
             console.log('Ride request successful');
-            document.getElementById('status-message').textContent = 'Searching for drivers...';
+            var statusMessage = document.getElementById("status-message");
+            statusMessage.style.display="block";
+            statusMessage.innerHTML = 'Searching for drivers<span class="dot-one">.</span><span class="dot-two">.</span><span class="dot-three">.</span>';
             await checkRideStatus(riderId);
         } else {
             let errorResponse;
@@ -221,9 +249,6 @@ function showModal(message) {
     };
 }
 
-
-
-
 async function checkRideStatus(riderId) {
     setTimeout(async () => {
         try {
@@ -243,23 +268,4 @@ async function checkRideStatus(riderId) {
             console.error('Error checking ride status:', error);
         }
     }, 120000); // 2 minutes
-}
-
-function showModal(message) {
-    const modal = document.getElementById('modal');
-    const modalMessage = document.getElementById('modal-message');
-    modalMessage.textContent = message;
-
-    modal.style.display = 'block';
-
-    const closeButton = document.getElementById('close-button');
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-    };
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = 'none';
-        }
-    };
 }
