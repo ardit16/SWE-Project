@@ -84,7 +84,7 @@ namespace RrezeBack.Services
                 await _context.SaveChangesAsync();
 
                 string profilePhotoFileName = $"{newUser.DriverID}_profile.jpg";
-                string profilePhotosDirectoryPath = @"C:Users/Megi Dervishi/OneDrive/Desktop/driverslicense";
+                string profilePhotosDirectoryPath = @"C:Users/Megi Dervishi/OneDrive/Desktop/profile";
 
                 if (!Directory.Exists(profilePhotosDirectoryPath))
                 {

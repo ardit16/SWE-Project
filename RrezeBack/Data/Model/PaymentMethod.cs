@@ -16,9 +16,4 @@ public class PaymentMethod
     public int? RiderID { get; set; }
     public int? DriverID { get; set; }
 
-
-    [ForeignKey("RiderID")]
-    public Rider Rider { get; set; }
-
-
 }

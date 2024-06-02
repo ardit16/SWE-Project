@@ -117,15 +117,29 @@ public class DriverController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPost("{driverId}/add-payment-method")]
+    [HttpPost("{driverId}/paymentmethod")]
     public async Task<IActionResult> AddPaymentMethod(int driverId, [FromForm] PaymentMethodDTO paymentMethodDto)
     {
-        var result = await _driverService.AddPaymentMethod(driverId, paymentMethodDto);
-        if (!result)
-        {
-            return NotFound("Driver not found.");
-        }
-        return Ok(result);
+        var result = await _driverService.AddPaymentMethod(paymentMethodDto);
+        if (!result) return BadRequest("Failed to add payment method");
+
+        return Ok("Payment method added successfully");
+    }
+
+    [HttpDelete("{driverId}/paymentmethods/{paymentMethodId}")]
+    public async Task<IActionResult> DeletePaymentMethod(int driverId, int paymentMethodId)
+    {
+        var result = await _driverService.DeletePaymentMethod(driverId, paymentMethodId);
+        if (!result) return NotFound("Payment method not found");
+
+        return Ok("Payment method deleted successfully.");
+    }
+
+    [HttpGet("{driverId}/paymentmethods")]
+    public async Task<IActionResult> GetPaymentMethods(int driverId)
+    {
+        var paymentMethods = await _driverService.GetPaymentMethods(driverId);
+        return Ok(paymentMethods);
     }
 
     [HttpPost("{driverId}/add-new-car")]
@@ -146,17 +160,6 @@ public class DriverController : ControllerBase
         if (result == null || !result.Any())
         {
             return NotFound("No cars found for the driver.");
-        }
-        return Ok(result);
-    }
-
-    [HttpGet("{driverId}/view-payment-methods")]
-    public async Task<IActionResult> ViewPaymentMethods(int driverId)
-    {
-        var result = await _driverService.ViewPaymentMethods(driverId);
-        if (result == null || !result.Any())
-        {
-            return NotFound("No payment methods found for the driver.");
         }
         return Ok(result);
     }

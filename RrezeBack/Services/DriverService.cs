@@ -17,10 +17,11 @@ public class DriverService
         Task<bool> AcceptRide(int driverId, int rideId, bool accept);
         Task<int> CancelRide(int driverId, int rideId);
         Task<bool> LeaveFeedback(int driverId, FeedbackDTO feedbackDto);
-        Task<bool> AddPaymentMethod(int driverId, PaymentMethodDTO paymentMethodDto);
+        Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto);
+        Task<bool> DeletePaymentMethod(int driverId, int paymentMethodId);
+        Task<IEnumerable<PaymentMethodDTO>> GetPaymentMethods(int driverId);
         Task<bool> AddNewCar(int driverId, VehicleDto vehicleDto);
         Task<List<Vehicle>> ViewCars(int driverId);
-        Task<List<PaymentMethod>> ViewPaymentMethods(int driverId);
         Task<List<Ride>> ViewRides(int driverId);
         Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId);
     }
@@ -209,27 +210,80 @@ public class DriverService
             return true;
         }
 
-        public async Task<bool> AddPaymentMethod(int driverId, PaymentMethodDTO paymentMethodDto)
+        public async Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto)
         {
-            var driver = await _context.Drivers.FindAsync(driverId);
+            var driver = await _context.Drivers.FindAsync(paymentMethodDto.DriverID);
+
             if (driver == null)
             {
-                return false;
+                throw new Exception($"Driver with ID {paymentMethodDto.DriverID} not found");
+            }
+
+            var existingPaymentMethod = await _context.PaymentMethod
+                .FirstOrDefaultAsync(pm => pm.DriverID == paymentMethodDto.DriverID && pm.PaymentType == "CreditCard");
+
+            if (existingPaymentMethod != null)
+            {
+                throw new Exception("Driver already has a credit card payment method");
             }
 
             var paymentMethod = new PaymentMethod
             {
-                DriverID= paymentMethodDto.DriverID,
+                DriverID = paymentMethodDto.DriverID,
                 PaymentType = paymentMethodDto.PaymentType,
                 CardNumber = paymentMethodDto.CardNumber,
                 ExpiryDate = paymentMethodDto.ExpiryDate,
                 CVV = paymentMethodDto.CVV,
-                CardName = paymentMethodDto.CardName
+                CardName = paymentMethodDto.CardName,
             };
 
-            await _context.PaymentMethod.AddAsync(paymentMethod);
+            try
+            {
+                _context.PaymentMethod.Add(paymentMethod);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException ex)
+            {
+                Console.WriteLine($"An error occurred while saving the payment method: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                throw;
+            }
+        }
+
+        public async Task<bool> DeletePaymentMethod(int driverId, int paymentMethodId)
+        {
+            var paymentMethod = await _context.PaymentMethod
+                .FirstOrDefaultAsync(pm => pm.DriverID == driverId && pm.PaymentId == paymentMethodId);
+
+            if (paymentMethod == null)
+            {
+                return false;
+            }
+
+            _context.PaymentMethod.Remove(paymentMethod);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<IEnumerable<PaymentMethodDTO>> GetPaymentMethods(int driverId)
+        {
+            return await _context.PaymentMethod
+                .Where(pm => pm.DriverID == driverId)
+                .Select(pm => new PaymentMethodDTO
+                {
+                    PaymentId = pm.PaymentId,
+                    DriverID = pm.DriverID,
+                    PaymentType = pm.PaymentType,
+                    CardNumber = pm.CardNumber,
+                    ExpiryDate = pm.ExpiryDate,
+                    CVV = pm.CVV,
+                    CardName = pm.CardName
+                })
+                .ToListAsync();
         }
 
         public async Task<bool> AddNewCar(int driverId, VehicleDto vehicleDto)
@@ -320,12 +374,6 @@ public class DriverService
         {
             var cars = await _context.Vehicles.Where(v => v.DriverID == driverId).ToListAsync();
             return cars;
-        }
-
-        public async Task<List<PaymentMethod>> ViewPaymentMethods(int driverId)
-        {
-            var paymentMethods = await _context.PaymentMethod.Where(p => p.RiderID == driverId).ToListAsync();
-            return paymentMethods;
         }
 
         public async Task<List<Ride>> ViewRides(int driverId)
