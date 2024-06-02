@@ -28,6 +28,7 @@ namespace RrezeBack.Controllers
             return Ok("Admin registered successfully.");
         }
 
+
         [HttpPost("DriverSignup")]
         public async Task<IActionResult> SignUpDriver([FromForm] SignUpDriverDto driverDto)
         {
