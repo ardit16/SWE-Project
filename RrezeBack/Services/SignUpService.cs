@@ -165,10 +165,10 @@ namespace RrezeBack.Services
         public async Task<bool> SignUpAdminAsync(AdminSignUpDTO adminSignUpDto)
         {
             var existingAdmin = await _context.Administrators
-                .FirstOrDefaultAsync(a => a.Name == adminSignUpDto.Name || a.Email == adminSignUpDto.Email);
+                .FirstOrDefaultAsync(a =>  a.Email == adminSignUpDto.Email);
             if (existingAdmin != null)
             {
-                return false; // Username or email already exists
+                return false; // Email already exists
             }
 
             var admin = new Administrator

@@ -83,10 +83,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         }
 
         // Extract day, month, and year
-        const day = cleaned.slice(0, 2);
-        const month = cleaned.slice(2, 4);
-        const year = cleaned.slice(4, 8);
+        const year = cleaned.slice(0, 4);
+        const month = cleaned.slice(4, 6);
+        const day = cleaned.slice(6, 8);
 
-        return `${day}/${month}/${year}`;
+        return `${day}.${month}.${year}`;
     }
 });
