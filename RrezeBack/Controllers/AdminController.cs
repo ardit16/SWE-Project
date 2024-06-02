@@ -18,6 +18,13 @@ namespace RrezeBack.Controllers
             _adminService = adminService;
         }
 
+        [HttpGet("{AdminID}")]
+        public async Task<IActionResult> GetADIMNProfile(int AdminID)
+        {
+            var admin = await _adminService.GetAdminProfile(AdminID);
+            if (admin == null) return NotFound();
+            return Ok(admin);
+        }
         [HttpPost("Accept-Driver/{driverId}")]
         public async Task<IActionResult> AcceptNewDriver(int driverId)
         {
@@ -79,5 +86,6 @@ namespace RrezeBack.Controllers
             }
             return Ok("Password changed successfully.");
         }
+
     }
 }

@@ -1,62 +1,64 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.querySelector('form');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const errorModal = document.getElementById('errorModal');
-    const errorMessage = document.getElementById('errorMessage');
-    const closeModal = document.getElementsByClassName('close')[0];
 
-    loginForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+    loginForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission
 
-        const email = emailInput.value;
-        const password = passwordInput.value;
+        const formData = new FormData();
+        formData.append('Email', document.getElementById('email').value);
+        formData.append('Password', document.getElementById('password').value);
 
-        if (email && password) {
-            const formData = new FormData();
-            formData.append('Email', email);
-            formData.append('Password', password);
+        try {
+            const response = await fetch('http://localhost:5179/api/LogIn/LogInAdmin', {
+                method: 'POST',
+                body: formData
+            });
 
-            try {
-                const response = await fetch('http://localhost:5179/api/LogIn/LogInAdmin', {
-                    method: 'POST',
-                    body: formData
-                });
-
+            if (response.ok) {  // Fix the condition here
                 const result = await response.json();
+                console.log('Login result:', result);
 
-                if (response.ok) {
-                    // Handle successful login
-                    alert('Login successful!');
-                    console.log(result);
-                    // Redirect to the admin dashboard
+                // Check the structure of the result object
+                if (result.name && result.surname) {                    
+                    // Store admin's name and ID in local storage
+                    localStorage.setItem('adminName', result.name);
+                    localStorage.setItem('adminSurname', result.surname);
+                    localStorage.setItem('adminId', result.id);
+
                     window.location.href = 'home_admin.html'; // Change this to the actual URL of your admin homepage
                 } else {
-                    // Handle login error
-                    showErrorModal(result || 'Invalid email or password.');
+                    console.error('API response does not contain name or surname.');
+                    showModal('An error occurred. Please try again.');
                 }
-            } catch (error) {
-                console.error('Error:', error);
-                showErrorModal('An error occurred. Please try again.');
+            } else if (response.status === 404) {
+                showModal('Email or password is not correct, check and try again.');
+            } else {
+                const errorText = await response.text();
+                console.error('Login error:', errorText); // Log errors
+                showModal('Error: ' + errorText);
             }
-        } else {
-            showErrorModal('Please fill in both fields.');
+        } catch (error) {
+            console.error('Error:', error); // Log exceptions
+            showModal('An error occurred. Please try again.');
         }
     });
 
-    closeModal.onclick = function() {
-        errorModal.style.display = 'none';
-    }
+    function showModal(message) {
+        const modal = document.getElementById('errorModal');
+        const modalMessage = document.getElementById('errorMessage');
+        modalMessage.textContent = message;
 
-    window.onclick = function(event) {
-        if (event.target === errorModal) {
-            errorModal.style.display = 'none';
-        }
-    }
+        modal.style.display = 'block';
 
-    function showErrorModal(message) {
-        errorMessage.textContent = message;
-        errorModal.style.display = 'block';
+        const closeButton = document.getElementsByClassName('close')[0];
+        closeButton.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        };
     }
 });
-

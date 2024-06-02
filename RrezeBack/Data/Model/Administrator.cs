@@ -16,6 +16,9 @@ namespace RrezeBack.Data.Model
 
         public string PhoneNumber { get; set; }
 
+        public string Birthday { get; set; }
+
+
         public ICollection<Driver> Drivers { get; set; }
         public ICollection<Rider> Riders { get; set; }
         public ICollection<Ride> Rides { get; set; }

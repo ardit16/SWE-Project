@@ -124,16 +124,15 @@ namespace RrezeBack.Services
                                        .FirstOrDefaultAsync();
             if (result == null || !VerifyPassword(result.Password, dto.Password))
             {
-                return false;
+                return null;  // Fix the return value here
             }
-            return  new
+            return new
             {
                 Id = result.AdministratorID,
                 Name = result.Name,
-                Surname = result.Surname,
-
+                Surname = result.Surname
             };
-        }
+        }            
         public async Task<object> LogInRider(LoginDTO dto)
         {
             try

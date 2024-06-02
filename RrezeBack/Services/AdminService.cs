@@ -11,6 +11,7 @@ namespace RrezeBack.Services
 {
     public interface IAdminService
     {
+        Task<AdminDto> GetAdminProfile(int AdminId);
         Task<bool> AcceptNewDriverAsync(int DriverId);
         Task<bool> DeleteRiderAsync(int userId);
         Task<bool> DeleteDriverAsync(int userId);
@@ -26,6 +27,22 @@ namespace RrezeBack.Services
         public AdminService(DBContext context)
         {
             _context = context;
+        }
+        public async Task<AdminDto> GetAdminProfile(int AdminId)
+        {
+            var admin = await _context.Administrators.FindAsync(AdminId);
+            if (admin == null) return null;
+
+            return new AdminDto
+            {
+                Id=admin.AdministratorID,
+                Name=admin.Name,
+                Surname=admin.Surname,
+                Birthday=admin.Birthday,
+                Email=admin.Email,
+                PhoneNumber=admin.PhoneNumber,
+
+            };
         }
 
         public async Task<bool> AcceptNewDriverAsync(int DriverId)

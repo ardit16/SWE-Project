@@ -179,6 +179,7 @@ namespace RrezeBack.Services
                 Name = adminSignUpDto.Name,
                 Surname=adminSignUpDto.Surname,
                 PhoneNumber=adminSignUpDto.Phone,
+                Birthday=adminSignUpDto.Birthday,
                 
             };
 

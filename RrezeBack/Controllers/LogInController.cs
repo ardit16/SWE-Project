@@ -20,13 +20,13 @@ namespace RrezeBack.Controllers
         {
             _logInService = logInService;
         }
-         [HttpPost("LogInAdmin")]
+        [HttpPost("LogInAdmin")]
         public async Task<IActionResult> LoginAdmin([FromForm] LoginDTO loginDto)
         {
             var result = await _logInService.LoginADMIN(loginDto);
             if (result == null)
             {
-                return Unauthorized("Invalid email or password.");
+                return NotFound();
             }
             return Ok(result);
         }
