@@ -14,7 +14,7 @@ namespace RrezeBack.Services
     Task<RiderDTO> GetRiderProfile(int riderId);
     Task<bool> ChangeTwoFactorAuthentication(int riderId, bool enable2FA);
     Task<int> ChangePassword(ChangePasswordDto dto);
-    Task<bool> RequestRide(RideDTO rideRequestDto);
+    Task<Ride> RequestRide(RideDTO rideRequestDto);
     Task<int> CancelRide(int Riderid);
     Task<bool> SubmitFeedback(FeedbackDTO feedbackDto);
     Task<bool> AddPaymentMethod(PaymentMethodDTO paymentMethodDto);
@@ -24,7 +24,9 @@ namespace RrezeBack.Services
     Task<IEnumerable<RideDTO>> GetPreviousRidesAsync(int riderId);
     Task<bool> UpdateProfilePicture(ProfilePictureDto profilePictureDto);
     Task<IEnumerable<FeedbackDTO>> GetRiderFeedbacks(int riderId);
-
+    Task<RideDTO> GetRideStatus(int rideId);
+    Task<bool> DeleteRide(int rideId);
+        Task<IEnumerable<RideDTO>> GetPendingRides(int riderId);
     }
     public class RiderService : IRiderService
     {
@@ -128,7 +130,7 @@ namespace RrezeBack.Services
                 throw;
             }
         }
-        public async Task<bool> RequestRide(RideDTO rideRequestDto)
+        public async Task<Ride> RequestRide(RideDTO rideRequestDto)
         {
             try
             {
@@ -153,7 +155,7 @@ namespace RrezeBack.Services
                 _context.Rides.Add(ride);
                 await _context.SaveChangesAsync();
 
-                return true;
+                return ride; // Return the created ride object
             }
             catch (Exception ex)
             {
@@ -162,10 +164,9 @@ namespace RrezeBack.Services
                 {
                     Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
                 }
-                return false;
+                return null;
             }
         }
-
 
         public async Task<int> CancelRide(int rideId)
         {
@@ -362,6 +363,59 @@ namespace RrezeBack.Services
                     RideID = f.RideID,
                     RiderRating = f.RiderRating,
                     RiderComment = f.RiderComment
+                })
+                .ToListAsync();
+        }
+
+        public async Task<RideDTO> GetRideStatus(int rideId)
+        {
+            var ride = await _context.Rides.FindAsync(rideId);
+            if (ride == null)
+            {
+                return null;
+            }
+
+            return new RideDTO
+            {
+                RideID = ride.RideID,
+                RideStatus = ride.RideStatus
+            };
+        }
+
+        public async Task<bool> DeleteRide(int rideId)
+        {
+            var ride = await _context.Rides.FindAsync(rideId);
+            if (ride == null)
+            {
+                return false;
+            }
+
+            _context.Rides.Remove(ride);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<IEnumerable<RideDTO>> GetPendingRides(int riderId)
+        {
+            return await _context.Rides
+                .Where(r => r.RiderID == riderId && r.RideStatus == false)
+                .Select(r => new RideDTO
+                {
+                    RideID = r.RideID,
+                    PickupLocationLONG = r.PickupLocationLONG,
+                    PickupLocationLAT = r.PickupLocationLAT,
+                    PickUpName = r.PickUpName,
+                    DropOffLocationLONG = r.DropOffLocationLONG,
+                    DropOffLocationLAT = r.DropOffLocationLAT,
+                    DropOffName = r.DropOffName,
+                    RideDate = r.RideDate,
+                    RideStartTime = r.RideStartTime,
+                    RideEndTime = r.RideEndTime,
+                    RideStatus = r.RideStatus,
+                    RideDistance = r.RideDistance,
+                    Amount = r.Amount,
+                    DriverId = r.DriverID,
+                    RiderID = r.RiderID
                 })
                 .ToListAsync();
         }

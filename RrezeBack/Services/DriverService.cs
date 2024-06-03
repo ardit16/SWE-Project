@@ -24,9 +24,10 @@ public class DriverService
         Task<List<Vehicle>> ViewCars(int driverId);
         Task<List<Ride>> ViewRides(int driverId);
         Task<IEnumerable<FeedbackDTO>> GetDriverFeedbacks(int driverId);
-        Task<bool> AssignDriverToRide(int rideId, int driverId);
         Task<bool> GetDriverStatus(int driverId);
         Task<bool> ToggleDriverStatus(int driverId);
+        Task<List<RideDTO>> GetPendingRideRequests();
+        Task<bool> AssignDriverToRide(int rideId, int driverId);
     }
 
     public class DriverServices: IDriverService
@@ -57,31 +58,6 @@ public class DriverService
                 ovrating = driver.ovrating,
                 DateAdded = driver.DateAdded
             };
-        }
-        public async Task<bool> AssignDriverToRide(int rideId, int driverId)
-        {
-            try
-            {
-                var ride = await _context.Rides.FindAsync(rideId);
-                if (ride == null)
-                {
-                    return false;
-                }
-
-                ride.DriverID = driverId;
-                _context.Rides.Update(ride);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
-                }
-                return false;
-            }
         }
 
         public async Task<bool> ChangeTwoFactorAuthentication(int driverId, bool enable2FA)
@@ -481,5 +457,62 @@ public class DriverService
 
             return driver.status;
         }
+
+        public async Task<List<RideDTO>> GetPendingRideRequests()
+        {
+            var rides = await _context.Rides
+                .Where(r => !r.RideStatus)
+                .ToListAsync();
+
+            var rideDTOs = rides.Select(r => new RideDTO
+            {
+                RideID = r.RideID,
+                PickupLocationLONG = r.PickupLocationLONG,
+                PickupLocationLAT = r.PickupLocationLAT,
+                PickUpName = r.PickUpName,
+                DropOffLocationLONG = r.DropOffLocationLONG,
+                DropOffLocationLAT = r.DropOffLocationLAT,
+                DropOffName = r.DropOffName,
+                RideDate = r.RideDate,
+                RideStartTime = r.RideStartTime,
+                RideEndTime = r.RideEndTime,
+                RideStatus = r.RideStatus,
+                RideDistance = r.RideDistance,
+                Amount = r.Amount,
+                DriverId = r.DriverID,
+                RiderID = r.RiderID
+            }).ToList();
+
+            return rideDTOs;
+        }
+
+        public async Task<bool> AssignDriverToRide(int rideId, int driverId)
+        {
+            try
+            {
+                var ride = await _context.Rides.FindAsync(rideId);
+                if (ride == null)
+                {
+                    return false;
+                }
+
+                ride.DriverID = driverId;
+                ride.RideStatus = true;
+                ride.RideStartTime = DateTime.Now.ToString("o"); // Set start time to current time
+                _context.Rides.Update(ride);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner exception: {ex.InnerException.Message}");
+                }
+                return false;
+            }
+        }
+
     }
 }

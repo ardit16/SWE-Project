@@ -171,6 +171,22 @@ function calculatePrice(distanceInMeters) {
 
 async function submitRideRequest(pickupLocation, dropoffLocation) {
     const riderId = localStorage.getItem('riderId');
+
+    // Check for existing pending ride request and delete if found
+    try {
+        const existingRidesResponse = await fetch(`http://localhost:5179/api/Rider/${riderId}/pendingrides`);
+        if (existingRidesResponse.ok) {
+            const pendingRides = await existingRidesResponse.json();
+            for (const ride of pendingRides) {
+                await fetch(`http://localhost:5179/api/Rider/${ride.rideID}`, {
+                    method: 'DELETE'
+                });
+            }
+        }
+    } catch (error) {
+        console.error('Error checking for existing pending rides:', error);
+    }
+
     const pickup = document.getElementById("pickup").value.split(' ').slice(0, 2).join(' ');
     const dropoff = document.getElementById("dropoff").value.split(' ').slice(0, 2).join(' ');
     const paymentMethod = document.getElementById("payment-method").value;
@@ -183,7 +199,6 @@ async function submitRideRequest(pickupLocation, dropoffLocation) {
     const rideEndTime = new Date(rideStartTime.getTime() + durationInMinutes * 60000);
 
     const rideRequestDto = {
-        rideID: 0,
         pickupLocationLONG: pickupLocation.lng(),
         pickupLocationLAT: pickupLocation.lat(),
         pickUpName: pickup,
@@ -196,7 +211,7 @@ async function submitRideRequest(pickupLocation, dropoffLocation) {
         rideStatus: false,
         rideDistance: rideDistance,
         amount: amount,
-        driverId: 1,//intial e lem nje pasaj e ndrrojm sepse nuk punon ndryshe
+        driverId: 1, // initial value, will be updated later
         riderID: parseInt(riderId)
     };
 
@@ -212,11 +227,34 @@ async function submitRideRequest(pickupLocation, dropoffLocation) {
         });
 
         if (response.ok) {
-            console.log('Ride request successful');
+            const rideResponse = await response.json(); // Assuming the response contains the created ride object with the rideID
+            const rideId = rideResponse.rideID;
+            console.log('Ride request successful with ID:', rideId);
+            
             var statusMessage = document.getElementById("status-message");
-            statusMessage.style.display="block";
+            statusMessage.style.display = "block";
             statusMessage.innerHTML = 'Searching for drivers<span class="dot-one">.</span><span class="dot-two">.</span><span class="dot-three">.</span>';
-            await checkRideStatus(riderId);
+
+            setTimeout(async () => {
+                try {
+                    const checkResponse = await fetch(`http://localhost:5179/api/Rider/${rideId}/checkstatus`);
+                    if (checkResponse.ok) {
+                        const rideStatus = await checkResponse.json();
+                        if (!rideStatus.rideStatus) {
+                            statusMessage.innerHTML = 'No drivers available at this moment.';
+                            await fetch(`http://localhost:5179/api/Rider/${rideId}`, {
+                                method: 'DELETE'
+                            });
+                        } else {
+                            window.location.href = 'onride_rider.html'; // Redirect to ride start page
+                        }
+                    } else {
+                        console.error('Failed to check ride status');
+                    }
+                } catch (error) {
+                    console.error('Error checking ride status:', error);
+                }
+            }, 240000); // 4 minutes
         } else {
             let errorResponse;
             try {
@@ -257,25 +295,4 @@ function logout(event) {
     localStorage.removeItem('riderSurname');
     localStorage.removeItem('riderId');
     window.location.href = 'index.html'; 
-}
-
-async function checkRideStatus(riderId) {
-    setTimeout(async () => {
-        try {
-            const response = await fetch(`http://localhost:5179/api/Rider/${riderId}/rides`);
-            if (response.ok) {
-                const rides = await response.json();
-                const latestRide = rides[rides.length - 1];
-                if (!latestRide.RideStatus) {
-                    document.getElementById('status-message').textContent = 'No drivers available.';
-                } else {
-                    document.getElementById('status-message').textContent = 'Driver found. Your ride is on the way.';
-                }
-            } else {
-                console.error('Failed to check ride status', response.status, response.statusText);
-            }
-        } catch (error) {
-            console.error('Error checking ride status:', error);
-        }
-    }, 120000); // 2 minutes
 }

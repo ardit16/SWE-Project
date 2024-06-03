@@ -25,6 +25,7 @@ namespace RrezeBack.Controllers
             return Ok(rider);
         }
 
+
         [HttpPost("{riderId}/change-two-factor")]
         public async Task<IActionResult> ChangeTwoFactorAuthentication(int riderId, [FromForm] twofadto dto)
         {
@@ -62,17 +63,15 @@ namespace RrezeBack.Controllers
             try
             {
                 var result = await _riderService.RequestRide(rideRequestDto);
-                if (!result) return BadRequest("Ride request failed");
+                if (result == null) return BadRequest("Ride request failed");
 
-                return Ok("Ride requested successfully");
+                return Ok(result); // Return the created ride object with its rideID
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
-
-
 
         [HttpPost("cancelride/{riderid}")]
         public async Task<IActionResult> CancelRide( string riderid)
@@ -152,6 +151,39 @@ namespace RrezeBack.Controllers
         {
             var feedbacks = await _riderService.GetRiderFeedbacks(riderId);
             return Ok(feedbacks);
+        }
+
+        [HttpGet("{rideId}/checkstatus")]
+        public async Task<IActionResult> CheckRideStatus(int rideId)
+        {
+            var rideStatus = await _riderService.GetRideStatus(rideId);
+            if (rideStatus == null)
+            {
+                return NotFound("Ride not found.");
+            }
+            return Ok(rideStatus);
+        }
+
+        [HttpDelete("{rideId}")]
+        public async Task<IActionResult> DeleteRide(int rideId)
+        {
+            var result = await _riderService.DeleteRide(rideId);
+            if (!result)
+            {
+                return NotFound("Ride not found.");
+            }
+            return Ok("Ride deleted successfully.");
+        }
+
+        [HttpGet("{riderId}/pendingrides")]
+        public async Task<IActionResult> GetPendingRides(int riderId)
+        {
+            var pendingRides = await _riderService.GetPendingRides(riderId);
+            if (!pendingRides.Any())
+            {
+                return NotFound("No pending rides found.");
+            }
+            return Ok(pendingRides);
         }
 
 
